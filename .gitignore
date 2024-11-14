@@ -1,0 +1,49 @@
+# Flutter specific files
+**/build/
+**/.dart_tool/
+**/.packages
+**/flutter_*.yaml
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.metadata
+**/.idea/
+**/.vscode/
+**/coverage/
+**/pubspec.lock
+
+# MacOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+
+# Android specific
+**/android/.gradle/
+**/android/app/debug/
+**/android/app/release/
+**/android/app/profile/
+**/android/local.properties
+**/android/key.properties
+
+# iOS specific
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/ephemeral/
+
+# Web specific
+**/web/.dart_tool/
+**/web/build/
+**/web/.firebase/
+# Node.js specific files in backend directory
+/backend/node_modules/
+/backend/.env
+/backend/.npm/
+/backend/logs/
+backend/debug.log
+backend/error.log
+/backend/temp/
+
