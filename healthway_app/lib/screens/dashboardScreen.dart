@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/selectionButton.dart';
-import '../widgets/sleepAnalysisCard.dart';
 import '../widgets/infoCard.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -8,12 +6,20 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Icon(Icons.settings, color: Colors.black),
+        title: Text('Hey Emily,'),
         actions: [
-          Icon(Icons.notifications, color: Colors.black),
-          SizedBox(width: 16),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              // Ação ao clicar no ícone de configurações
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              // Ação ao clicar no ícone de notificações
+            },
+          ),
         ],
       ),
       body: Padding(
@@ -21,22 +27,38 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Hey Emily,',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
+            // Filtros diários, semanais e mensais
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SelectionButton(text: 'Daily', isSelected: false),
-                SelectionButton(text: 'Weekly', isSelected: false),
-                SelectionButton(text: 'Monthly', isSelected: true),
+                FilterButton(text: 'Daily'),
+                FilterButton(text: 'Weekly'),
+                FilterButton(
+                  text: 'Monthly',
+                  isSelected: true, // Define o botão "Monthly" como selecionado
+                ),
               ],
             ),
-            SizedBox(height: 16),
-            SleepAnalysisCard(),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
+            
+            // Análise de sono
+Text(
+  'Sleep Analysis',
+  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+),
+SizedBox(height: 16),
+SizedBox(
+  height: 180, // Ajuste a altura conforme necessário
+  child: InfoCard(
+    text: '80.4% Quality\n7h 30m Sleep Duration',
+    icon: Icons.nightlight_round,
+    routeName: '/sleepAnalysis',
+  ),
+),
+SizedBox(height: 24),
+
+
+            // Outros cards de informações
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
@@ -44,16 +66,55 @@ class DashboardScreen extends StatelessWidget {
                 mainAxisSpacing: 16,
                 children: [
                   InfoCard(
-                      text: 'More Self love & Fulfilment',
-                      icon: Icons.self_improvement),
+                    text: 'More Self love & Fulfilment',
+                    icon: Icons.self_improvement,
+                    routeName: '/selfLove',
+                  ),
                   InfoCard(
-                      text: '1698 kcal Consumed', icon: Icons.local_dining),
-                  InfoCard(text: '80 bpm Avg Heart Rate', icon: Icons.favorite),
-                  InfoCard(text: '350 kcal Burned', icon: Icons.fitness_center),
+                    text: '1698 kcal Consumed',
+                    icon: Icons.local_dining,
+                    routeName: '/caloriesConsumed',
+                  ),
+                  InfoCard(
+                    text: '80 bpm Avg Heart Rate',
+                    icon: Icons.favorite,
+                    routeName: '/heartRate',
+                  ),
+                  InfoCard(
+                    text: '350 kcal Burned',
+                    icon: Icons.fitness_center,
+                    routeName: '/caloriesBurned',
+                  ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// Botão de filtro customizado
+class FilterButton extends StatelessWidget {
+  final String text;
+  final bool isSelected;
+
+  const FilterButton({required this.text, this.isSelected = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: isSelected ? Colors.blue : Colors.blue[100],
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: isSelected ? Colors.white : Colors.black,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
