@@ -29,12 +29,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system, // Alterna automaticamente entre claro e escuro
       initialRoute: '/',
       routes: {
-        '/': (context) => AnimatedLogo(
-              logoPath: 'lib/assets/logo.png',
-              onAnimationComplete: () {
-                Navigator.of(context).pushReplacementNamed('/dashboard');
-              },
-            ),
+        '/': (context) => PresentationScreen(),
         '/sleepAnalysis': (context) => const SleepCalculatorScreen(),
         '/selfLove': (context) => SelfLoveScreen(),
         '/caloriesConsumed': (context) => CaloriesConsumedScreen(),
@@ -43,4 +38,5 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+
 }

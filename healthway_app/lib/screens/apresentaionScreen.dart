@@ -1,43 +1,41 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
-class AnimatedLogo extends StatefulWidget {
-  final String logoPath;
-  final double size;
-  final VoidCallback onAnimationComplete;
+import 'package:healthway_app/screens/dashboardScreen.dart';
 
-  const AnimatedLogo({
-    Key? key,
-    required this.logoPath,
-    this.size = 200,
-    required this.onAnimationComplete,
-  }) : super(key: key);
-
+class PresentationScreen extends StatefulWidget {
   @override
-  _AnimatedLogoState createState() => _AnimatedLogoState();
+  _PresentationScreenState createState() => _PresentationScreenState();
 }
 
-class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderStateMixin {
+class _PresentationScreenState extends State<PresentationScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _fadeAnimation;
-  late Animation<double> _scaleAnimation;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+
+    // Configurando a animação
     _controller = AnimationController(
+      duration: const Duration(seconds: 2),
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
     );
 
-    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.5, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
-    );
+    _controller.forward();
 
-    _controller.forward().then((_) => widget.onAnimationComplete());
+    // Navegar para a próxima tela após a animação
+    Timer(Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => DashboardScreen(onThemeChanged: (bool value) {  },)),
+      );
+    });
   }
 
   @override
@@ -48,22 +46,18 @@ class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Opacity(
-          opacity: _fadeAnimation.value,
-          child: Transform.scale(
-            scale: _scaleAnimation.value,
-            child: Image.asset(
-              widget.logoPath,
-              width: widget.size,
-              height: widget.size,
-            ),
+    return Scaffold(
+      backgroundColor: Color(0xFF31BAC2),
+      body: Center(
+        child: FadeTransition(
+          opacity: _animation,
+          child: Image.asset(
+            'lib/assets/logo.png', // Substitua pelo caminho da sua logo
+            width: 150,
+            height: 150,
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
-
