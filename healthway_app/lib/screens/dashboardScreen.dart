@@ -65,6 +65,7 @@ class DashboardScreen extends StatelessWidget {
                     const Text(
                       'Acesso Rápido',
                       style: TextStyle(
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -104,6 +105,7 @@ class DashboardScreen extends StatelessWidget {
                           const Text(
                             'Agendar uma consulta',
                             style: TextStyle(
+                              color: Colors.black,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -120,6 +122,7 @@ class DashboardScreen extends StatelessWidget {
                         Text(
                           'Plano alimentar',
                           style: TextStyle(
+                            color: Colors.black,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -127,7 +130,7 @@ class DashboardScreen extends StatelessWidget {
                         Text(
                           'Ver mais',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Colors.black,
                             fontSize: 14,
                           ),
                         ),
@@ -153,7 +156,7 @@ class DashboardScreen extends StatelessWidget {
                             'Seu profissional ainda não disponibilizou seu plano alimentar',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                               fontSize: 14,
                             ),
                           ),
@@ -161,12 +164,24 @@ class DashboardScreen extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF31BAC2),
+                              backgroundColor:
+                                  Color(0xFF31BAC2),
+                              textStyle: const TextStyle(
+                                fontSize: 16, 
+                                fontWeight: FontWeight.bold, 
+                                color: Colors.white, 
+                              ),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(
+                                    8), 
                               ),
                             ),
-                            child: const Text('Conversar com seu profissional'),
+                            child: const Text(
+                              'Conversar com seu profissional',
+                              style: TextStyle(
+                                color: Colors.white, 
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -180,6 +195,7 @@ class DashboardScreen extends StatelessWidget {
                         Text(
                           'Atualizações do seu diário',
                           style: TextStyle(
+                            color: Colors.black,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -187,7 +203,7 @@ class DashboardScreen extends StatelessWidget {
                         Text(
                           'Ver mais',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Colors.black,
                             fontSize: 14,
                           ),
                         ),
@@ -212,20 +228,38 @@ class DashboardScreen extends StatelessWidget {
                           const Text(
                             'Nenhum registro no seu diário',
                             style: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black, 
                               fontSize: 14,
                             ),
                           ),
                           const SizedBox(height: 12),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              // Adicione aqui a ação para o botão
+                            },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF31BAC2),
+                              backgroundColor: const Color(
+                                  0xFF31BAC2), // Cor de fundo do botão
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(
+                                    8),
+                              ),
+                              textStyle: const TextStyle(
+                                fontSize:
+                                    16, 
+                                fontWeight: FontWeight.w500, 
+                                color: Colors.white,
                               ),
                             ),
-                            child: const Text('Novo diário'),
+                            child: const Text(
+                              'Novo diário',
+                              style: TextStyle(
+                                color: Colors
+                                    .white,
+                                fontWeight:
+                                    FontWeight.bold, 
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -290,7 +324,7 @@ class DashboardScreen extends StatelessWidget {
           label,
           style: const TextStyle(
             fontSize: 12,
-            color: Colors.grey,
+            color: Colors.black,
           ),
         ),
       ],
