@@ -1,43 +1,43 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:healthway_app/screens/dashboardScreen.dart';
+class AnimatedLogo extends StatefulWidget {
+  final String logoPath;
+  final double size;
+  final VoidCallback onAnimationComplete;
 
-class PresentationScreen extends StatefulWidget {
-  const PresentationScreen({super.key});
+  const AnimatedLogo({
+    Key? key,
+    required this.logoPath,
+    this.size = 200,
+    required this.onAnimationComplete,
+  }) : super(key: key);
 
   @override
-  _PresentationScreenState createState() => _PresentationScreenState();
+  _AnimatedLogoState createState() => _AnimatedLogoState();
 }
 
-class _PresentationScreenState extends State<PresentationScreen>
-    with SingleTickerProviderStateMixin {
+class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _animation;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
     super.initState();
-
-    // Configurando a animação
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
       vsync: this,
+      duration: const Duration(milliseconds: 1500),
     );
 
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
     );
 
-    _controller.forward();
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+    );
 
-    // Navegar para a próxima tela após a animação
-    Timer(Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => DashboardScreen(onThemeChanged: (bool value) {  },)),
-      );
-    });
+    _controller.forward().then((_) => widget.onAnimationComplete());
   }
 
   @override
@@ -48,18 +48,21 @@ class _PresentationScreenState extends State<PresentationScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF31BAC2),
-      body: Center(
-        child: FadeTransition(
-          opacity: _animation,
-          child: Image.asset(
-            'assets/logo.png', // Substitua pelo caminho da sua logo
-            width: 150,
-            height: 150,
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _fadeAnimation.value,
+          child: Transform.scale(
+            scale: _scaleAnimation.value,
+            child: Image.asset(
+              widget.logoPath,
+              width: widget.size,
+              height: widget.size,
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
