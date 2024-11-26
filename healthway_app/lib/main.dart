@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthway_app/screens/apresentaionScreen.dart';
 import 'screens/dashboardScreen.dart';
 import 'screens/sleepAnalysisCard.dart';
 import 'screens/selfLoveScreen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system, // Alterna automaticamente entre claro e escuro
       initialRoute: '/',
       routes: {
-        '/': (context) => DashboardScreen(onThemeChanged: (bool value) {  },),
+        '/': (context) => PresentationScreen(),
         '/sleepAnalysis': (context) => const SleepCalculatorScreen(),
         '/selfLove': (context) => SelfLoveScreen(),
         '/caloriesConsumed': (context) => CaloriesConsumedScreen(),
