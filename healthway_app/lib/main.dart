@@ -1,65 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:healthway_app/screens/apresentaionScreen.dart';
+import 'screens/dashboardScreen.dart';
+import 'screens/sleepAnalysisCard.dart';
+import 'screens/selfLoveScreen.dart';
+import 'screens/caloriesConsumedScreen.dart';
+import 'screens/heartRateScreen.dart';
+import 'screens/caloriesBurnedScreen.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  String message = "Loading...";
-
-  @override
-  void initState() {
-    super.initState();
-    fetchMessage();
-  }
-
-  Future<void> fetchMessage() async {
-    final apiUrl = const String.fromEnvironment('API_URL',
-        defaultValue: 'http://localhost:3000/');
-    try {
-      final response = await http.get(Uri.parse(apiUrl));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        setState(() {
-          message = data['message'];
-        });
-      } else {
-        setState(() {
-          message = "Failed to load message";
-        });
-      }
-    } catch (e) {
-      setState(() {
-        message = "Error: $e";
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter + Express API'),
+      title: 'Health Dashboard',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: const Color(0xFF4CAF50),
+        scaffoldBackgroundColor: Colors.white,
       ),
-      body: Center(
-        child: Text(message),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color(0xFF4CAF50),
+        scaffoldBackgroundColor: Colors.black,
       ),
+      themeMode:
+          ThemeMode.system, // Alterna automaticamente entre claro e escuro
+      initialRoute: '/',
+      routes: {
+        '/': (context) => PresentationScreen(),
+        '/sleepAnalysis': (context) => const SleepCalculatorScreen(),
+        '/selfLove': (context) => SelfLoveScreen(),
+        '/caloriesConsumed': (context) => CaloriesConsumedScreen(),
+        '/heartRate': (context) => HeartRateScreen(),
+        '/caloriesBurned': (context) => CaloriesBurnedScreen(),
+      },
     );
   }
 }
