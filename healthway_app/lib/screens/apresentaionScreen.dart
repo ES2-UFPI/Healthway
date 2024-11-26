@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:healthway_app/screens/dashboardScreen.dart';
 
 class PresentationScreen extends StatefulWidget {
+  const PresentationScreen({super.key});
+
   @override
   _PresentationScreenState createState() => _PresentationScreenState();
 }

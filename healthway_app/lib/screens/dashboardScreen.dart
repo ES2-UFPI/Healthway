@@ -16,9 +16,14 @@ class DashboardScreen extends StatelessWidget {
               color: Color(0xFF31BAC2),
               child: Row(
                 children: [
-                  const CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage('assets/profile.png'),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/profile'); // Navega para a tela de perfil
+                    },
+                    child: const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/profile.png'),
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -242,10 +247,6 @@ class DashboardScreen extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today_outlined),
-            label: 'Agenda',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
             label: 'Chat',
           ),
@@ -258,6 +259,22 @@ class DashboardScreen extends StatelessWidget {
             label: 'Menu',
           ),
         ],
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/chat');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/health');
+              break;
+            case 3:
+              Navigator.pushNamed(context, '/menu');
+              break;
+          }
+        },
       ),
     );
   }
