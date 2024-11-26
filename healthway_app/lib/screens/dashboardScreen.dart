@@ -67,7 +67,7 @@ class DashboardScreen extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -92,9 +92,12 @@ class DashboardScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
+                            color: Colors.black.withOpacity(
+                                0.25), // Aumente a opacidade da sombra
+                            blurRadius:
+                                15, // Aumente o raio de desfoque da sombra
+                            offset: const Offset(
+                                0, 4), // Ajuste o deslocamento da sombra
                           ),
                         ],
                       ),
@@ -124,7 +127,7 @@ class DashboardScreen extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
@@ -144,9 +147,12 @@ class DashboardScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
+                            color: Colors.black.withOpacity(
+                                0.25), // Aumente a opacidade da sombra
+                            blurRadius:
+                                15, // Aumente o raio de desfoque da sombra
+                            offset: const Offset(
+                                0, 4), // Ajuste o deslocamento da sombra
                           ),
                         ],
                       ),
@@ -164,22 +170,21 @@ class DashboardScreen extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color(0xFF31BAC2),
+                              backgroundColor: Color(0xFF31BAC2),
+                              elevation: 10,
                               textStyle: const TextStyle(
-                                fontSize: 16, 
-                                fontWeight: FontWeight.bold, 
-                                color: Colors.white, 
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    8), 
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             child: const Text(
                               'Conversar com seu profissional',
                               style: TextStyle(
-                                color: Colors.white, 
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -197,7 +202,7 @@ class DashboardScreen extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
@@ -217,9 +222,12 @@ class DashboardScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
+                            color: Colors.black.withOpacity(
+                                0.25), // Aumente a opacidade da sombra
+                            blurRadius:
+                                15, // Aumente o raio de desfoque da sombra
+                            offset: const Offset(
+                                0, 4), // Ajuste o deslocamento da sombra
                           ),
                         ],
                       ),
@@ -228,7 +236,7 @@ class DashboardScreen extends StatelessWidget {
                           const Text(
                             'Nenhum registro no seu diário',
                             style: TextStyle(
-                              color: Colors.black, 
+                              color: Colors.black,
                               fontSize: 14,
                             ),
                           ),
@@ -238,32 +246,31 @@ class DashboardScreen extends StatelessWidget {
                               // Adicione aqui a ação para o botão
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(
-                                  0xFF31BAC2), // Cor de fundo do botão
+                              backgroundColor: const Color(0xFF31BAC2),
+                              elevation:
+                                  10, // Aumente a elevação para uma sombra mais pronunciada
+                              shadowColor: Colors.black.withOpacity(
+                                  0.5), // Ajuste a opacidade da sombra
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    8),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                               textStyle: const TextStyle(
-                                fontSize:
-                                    16, 
-                                fontWeight: FontWeight.w500, 
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),
                             ),
                             child: const Text(
                               'Novo diário',
                               style: TextStyle(
-                                color: Colors
-                                    .white,
-                                fontWeight:
-                                    FontWeight.bold, 
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -311,9 +318,10 @@ class DashboardScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 2),
+                color: Colors.black
+                    .withOpacity(0.25), // Aumente a opacidade da sombra
+                blurRadius: 15, // Aumente o raio de desfoque da sombra
+                offset: const Offset(0, 4), // Ajuste o deslocamento da sombra
               ),
             ],
           ),
