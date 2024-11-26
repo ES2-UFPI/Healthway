@@ -1,4 +1,4 @@
-const db = require('.../firebase-config');
+const db = require('../firebase-config');
 const Refeicao = require('../model/refeicao');
 
 const refeicaoController = {

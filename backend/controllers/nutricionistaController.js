@@ -63,6 +63,31 @@ const nutricionistaController = {
       res.status(500).json({ error: error.message });
     }
   },
+
+  // Adicionar a função no controller
+async getBySpecialty(req, res) {
+  try {
+    const { specialty } = req.params; // Obtém a especialidade a partir dos parâmetros da URL
+    const snapshot = await db.collection('nutricionista')
+                              .where('especialidade', '==', specialty)
+                              .get();
+
+    if (snapshot.empty) {
+      return res.status(404).json({ message: 'Nenhum nutricionista encontrado com essa especialidade.' });
+    }
+
+    const nutricionistas = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    res.status(200).json(nutricionistas);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+
 };
+
+
+
 
 module.exports = nutricionistaController;

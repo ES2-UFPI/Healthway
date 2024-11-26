@@ -8,5 +8,6 @@ router.get('/', nutricionistaController.getAll);
 router.get('/:id', nutricionistaController.getById);
 router.put('/:id', nutricionistaController.update);
 router.delete('/:id', nutricionistaController.delete);
+router.get('/specialty/:specialty', nutricionistaController.getBySpecialty);
 
 module.exports = router;
