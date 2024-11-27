@@ -1,7 +1,7 @@
-const db = require('.../firebase-config');
+const db = require('../firebase-config');
 const Alimento = require('../model/alimento');
 
-const alimentoConstroller = {
+const alimentoController = {
     //Criar um novo alimento
     async create(req, res){
         try {
@@ -13,7 +13,7 @@ const alimentoConstroller = {
         }
     },
 
-    //Obter todos os alimentos 
+    //Obter todos os alimentos
     async getAll(req, res){
         try {
             const snapshot = await db.collection('alimento').get();
@@ -65,4 +65,4 @@ const alimentoConstroller = {
     }
 };
 
-module.exports = alimentoConstroller;
+module.exports = alimentoController;
