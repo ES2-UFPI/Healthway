@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:healthway_app/screens/apresentaionScreen.dart';
 import 'package:healthway_app/screens/dashboardScreen.dart';
 import 'package:healthway_app/screens/healthScreen.dart';
+import 'package:healthway_app/screens/loginScreen.dart';
+import 'package:healthway_app/screens/notificationScreen.dart';
 import 'package:healthway_app/screens/profileScreen.dart';
+import 'package:healthway_app/screens/setingsScreen.dart';
+import 'package:healthway_app/screens/signupScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,11 +24,15 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => PresentationScreen(),
         '/home': (context) => DashboardScreen(onThemeChanged: (bool value) {  },),
+        '/signUp': (context) => SignUpScreen(),
+        '/login': (context) => LoginScreen(),
         '/chat': (context) => ChatScreen(),
         '/health': (context) => HealthScreen(),
         '/menu': (context) => MenuScreen(),
         '/presentation': (context) => PresentationScreen(),
-        'profile': (context) => ProfileScreen(),
+        '/profile': (context) => ProfileScreen(),
+        '/notifications': (context) => NotificationScreen(),
+        '/settings': (context) => SettingsScreen(),
       },
     );
   }
@@ -108,7 +116,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             Navigator.pushNamed(context, '/health');
             break;
           case 3:
-            Navigator.pushNamed(context, '/menu');
+            Navigator.pushNamed(context, '/settings');
             break;
         }
       },

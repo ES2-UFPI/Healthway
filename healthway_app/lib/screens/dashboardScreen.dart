@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key, required Null Function(bool value) onThemeChanged}) : super(key: key);
+  const DashboardScreen({super.key, required Null Function(bool value) onThemeChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class DashboardScreen extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/profile'); // Navega para a tela de perfil
+                      Navigator.pushNamed(context, '/profile');
                     },
                     child: const CircleAvatar(
                       radius: 20,
@@ -50,11 +50,14 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   IconButton(
                     icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/notifications');
+                    },
                   ),
                 ],
               ),
             ),
+
 
             // Content
             Expanded(
@@ -271,7 +274,7 @@ class DashboardScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/health');
               break;
             case 3:
-              Navigator.pushNamed(context, '/menu');
+              Navigator.pushNamed(context, '/settings');
               break;
           }
         },
