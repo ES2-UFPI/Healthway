@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
+<<<<<<< HEAD
   const DashboardScreen({super.key, required Null Function(bool value) onThemeChanged});
+=======
+  const DashboardScreen({Key? key, required Null Function(bool value) onThemeChanged}) : super(key: key);
+>>>>>>> dev
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +20,7 @@ class DashboardScreen extends StatelessWidget {
               color: Color(0xFF31BAC2),
               child: Row(
                 children: [
+<<<<<<< HEAD
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, '/profile');
@@ -24,6 +29,11 @@ class DashboardScreen extends StatelessWidget {
                       radius: 20,
                       backgroundImage: AssetImage('lib/assets/profile.jpg'),
                     ),
+=======
+                  const CircleAvatar(
+                    radius: 20,
+                    backgroundImage: AssetImage('assets/profile.png'),
+>>>>>>> dev
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -38,7 +48,11 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
+<<<<<<< HEAD
                           'Lucas Herlon!',
+=======
+                          'Cristina Bastião!',
+>>>>>>> dev
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -50,15 +64,22 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   IconButton(
                     icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+<<<<<<< HEAD
                     onPressed: () {
                       Navigator.pushNamed(context, '/notifications');
                     },
+=======
+                    onPressed: () {},
+>>>>>>> dev
                   ),
                 ],
               ),
             ),
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
             // Content
             Expanded(
               child: SingleChildScrollView(
@@ -250,6 +271,13 @@ class DashboardScreen extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
+<<<<<<< HEAD
+=======
+            icon: Icon(Icons.calendar_today_outlined),
+            label: 'Agenda',
+          ),
+          BottomNavigationBarItem(
+>>>>>>> dev
             icon: Icon(Icons.chat_bubble_outline),
             label: 'Chat',
           ),
@@ -262,6 +290,7 @@ class DashboardScreen extends StatelessWidget {
             label: 'Menu',
           ),
         ],
+<<<<<<< HEAD
         onTap: (index) {
           switch (index) {
             case 0:
@@ -278,6 +307,8 @@ class DashboardScreen extends StatelessWidget {
               break;
           }
         },
+=======
+>>>>>>> dev
       ),
     );
   }
@@ -297,6 +328,7 @@ class DashboardScreen extends StatelessWidget {
                 offset: const Offset(0, 2),
               ),
             ],
+<<<<<<< HEAD
           ),
           child: Icon(icon, color: Color(0xFF31BAC2)),
         ),
@@ -307,8 +339,24 @@ class DashboardScreen extends StatelessWidget {
             fontSize: 12,
             color: Colors.grey,
           ),
+=======
+          ),
+          child: Icon(icon, color: Color(0xFF31BAC2)),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+          ),
+>>>>>>> dev
         ),
       ],
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dev
