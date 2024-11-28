@@ -57,11 +57,11 @@ class ProfileScreen extends StatelessWidget {
                       // Profile Picture
                       const CircleAvatar(
                         radius: 50,
-                        backgroundImage: AssetImage('assets/profile_picture.jpg'),
+                        backgroundImage: AssetImage('lib/assets/profile.jpg'),
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'João Silva',
+                        'Lucas Herlon',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

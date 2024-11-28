@@ -24,7 +24,7 @@ class DashboardScreen extends StatelessWidget {
                     },
                     child: const CircleAvatar(
                       radius: 20,
-                      backgroundImage: AssetImage('assets/profile.png'),
+                      backgroundImage: AssetImage('lib/assets/profile.jpg'),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -40,7 +40,7 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Cristina Bastião!',
+                          'Lucas Herlon!',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -309,7 +309,7 @@ class DashboardScreen extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/home');
               break;
             case 1:
               Navigator.pushNamed(context, '/chat');
