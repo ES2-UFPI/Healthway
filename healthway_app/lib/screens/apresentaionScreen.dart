@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:healthway_app/screens/dashboardScreen.dart';
+import 'package:healthway_app/screens/loginScreen.dart';
 
 class PresentationScreen extends StatefulWidget {
   const PresentationScreen({super.key});
@@ -54,7 +55,7 @@ class _PresentationScreenState extends State<PresentationScreen>
         child: FadeTransition(
           opacity: _animation,
           child: Image.asset(
-            'assets/logo.png', // Substitua pelo caminho da sua logo
+            'lib/assets/logo.png', // Substitua pelo caminho da sua logo
             width: 150,
             height: 150,
           ),
@@ -63,4 +64,3 @@ class _PresentationScreenState extends State<PresentationScreen>
     );
   }
 }
-
