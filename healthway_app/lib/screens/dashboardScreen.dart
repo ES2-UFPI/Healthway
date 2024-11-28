@@ -22,7 +22,7 @@ class DashboardScreen extends StatelessWidget {
                     },
                     child: const CircleAvatar(
                       radius: 20,
-                      backgroundImage: AssetImage('assets/profile.png'),
+                      backgroundImage: AssetImage('lib/assets/profile.jpg'),
                     ),
                   ),
                   const SizedBox(width: 12),
