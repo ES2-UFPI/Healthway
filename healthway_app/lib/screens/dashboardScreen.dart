@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key, required Null Function(bool value) onThemeChanged});
+  const DashboardScreen(
+      {super.key, required Null Function(bool value) onThemeChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Cristina Bastião!',
+                          'Lucas Herlon!',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -49,7 +50,8 @@ class DashboardScreen extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+                    icon: const Icon(Icons.notifications_outlined,
+                        color: Colors.white),
                     onPressed: () {
                       Navigator.pushNamed(context, '/notifications');
                     },
@@ -57,7 +59,6 @@ class DashboardScreen extends StatelessWidget {
                 ],
               ),
             ),
-
 
             // Content
             Expanded(
@@ -80,8 +81,10 @@ class DashboardScreen extends StatelessWidget {
                       children: [
                         _buildQuickAccessItem(Icons.book, 'Materiais'),
                         _buildQuickAccessItem(Icons.receipt, 'Receitas'),
-                        _buildQuickAccessItem(Icons.chat_bubble_outline, 'Chat'),
-                        _buildQuickAccessItem(Icons.medical_services_outlined, 'Prescrições'),
+                        _buildQuickAccessItem(
+                            Icons.chat_bubble_outline, 'Chat'),
+                        _buildQuickAccessItem(
+                            Icons.medical_services_outlined, 'Prescrições'),
                       ],
                     ),
 
