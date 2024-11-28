@@ -38,7 +38,7 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Cristina Bastião!',
+                          'Lucas Herlon!',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

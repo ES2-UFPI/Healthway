@@ -61,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'João Silva',
+                        'Lucas Herlon',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

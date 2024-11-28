@@ -68,7 +68,7 @@ class HealthScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             Image.asset(
-                              'assets/body_silhouette.png',
+                              'lib/assets/corpo.png',
                               height: 200,
                               color: Colors.black12,
                             ),
