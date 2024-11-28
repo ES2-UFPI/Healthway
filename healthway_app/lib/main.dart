@@ -18,8 +18,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Healthway',
+      title: 'Health Dashboard',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: const Color(0xFF4CAF50),
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color(0xFF4CAF50),
+        scaffoldBackgroundColor: Colors.black,
+      ),
+      themeMode:
+          ThemeMode.system, // Alterna automaticamente entre claro e escuro
       initialRoute: '/',
       routes: {
         '/': (context) => PresentationScreen(),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen(
-      {Key? key, required Null Function(bool value) onThemeChanged})
-      : super(key: key);
+  const DashboardScreen({super.key, required Null Function(bool value) onThemeChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class DashboardScreen extends StatelessWidget {
                     },
                     child: const CircleAvatar(
                       radius: 20,
-                      backgroundImage: AssetImage('lib/assets/profile.jpg'),
+                      backgroundImage: AssetImage('assets/profile.png'),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -51,9 +49,10 @@ class DashboardScreen extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.notifications_outlined,
-                        color: Colors.white),
-                    onPressed: () {},
+                    icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/notifications');
+                    },
                   ),
                 ],
               ),
@@ -71,9 +70,8 @@ class DashboardScreen extends StatelessWidget {
                     const Text(
                       'Acesso Rápido',
                       style: TextStyle(
-                        color: Colors.black,
                         fontSize: 16,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -82,10 +80,8 @@ class DashboardScreen extends StatelessWidget {
                       children: [
                         _buildQuickAccessItem(Icons.book, 'Materiais'),
                         _buildQuickAccessItem(Icons.receipt, 'Receitas'),
-                        _buildQuickAccessItem(
-                            Icons.chat_bubble_outline, 'Chat'),
-                        _buildQuickAccessItem(
-                            Icons.medical_services_outlined, 'Prescrições'),
+                        _buildQuickAccessItem(Icons.chat_bubble_outline, 'Chat'),
+                        _buildQuickAccessItem(Icons.medical_services_outlined, 'Prescrições'),
                       ],
                     ),
 
@@ -98,12 +94,9 @@ class DashboardScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(
-                                0.25), // Aumente a opacidade da sombra
-                            blurRadius:
-                            15, // Aumente o raio de desfoque da sombra
-                            offset: const Offset(
-                                0, 4), // Ajuste o deslocamento da sombra
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 10,
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -114,7 +107,6 @@ class DashboardScreen extends StatelessWidget {
                           const Text(
                             'Agendar uma consulta',
                             style: TextStyle(
-                              color: Colors.black,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -131,15 +123,14 @@ class DashboardScreen extends StatelessWidget {
                         Text(
                           'Plano alimentar',
                           style: TextStyle(
-                            color: Colors.black,
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
                           'Ver mais',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.grey,
                             fontSize: 14,
                           ),
                         ),
@@ -153,12 +144,9 @@ class DashboardScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(
-                                0.25), // Aumente a opacidade da sombra
-                            blurRadius:
-                            15, // Aumente o raio de desfoque da sombra
-                            offset: const Offset(
-                                0, 4), // Ajuste o deslocamento da sombra
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 10,
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -168,7 +156,7 @@ class DashboardScreen extends StatelessWidget {
                             'Seu profissional ainda não disponibilizou seu plano alimentar',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.grey,
                               fontSize: 14,
                             ),
                           ),
@@ -177,22 +165,11 @@ class DashboardScreen extends StatelessWidget {
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFF31BAC2),
-                              elevation: 10,
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: const Text(
-                              'Conversar com seu profissional',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
+                            child: const Text('Conversar com seu profissional'),
                           ),
                         ],
                       ),
@@ -206,15 +183,14 @@ class DashboardScreen extends StatelessWidget {
                         Text(
                           'Atualizações do seu diário',
                           style: TextStyle(
-                            color: Colors.black,
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
                           'Ver mais',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.grey,
                             fontSize: 14,
                           ),
                         ),
@@ -228,12 +204,9 @@ class DashboardScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(
-                                0.25), // Aumente a opacidade da sombra
-                            blurRadius:
-                            15, // Aumente o raio de desfoque da sombra
-                            offset: const Offset(
-                                0, 4), // Ajuste o deslocamento da sombra
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 10,
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -242,41 +215,24 @@ class DashboardScreen extends StatelessWidget {
                           const Text(
                             'Nenhum registro no seu diário',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.grey,
                               fontSize: 14,
                             ),
                           ),
                           const SizedBox(height: 12),
                           ElevatedButton(
-                            onPressed: () {
-                              // Adicione aqui a ação para o botão
-                            },
+                            onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF31BAC2),
-                              elevation:
-                              10, // Aumente a elevação para uma sombra mais pronunciada
-                              shadowColor: Colors.black.withOpacity(
-                                  0.5), // Ajuste a opacidade da sombra
+                              backgroundColor: Color(0xFF31BAC2),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
                             ),
-                            child: const Text(
-                              'Novo diário',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            child: const Text('Novo diário'),
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -336,10 +292,9 @@ class DashboardScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black
-                    .withOpacity(0.25), // Aumente a opacidade da sombra
-                blurRadius: 15, // Aumente o raio de desfoque da sombra
-                offset: const Offset(0, 4), // Ajuste o deslocamento da sombra
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 2),
               ),
             ],
           ),
@@ -350,7 +305,7 @@ class DashboardScreen extends StatelessWidget {
           label,
           style: const TextStyle(
             fontSize: 12,
-            color: Colors.black,
+            color: Colors.grey,
           ),
         ),
       ],
