@@ -5,7 +5,8 @@ class InfoCard extends StatelessWidget {
   final IconData icon;
   final String routeName;
 
-  const InfoCard({required this.text, required this.icon, required this.routeName});
+  const InfoCard(
+      {required this.text, required this.icon, required this.routeName});
 
   @override
   Widget build(BuildContext context) {
