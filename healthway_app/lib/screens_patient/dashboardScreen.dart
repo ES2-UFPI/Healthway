@@ -6,6 +6,8 @@ import 'healthScreen.dart';
 
 class PatientDashboardScreen extends StatelessWidget {
   const PatientDashboardScreen({super.key});
+  
+  BuildContext? get context => null;
 
   @override
   Widget build(BuildContext context) {
@@ -338,19 +340,19 @@ class PatientDashboardScreen extends StatelessWidget {
               break;
             case 1:
               Navigator.push(
-                context,
+                context!,
                 MaterialPageRoute(builder: (context) => DietManagementScreen()),
               );
               break;
             case 2:
               Navigator.push(
-                context,
+                context!,
                 MaterialPageRoute(builder: (context) => PresentationScreen()),
               );
               break;
             case 3:
               Navigator.push(
-                context,
+                context!,
                 MaterialPageRoute(builder: (context) => PatientProfileScreen()),
               );
               break;
