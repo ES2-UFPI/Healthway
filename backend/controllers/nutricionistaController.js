@@ -83,8 +83,6 @@ async getBySpecialty(req, res) {
   }
 }
 
-
-
 };
 
 

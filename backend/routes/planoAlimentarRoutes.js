@@ -8,5 +8,6 @@ router.get('/', planoAlimentarController.getAll);
 router.get('/:id', planoAlimentarController.getById);
 router.put('/:id', planoAlimentarController.update);
 router.delete('/:id', planoAlimentarController.delete);
+router.get('/:paciente', planoAlimentarController.getByPaciente);
 
 module.exports = router;
