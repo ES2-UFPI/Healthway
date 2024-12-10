@@ -126,6 +126,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
           Text(
             'Acesso Rápido',
             style: TextStyle(
+              color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),

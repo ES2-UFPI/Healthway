@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:healthway_app/geral_screens/alimentos_screen.dart';
 import 'package:healthway_app/geral_screens/apresentationScreen.dart';
 import 'package:healthway_app/screens_patient/profileScreen.dart';
-
 import 'healthScreen.dart';
 
 class PatientDashboardScreen extends StatelessWidget {
   const PatientDashboardScreen({super.key});
-  
-  BuildContext? get context => null;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +17,14 @@ class PatientDashboardScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(),
-              _buildQuickAccess(),
+              _buildQuickAccess(context),
               _buildNextAppointment(),
               _buildDailyProgress(),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
@@ -122,65 +120,67 @@ class PatientDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAccess() {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Acesso Rápido',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+  Widget _buildQuickAccess(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.all(20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Acesso Rápido',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
-          SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildQuickAccessItem(Icons.restaurant_menu, 'Dieta', '/meal_plan'),
-              _buildQuickAccessItem(Icons.fitness_center, 'Exercícios', '/exercises'),
-              _buildQuickAccessItem(Icons.insert_chart, 'Progresso', '/progress'),
-              _buildQuickAccessItem(Icons.message, 'Chat', '/chat'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+        SizedBox(height: 15),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildQuickAccessItem(context, Icons.restaurant_menu, 'Dieta', '/alimentos'),
+            _buildQuickAccessItem(context, Icons.fitness_center, 'Exercícios', '/exercises'),
+            _buildQuickAccessItem(context, Icons.insert_chart, 'Progresso', '/progress'),
+            _buildQuickAccessItem(context, Icons.message, 'Chat', '/chat'),
+          ],
+        ),
+      ],
+    ),
+  );
+}
 
-  Widget _buildQuickAccessItem(IconData icon, String label, String route) {
-    return GestureDetector(
-      onTap: () {
-        // Navegação para a rota especificada
-      },
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              color: Color(0xFF31BAC2).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Icon(
-              icon,
-              color: Color(0xFF31BAC2),
-              size: 30,
-            ),
+Widget _buildQuickAccessItem(BuildContext context, IconData icon, String label, String route) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(context, route); // Aqui você agora tem acesso ao 'context'
+    },
+    child: Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Color(0xFF31BAC2).withOpacity(0.1),
+            borderRadius: BorderRadius.circular(15),
           ),
-          SizedBox(height: 5),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[600],
-            ),
+          child: Icon(
+            icon,
+            color: Color(0xFF31BAC2),
+            size: 30,
           ),
-        ],
-      ),
-    );
-  }
+        ),
+        SizedBox(height: 5),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey[600],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildNextAppointment() {
     return Padding(
@@ -220,6 +220,7 @@ class PatientDashboardScreen extends StatelessWidget {
                   Text(
                     'Próxima Consulta',
                     style: TextStyle(
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -228,7 +229,7 @@ class PatientDashboardScreen extends StatelessWidget {
                   Text(
                     'Dr. Silva - Nutricionista',
                     style: TextStyle(
-                      color: Colors.grey[600],
+                      color: Colors.black,
                       fontSize: 14,
                     ),
                   ),
@@ -258,6 +259,7 @@ class PatientDashboardScreen extends StatelessWidget {
           Text(
             'Progresso Diário',
             style: TextStyle(
+              color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -294,7 +296,7 @@ class PatientDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
+  Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -336,25 +338,16 @@ class PatientDashboardScreen extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-            // Already on the home screen, do nothing
+              // Já estamos na tela inicial, então não faça nada
               break;
             case 1:
-              Navigator.push(
-                context!,
-                MaterialPageRoute(builder: (context) => DietManagementScreen()),
-              );
+              Navigator.pushNamed(context, '/diet');
               break;
             case 2:
-              Navigator.push(
-                context!,
-                MaterialPageRoute(builder: (context) => PresentationScreen()),
-              );
+              Navigator.pushNamed(context, '/progress');
               break;
             case 3:
-              Navigator.push(
-                context!,
-                MaterialPageRoute(builder: (context) => PatientProfileScreen()),
-              );
+              Navigator.pushNamed(context, '/profile');
               break;
           }
         },
@@ -362,4 +355,3 @@ class PatientDashboardScreen extends StatelessWidget {
     );
   }
 }
-

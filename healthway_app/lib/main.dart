@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:healthway_app/geral_screens//apresentationScreen.dart';
+import 'package:healthway_app/geral_screens/alimentos_screen.dart';
 import 'package:healthway_app/screens_patient/dashboardScreen.dart';
+import 'package:healthway_app/screens_patient/dietScreen.dart';
 import 'package:healthway_app/screens_patient/healthScreen.dart';
 import 'package:healthway_app/geral_screens//loginScreen.dart';
 import 'package:healthway_app/screens_patient/notificationScreen.dart';
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/chat': (context) => ChatScreen(),
         '/health': (context) => DietManagementScreen(),
+        '/alimentos': (context) => AlimentosScreen(),
         '/menu': (context) => MenuScreen(),
         '/presentation': (context) => PresentationScreen(),
         '/profile': (context) => PatientProfileScreen(),
