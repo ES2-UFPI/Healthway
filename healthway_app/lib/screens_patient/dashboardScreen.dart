@@ -139,7 +139,7 @@ class PatientDashboardScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildQuickAccessItem(context, Icons.restaurant_menu, 'Dieta', '/alimentos'),
-            _buildQuickAccessItem(context, Icons.fitness_center, 'Exercícios', '/exercises'),
+            _buildQuickAccessItem(context, Icons.people, 'Nutricionistas', '/nutricionistas'),
             _buildQuickAccessItem(context, Icons.insert_chart, 'Progresso', '/progress'),
             _buildQuickAccessItem(context, Icons.message, 'Chat', '/chat'),
           ],
