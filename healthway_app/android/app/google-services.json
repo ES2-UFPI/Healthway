@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "475510528118",
+    "project_id": "healthway-a0e87",
+    "storage_bucket": "healthway-a0e87.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475510528118:android:0b34371d3eb0b96eed2757",
+        "android_client_info": {
+          "package_name": "com.healthway.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrKQR47nNS3_AOnPsnaU-Vg7im9OvVhcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

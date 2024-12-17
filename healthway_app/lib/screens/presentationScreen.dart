@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:healthway_app/screens/dashboardScreen.dart';
+// import 'package:healthway_app/screens/dashboardScreen.dart';
+import 'package:healthway_app/screens/signupScreen.dart';
 // import 'package:healthway_app/screens/loginScreen.dart';
 
 class PresentationScreen extends StatefulWidget {
@@ -37,9 +38,10 @@ class _PresentationScreenState extends State<PresentationScreen>
     Timer(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-            builder: (_) => DashboardScreen(
-                  onThemeChanged: (bool value) {},
-                )),
+            // builder: (_) => DashboardScreen(
+            //       onThemeChanged: (bool value) {},
+            //     )),
+            builder: (_) => SignUpScreen()),
       );
     });
   }

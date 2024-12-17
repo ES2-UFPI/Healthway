@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:healthway_app/screens/presentationScreen.dart';
 import 'package:healthway_app/screens/dashboardScreen.dart';
@@ -8,7 +9,13 @@ import 'package:healthway_app/screens/profileScreen.dart';
 import 'package:healthway_app/screens/setingsScreen.dart';
 import 'package:healthway_app/screens/signupScreen.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -41,7 +48,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/chat': (context) => ChatScreen(),
         '/health': (context) => HealthScreen(),
-        '/menu': (context) => MenuScreen(),
+        // '/menu': (context) => MenuScreen(),
         '/presentation': (context) => PresentationScreen(),
         '/profile': (context) => ProfileScreen(),
         '/notifications': (context) => NotificationScreen(),
@@ -77,18 +84,18 @@ class ChatScreen extends StatelessWidget {
   }
 }
 
-class MenuScreen extends StatelessWidget {
-  const MenuScreen({super.key});
+// class MenuScreen extends StatelessWidget {
+//   const MenuScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Menu')),
-      bottomNavigationBar: CustomBottomNavigationBar(),
-      body: Center(child: Text('Tela de Menu')),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Menu')),
+//       bottomNavigationBar: CustomBottomNavigationBar(),
+//       body: Center(child: Text('Tela de Menu')),
+//     );
+//   }
+// }
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key});
