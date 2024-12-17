@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CaloriesBurnedScreen extends StatelessWidget {
+  const CaloriesBurnedScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

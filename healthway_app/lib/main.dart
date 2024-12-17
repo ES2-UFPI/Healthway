@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthway_app/screens/apresentaionScreen.dart';
+import 'package:healthway_app/screens/presentationScreen.dart';
 import 'package:healthway_app/screens/dashboardScreen.dart';
 import 'package:healthway_app/screens/healthScreen.dart';
 import 'package:healthway_app/screens/loginScreen.dart';
@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => PresentationScreen(),
-        '/home': (context) => DashboardScreen(onThemeChanged: (bool value) {  },),
+        '/home': (context) => DashboardScreen(
+              onThemeChanged: (bool value) {},
+            ),
         '/signUp': (context) => SignUpScreen(),
         '/login': (context) => LoginScreen(),
         '/chat': (context) => ChatScreen(),
