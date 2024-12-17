@@ -4,7 +4,7 @@ class SleepCalculatorScreen extends StatefulWidget {
   const SleepCalculatorScreen({super.key});
 
   @override
-  _SleepCalculatorScreenState createState() => _SleepCalculatorScreenState();
+  State<SleepCalculatorScreen> createState() => _SleepCalculatorScreenState();
 }
 
 class _SleepCalculatorScreenState extends State<SleepCalculatorScreen> {
@@ -52,7 +52,8 @@ class _SleepCalculatorScreenState extends State<SleepCalculatorScreen> {
 
       final duration = adjustedWakeUpDateTime.difference(sleepDateTime);
       setState(() {
-        sleepDuration = "${duration.inHours}h ${duration.inMinutes.remainder(60)}m";
+        sleepDuration =
+            "${duration.inHours}h ${duration.inMinutes.remainder(60)}m";
       });
     } else {
       setState(() {
@@ -60,7 +61,6 @@ class _SleepCalculatorScreenState extends State<SleepCalculatorScreen> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,8 @@ class _SleepCalculatorScreenState extends State<SleepCalculatorScreen> {
                 onPressed: _calculateSleepDuration,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4CAF50),
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -134,7 +135,9 @@ class _SleepCalculatorScreenState extends State<SleepCalculatorScreen> {
   }
 
   Widget _buildTimePicker(BuildContext context,
-      {required String label, TimeOfDay? selectedTime, required VoidCallback onTap}) {
+      {required String label,
+      TimeOfDay? selectedTime,
+      required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(

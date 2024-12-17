@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SelfLoveScreen extends StatelessWidget {
+  const SelfLoveScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

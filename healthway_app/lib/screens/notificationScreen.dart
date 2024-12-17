@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+  const NotificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,31 +17,36 @@ class NotificationScreen extends StatelessWidget {
           children: [
             _buildNotificationItem(
               title: 'Nova mensagem do seu nutricionista',
-              description: 'Dr. Silva enviou uma atualização sobre seu plano alimentar.',
+              description:
+                  'Dr. Silva enviou uma atualização sobre seu plano alimentar.',
               time: '2 min atrás',
               icon: Icons.message_outlined,
             ),
             _buildNotificationItem(
               title: 'Lembrete de consulta',
-              description: 'Sua consulta com Dr. Oliveira está marcada para amanhã às 14:00.',
+              description:
+                  'Sua consulta com Dr. Oliveira está marcada para amanhã às 14:00.',
               time: '1 hora atrás',
               icon: Icons.calendar_today_outlined,
             ),
             _buildNotificationItem(
               title: 'Meta diária alcançada!',
-              description: 'Parabéns! Você atingiu sua meta de passos para hoje.',
+              description:
+                  'Parabéns! Você atingiu sua meta de passos para hoje.',
               time: '3 horas atrás',
               icon: Icons.emoji_events_outlined,
             ),
             _buildNotificationItem(
               title: 'Novo artigo disponível',
-              description: 'Leia sobre os benefícios da meditação para sua saúde mental.',
+              description:
+                  'Leia sobre os benefícios da meditação para sua saúde mental.',
               time: '5 horas atrás',
               icon: Icons.article_outlined,
             ),
             _buildNotificationItem(
               title: 'Atualização do aplicativo',
-              description: 'Uma nova versão do aplicativo está disponível. Atualize agora!',
+              description:
+                  'Uma nova versão do aplicativo está disponível. Atualize agora!',
               time: '1 dia atrás',
               icon: Icons.system_update_outlined,
             ),
@@ -98,4 +103,3 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 }
-

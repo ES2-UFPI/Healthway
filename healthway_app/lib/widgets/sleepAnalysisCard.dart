@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SleepAnalysisCard extends StatelessWidget {
+  const SleepAnalysisCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Card(

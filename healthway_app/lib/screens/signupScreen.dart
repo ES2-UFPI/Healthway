@@ -5,7 +5,7 @@ class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
@@ -97,7 +97,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Por favor, insira seu email';
                     }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(value)) {
                       return 'Por favor, insira um email válido';
                     }
                     return null;
@@ -133,7 +134,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      prefixIcon: Icon(Icons.calendar_today, color: Color(0xFF31BAC2)),
+                      prefixIcon:
+                          Icon(Icons.calendar_today, color: Color(0xFF31BAC2)),
                     ),
                     child: Text(
                       _selectedDate == null
@@ -145,12 +147,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate() && _selectedDate != null) {
+                    if (_formKey.currentState!.validate() &&
+                        _selectedDate != null) {
                       // Implementar lógica de cadastro aqui
                       print('Nome: ${_nameController.text}');
                       print('Email: ${_emailController.text}');
                       print('Senha: ${_passwordController.text}');
-                      print('Data de Nascimento: ${DateFormat('dd/MM/yyyy').format(_selectedDate!)}');
+                      print(
+                          'Data de Nascimento: ${DateFormat('dd/MM/yyyy').format(_selectedDate!)}');
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -183,4 +187,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-

@@ -4,7 +4,8 @@ class SelectionButton extends StatelessWidget {
   final String text;
   final bool isSelected;
 
-  const SelectionButton({required this.text, required this.isSelected});
+  const SelectionButton(
+      {super.key, required this.text, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
