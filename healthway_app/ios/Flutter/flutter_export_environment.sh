@@ -1,7 +1,12 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
+<<<<<<< HEAD
 export "FLUTTER_ROOT=/home/kaua/flutter"
 export "FLUTTER_APPLICATION_PATH=/home/kaua/VSCode/Healthway/healthway_app"
+=======
+export "FLUTTER_ROOT=/Users/lemuelcavalcante/Documents/development/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/lemuelcavalcante/Documents/engenharia2/Healthway/healthway_app"
+>>>>>>> origin/lemu
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
