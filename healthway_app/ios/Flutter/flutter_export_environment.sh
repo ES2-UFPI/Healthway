@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/lemuelcavalcante/Documents/dev/flutter"
+export "FLUTTER_ROOT=/Users/lemuelcavalcante/Documents/development/flutter"
 export "FLUTTER_APPLICATION_PATH=/Users/lemuelcavalcante/Documents/engenharia2/Healthway/healthway_app"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=/Users/lemuelcavalcante/Documents/engenharia2/Healthway/healthway_app/lib/main.dart"

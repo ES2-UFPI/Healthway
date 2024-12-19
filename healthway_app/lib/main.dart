@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:healthway_app/screens/presentationScreen.dart';
-import 'package:healthway_app/screens/dashboardScreen.dart';
-import 'package:healthway_app/screens/healthScreen.dart';
-import 'package:healthway_app/screens/loginScreen.dart';
-import 'package:healthway_app/screens/notificationScreen.dart';
-import 'package:healthway_app/screens/profileScreen.dart';
-import 'package:healthway_app/screens/setingsScreen.dart';
-import 'package:healthway_app/screens/signupScreen.dart';
+import 'package:healthway_app/geral_screens//apresentationScreen.dart';
+import 'package:healthway_app/geral_screens/alimentos_screen.dart';
+import 'package:healthway_app/geral_screens/nutricionistas_screen.dart';
+import 'package:healthway_app/screens_patient/dashboardScreen.dart';
+import 'package:healthway_app/screens_patient/dietScreen.dart';
+import 'package:healthway_app/screens_patient/healthScreen.dart';
+import 'package:healthway_app/geral_screens//loginScreen.dart';
+import 'package:healthway_app/screens_patient/notificationScreen.dart';
+import 'package:healthway_app/screens_patient/profileScreen.dart';
+import 'package:healthway_app/screens_patient/setingsScreen.dart';
+import 'package:healthway_app/screens_patient/signupScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,16 +37,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => PresentationScreen(),
-        '/home': (context) => DashboardScreen(
-              onThemeChanged: (bool value) {},
-            ),
+        '/home': (context) => PatientDashboardScreen(),
         '/signUp': (context) => SignUpScreen(),
         '/login': (context) => LoginScreen(),
         '/chat': (context) => ChatScreen(),
-        '/health': (context) => HealthScreen(),
+        '/health': (context) => DietManagementScreen(),
+        '/alimentos': (context) => AlimentosScreen(),
+        '/nutricionistas': (context) => NutricionistasScreen(),
         '/menu': (context) => MenuScreen(),
         '/presentation': (context) => PresentationScreen(),
-        '/profile': (context) => ProfileScreen(),
+        '/profile': (context) => PatientProfileScreen(),
         '/notifications': (context) => NotificationScreen(),
         '/settings': (context) => SettingsScreen(),
       },
