@@ -1,189 +1,312 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
-
+class CadastroPacienteScreen extends StatefulWidget {
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  _CadastroPacienteScreenState createState() => _CadastroPacienteScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
+  final _nomeController = TextEditingController();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  DateTime? _selectedDate;
+  final _cpfController = TextEditingController();
+  final _dataNascimentoController = TextEditingController();
+  final _alturaController = TextEditingController();
+  final _pesoController = TextEditingController();
+  final _circunferenciaAbdominalController = TextEditingController();
+  final _gorduraCorporalController = TextEditingController();
+  final _massaMuscularController = TextEditingController();
+  final _alergiasController = TextEditingController();
+  final _preferenciasController = TextEditingController();
+  final _senhaController = TextEditingController();
+  final _confirmarSenhaController = TextEditingController();
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  void _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Color(0xFF31BAC2),
-              onPrimary: Colors.white,
-              onSurface: Colors.black,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
+  String? _sexo;
+  DateTime? _dataNascimento;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE6F7F8), // Tom muito claro de azul
       appBar: AppBar(
-        title: const Text('Cadastro'),
-        backgroundColor: const Color(0xFF31BAC2),
+        title: Text('Cadastro de Paciente', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Color(0xFF31BAC2),
         elevation: 0,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Nome',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    prefixIcon: Icon(Icons.person, color: Color(0xFF31BAC2)),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira seu nome';
-                    }
-                    return null;
-                  },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 150,
+              decoration: BoxDecoration(
+                color: Color(0xFF31BAC2),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
                 ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    prefixIcon: Icon(Icons.email, color: Color(0xFF31BAC2)),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira seu email';
-                    }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(value)) {
-                      return 'Por favor, insira um email válido';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Senha',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    prefixIcon: Icon(Icons.lock, color: Color(0xFF31BAC2)),
-                  ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira uma senha';
-                    }
-                    if (value.length < 6) {
-                      return 'A senha deve ter pelo menos 6 caracteres';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                InkWell(
-                  onTap: () => _selectDate(context),
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: 'Data de Nascimento',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      prefixIcon:
-                          Icon(Icons.calendar_today, color: Color(0xFF31BAC2)),
-                    ),
-                    child: Text(
-                      _selectedDate == null
-                          ? 'Selecione sua data de nascimento'
-                          : DateFormat('dd/MM/yyyy').format(_selectedDate!),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate() &&
-                        _selectedDate != null) {
-                      // Implementar lógica de cadastro aqui
-                      print('Nome: ${_nameController.text}');
-                      print('Email: ${_emailController.text}');
-                      print('Senha: ${_passwordController.text}');
-                      print(
-                          'Data de Nascimento: ${DateFormat('dd/MM/yyyy').format(_selectedDate!)}');
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF31BAC2),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'Cadastrar',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  child: const Text(
-                    'Já tem uma conta? Faça login',
-                    style: TextStyle(color: Color(0xFF31BAC2)),
-                  ),
-                ),
-              ],
+              ),
+              child: Center(
+                child: Icon(Icons.person_add, size: 80, color: Colors.white),
+              ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildTextField(_nomeController, 'Nome completo', Icons.person),
+                    _buildTextField(_emailController, 'E-mail', Icons.email, keyboardType: TextInputType.emailAddress),
+                    _buildTextField(_cpfController, 'CPF', Icons.badge, inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+                    _buildDateField(),
+                    _buildDropdownField(),
+                    _buildMeasurementFields(),
+                    _buildTextField(_alergiasController, 'Alergias', Icons.warning),
+                    _buildTextField(_preferenciasController, 'Preferências Alimentares', Icons.restaurant),
+                    _buildPasswordFields(),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _submitForm,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white, backgroundColor: Color(0xFF31BAC2),
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text('Cadastrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+
+  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {bool obscureText = false, TextInputType? keyboardType, List<TextInputFormatter>? inputFormatters}) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20.0),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          prefixIcon: Icon(icon, color: Color(0xFF31BAC2)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.white,
+          labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ),
+        style: TextStyle(fontSize: 16),
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        inputFormatters: inputFormatters,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Por favor, preencha este campo';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
+  Widget _buildDateField() {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20.0),
+      child: TextFormField(
+        controller: _dataNascimentoController,
+        decoration: InputDecoration(
+          labelText: 'Data de Nascimento',
+          prefixIcon: Icon(Icons.calendar_today, color: Color(0xFF31BAC2)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.white,
+          labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ),
+        style: TextStyle(fontSize: 16),
+        readOnly: true,
+        onTap: () async {
+          final pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime.now(),
+            builder: (context, child) {
+              return Theme(
+                data: ThemeData.light().copyWith(
+                  primaryColor: Color(0xFF31BAC2),
+                  hintColor: Color(0xFF31BAC2),
+                  colorScheme: ColorScheme.light(primary: Color(0xFF31BAC2)),
+                  buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                ),
+                child: child!,
+              );
+            },
+          );
+          if (pickedDate != null) {
+            setState(() {
+              _dataNascimento = pickedDate;
+              _dataNascimentoController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+            });
+          }
+        },
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Por favor, selecione a data de nascimento';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
+  Widget _buildDropdownField() {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20.0),
+      child: DropdownButtonFormField<String>(
+        value: _sexo,
+        decoration: InputDecoration(
+          labelText: 'Sexo',
+          prefixIcon: Icon(Icons.wc, color: Color(0xFF31BAC2)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.white,
+          labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ),
+        style: TextStyle(fontSize: 16, color: Colors.black),
+        items: ['Masculino', 'Feminino', 'Outro']
+            .map((label) => DropdownMenuItem(
+          child: Text(label),
+          value: label,
+        ))
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            _sexo = value;
+          });
+        },
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Por favor, selecione o sexo';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
+  Widget _buildMeasurementFields() {
+    return Card(
+      elevation: 4,
+      color: Color(0xFFF0FAFB), // Tom muito claro de azul
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Medidas Corporais',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+            ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(child: _buildMeasurementField(_alturaController, 'Altura (cm)', Icons.height)),
+                SizedBox(width: 16),
+                Expanded(child: _buildMeasurementField(_pesoController, 'Peso (kg)', Icons.fitness_center)),
+              ],
+            ),
+            SizedBox(height: 16),
+            _buildMeasurementField(_circunferenciaAbdominalController, 'Circunferência Abdominal (cm)', Icons.straighten),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(child: _buildMeasurementField(_gorduraCorporalController, 'Gordura Corporal (%)', Icons.percent)),
+                SizedBox(width: 16),
+                Expanded(child: _buildMeasurementField(_massaMuscularController, 'Massa Muscular (kg)', Icons.fitness_center)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMeasurementField(TextEditingController controller, String label, IconData icon) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: Color(0xFF31BAC2)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: Color(0xFF31BAC2)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: Color(0xFF31BAC2), width: 2),
+        ),
+        labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+      ),
+      keyboardType: TextInputType.number,
+      style: TextStyle(fontSize: 16),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Preencha este campo';
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildPasswordFields() {
+    return Card(
+      elevation: 4,
+      color: Color(0xFFF0FAFB), // Tom muito claro de azul
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Segurança',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+            ),
+            SizedBox(height: 16),
+            _buildTextField(_senhaController, 'Senha', Icons.lock, obscureText: true),
+            _buildTextField(_confirmarSenhaController, 'Confirmar Senha', Icons.lock, obscureText: true),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      // TODO: Implement form submission logic
+      print('Form is valid. Submitting...');
+      // You would typically call a service method here to save the patient data
+    }
+  }
 }
+

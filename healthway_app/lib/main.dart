@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => PresentationScreen(),
         '/home': (context) => PatientDashboardScreen(),
-        '/signUp': (context) => SignUpScreen(),
+        '/signUpPatient': (context) => CadastroPacienteScreen(),
         '/login': (context) => LoginScreen(),
         '/chat': (context) => ChatScreen(),
         '/health': (context) => DietManagementScreen(),
