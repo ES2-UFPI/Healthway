@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import '../services/paciente_services.dart';
 
 class CadastroPacienteScreen extends StatefulWidget {
+  const CadastroPacienteScreen({super.key});
+
   @override
   _CadastroPacienteScreenState createState() => _CadastroPacienteScreenState();
 }
@@ -26,10 +29,16 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
   String? _sexo;
   DateTime? _dataNascimento;
 
+  final PacienteService _pacienteService = PacienteService();
+
+  bool _isLoading = false;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE6F7F8), // Tom muito claro de azul
+      backgroundColor: Color(0xFFE6F7F8),
       appBar: AppBar(
         title: Text('Cadastro de Paciente', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFF31BAC2),
@@ -67,9 +76,9 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
                     _buildTextField(_alergiasController, 'Alergias', Icons.warning),
                     _buildTextField(_preferenciasController, 'Preferências Alimentares', Icons.restaurant),
                     _buildPasswordFields(),
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
                     ElevatedButton(
-                      onPressed: _submitForm,
+                      onPressed: _isLoading ? null : _submitForm,
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white, backgroundColor: Color(0xFF31BAC2),
                         padding: EdgeInsets.symmetric(vertical: 16),
@@ -77,7 +86,9 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Text('Cadastrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      child: _isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text('Cadastrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ],
                 ),
@@ -89,7 +100,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {bool obscureText = false, TextInputType? keyboardType, List<TextInputFormatter>? inputFormatters}) {
+  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {TextInputType? keyboardType, List<TextInputFormatter>? inputFormatters}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
@@ -107,7 +118,6 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
         style: TextStyle(fontSize: 16),
-        obscureText: obscureText,
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
         validator: (value) {
@@ -216,7 +226,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
   Widget _buildMeasurementFields() {
     return Card(
       elevation: 4,
-      color: Color(0xFFF0FAFB), // Tom muito claro de azul
+      color: Color(0xFFF0FAFB),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -281,7 +291,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
   Widget _buildPasswordFields() {
     return Card(
       elevation: 4,
-      color: Color(0xFFF0FAFB), // Tom muito claro de azul
+      color: Color(0xFFF0FAFB),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -293,20 +303,119 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
             ),
             SizedBox(height: 16),
-            _buildTextField(_senhaController, 'Senha', Icons.lock, obscureText: true),
-            _buildTextField(_confirmarSenhaController, 'Confirmar Senha', Icons.lock, obscureText: true),
+            _buildPasswordField(_senhaController, 'Senha', _obscurePassword, () {
+              setState(() {
+                _obscurePassword = !_obscurePassword;
+              });
+            }),
+            SizedBox(height: 16),
+            _buildPasswordField(_confirmarSenhaController, 'Confirmar Senha', _obscureConfirmPassword, () {
+              setState(() {
+                _obscureConfirmPassword = !_obscureConfirmPassword;
+              });
+            }),
           ],
         ),
       ),
     );
   }
 
-  void _submitForm() {
+  Widget _buildPasswordField(TextEditingController controller, String label, bool obscureText, Function() onTap) {
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(Icons.lock, color: Color(0xFF31BAC2)),
+        suffixIcon: IconButton(
+          icon: Icon(
+            obscureText ? Icons.visibility : Icons.visibility_off,
+            color: Color(0xFF31BAC2),
+          ),
+          onPressed: onTap,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+      style: TextStyle(fontSize: 16),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Por favor, insira uma senha';
+        }
+        return null;
+      },
+    );
+  }
+
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // TODO: Implement form submission logic
-      print('Form is valid. Submitting...');
-      // You would typically call a service method here to save the patient data
+      if (_senhaController.text != _confirmarSenhaController.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('As senhas não coincidem')),
+        );
+        return;
+      }
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        await _pacienteService.cadastrarPaciente(
+          nome: _nomeController.text,
+          email: _emailController.text,
+          cpf: _cpfController.text,
+          dataNascimento: _dataNascimentoController.text,
+          sexo: _sexo!,
+          altura: double.parse(_alturaController.text),
+          peso: double.parse(_pesoController.text),
+          circunferenciaAbdominal: double.parse(_circunferenciaAbdominalController.text),
+          gorduraCorporal: double.parse(_gorduraCorporalController.text),
+          massaMuscular: double.parse(_massaMuscularController.text),
+          alergias: _alergiasController.text,
+          preferencias: _preferenciasController.text,
+          senha: _senhaController.text,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Paciente cadastrado com sucesso!')),
+        );
+
+        Navigator.of(context).pop();
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao cadastrar paciente: ${e.toString()}')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    _nomeController.dispose();
+    _emailController.dispose();
+    _cpfController.dispose();
+    _dataNascimentoController.dispose();
+    _alturaController.dispose();
+    _pesoController.dispose();
+    _circunferenciaAbdominalController.dispose();
+    _gorduraCorporalController.dispose();
+    _massaMuscularController.dispose();
+    _alergiasController.dispose();
+    _preferenciasController.dispose();
+    _senhaController.dispose();
+    _confirmarSenhaController.dispose();
+    super.dispose();
   }
 }
 
