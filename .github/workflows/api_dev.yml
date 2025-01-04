@@ -43,9 +43,13 @@ jobs:
         cache-dependency-path: backend/package-lock.json
     - run: npm ci
       working-directory: backend
-    - name: Test
+    - name: Start server
+      working-directory: backend
+      run: |
+        npm start &
+        SERVER_PID=$!
+        sleep 10
+        kill $SERVER_PID
+    - name: Run tests
       working-directory: backend
       run: npm test
-    - name: Start
-      working-directory: backend
-      run: npm start
