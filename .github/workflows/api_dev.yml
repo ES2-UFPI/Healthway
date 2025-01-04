@@ -48,7 +48,7 @@ jobs:
       run: |
         npm start &
         SERVER_PID=$!
-        sleep 10
+        sleep 6
         kill $SERVER_PID
     - name: Run tests
       working-directory: backend
