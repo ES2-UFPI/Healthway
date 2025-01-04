@@ -5,9 +5,9 @@ name: DEV - Start & Test (API)
 
 on:
   push:
-    branches: [ "iury" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "iury" ]
+    branches: [ "dev" ]
 
 jobs:
   build:
