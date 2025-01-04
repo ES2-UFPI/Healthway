@@ -1,5 +1,5 @@
 const db = require('../firebase-config');
-const Alimento = require('../model/alimento');
+const Alimento = require('../model/Alimento');
 
 const alimentoController = {
     //Criar um novo alimento
