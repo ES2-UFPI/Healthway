@@ -6,7 +6,7 @@ const alimentoController = {
     async create(req, res){
         try {
             const alimento = new Alimento(req.body);
-            await db.collection('alimento').add(alimento.toFirestore());
+            await db.collection('alimentos').add(alimento.toFirestore());
             res.status(201).json({ message: 'Alimento criado com sucesso!' });
         } catch (error) {
             res.status(500).json({ error: error.message });
