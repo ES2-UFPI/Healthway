@@ -23,17 +23,18 @@ jobs:
     - uses: actions/checkout@v4
     - name: Create .env file
       working-directory: backend
-      run: echo "TYPE=${{ secrets.TYPE }}" > .env &&
-            echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> .env &&
-            echo "PRIVATE_KEY_ID=${{ secrets.PRIVATE_KEY_ID }}" >> .env &&
-            echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}" >> .env &&
-            echo "CLIENT_EMAIL=${{ secrets.CLIENT_EMAIL }}" >> .env &&
-            echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env &&
-            echo "AUTH_URI=${{ secrets.AUTH_URI }}" >> .env &&
-            echo "TOKEN_URI=${{ secrets.TOKEN_URI }}" >> .env &&
-            echo "AUTH_PROVIDER_X509_CERT_URL=${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}" >> .env &&
-            echo "CLIENT_X509_CERT_URL=${{ secrets.CLIENT_X509_CERT_URL }}" >> .env
-            echo "UNIVERSE_DOMAIN=${{ secrets.UNIVERSE_DOMAIN }}" >> .env
+      run: |
+        echo "TYPE=${{ secrets.TYPE }}" > .env &&
+        echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> .env &&
+        echo "PRIVATE_KEY_ID=${{ secrets.PRIVATE_KEY_ID }}" >> .env &&
+        echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}" >> .env &&
+        echo "CLIENT_EMAIL=${{ secrets.CLIENT_EMAIL }}" >> .env &&
+        echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env &&
+        echo "AUTH_URI=${{ secrets.AUTH_URI }}" >> .env &&
+        echo "TOKEN_URI=${{ secrets.TOKEN_URI }}" >> .env &&
+        echo "AUTH_PROVIDER_X509_CERT_URL=${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}" >> .env &&
+        echo "CLIENT_X509_CERT_URL=${{ secrets.CLIENT_X509_CERT_URL }}" >> .env
+        echo "UNIVERSE_DOMAIN=${{ secrets.UNIVERSE_DOMAIN }}" >> .env
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
