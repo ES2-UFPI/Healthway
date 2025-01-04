@@ -24,15 +24,15 @@ jobs:
     - name: Create .env file
       working-directory: backend
       run: |
-        echo "TYPE=${{ secrets.TYPE }}" > .env &&
-        echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> .env &&
-        echo "PRIVATE_KEY_ID=${{ secrets.PRIVATE_KEY_ID }}" >> .env &&
-        echo "PRIVATE_KEY=\"${{ secrets.PRIVATE_KEY }}\"" >> .env &&
-        echo "CLIENT_EMAIL=${{ secrets.CLIENT_EMAIL }}" >> .env &&
-        echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env &&
-        echo "AUTH_URI=${{ secrets.AUTH_URI }}" >> .env &&
-        echo "TOKEN_URI=${{ secrets.TOKEN_URI }}" >> .env &&
-        echo "AUTH_PROVIDER_X509_CERT_URL=${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}" >> .env &&
+        echo "TYPE=${{ secrets.TYPE }}" > .env
+        echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> .env
+        echo "PRIVATE_KEY_ID=${{ secrets.PRIVATE_KEY_ID }}" >> .env
+        echo 'PRIVATE_KEY="${{ secrets.PRIVATE_KEY }}"' >> .env
+        echo "CLIENT_EMAIL=${{ secrets.CLIENT_EMAIL }}" >> .env
+        echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env
+        echo "AUTH_URI=${{ secrets.AUTH_URI }}" >> .env
+        echo "TOKEN_URI=${{ secrets.TOKEN_URI }}" >> .env
+        echo "AUTH_PROVIDER_X509_CERT_URL=${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}" >> .env
         echo "CLIENT_X509_CERT_URL=${{ secrets.CLIENT_X509_CERT_URL }}" >> .env
         echo "UNIVERSE_DOMAIN=${{ secrets.UNIVERSE_DOMAIN }}" >> .env
     - name: Use Node.js ${{ matrix.node-version }}
@@ -41,9 +41,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: backend/package-lock.json
-    - run: npm ci
+    - name: Test & Start
       working-directory: backend
-    - run: npm test
-      working-directory: backend
-    - run: npm start
-      working-directory: backend
+      run: |
+        npm ci
+        npm test
+        npm start
