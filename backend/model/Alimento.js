@@ -1,6 +1,6 @@
 class Alimento {
     constructor(
-        numero,
+        categoria,
         descricao,
         umidade,
         energiaKcal,
@@ -21,7 +21,7 @@ class Alimento {
         cobre,
         zinco
     ) {
-        this.numero = numero; // Número do Alimento
+        this.categoria = categoria; // Categoria do Alimento
         this.descricao = descricao; // Descrição dos alimentos
         this.umidade = umidade; // Umidade (%)
         this.energiaKcal = energiaKcal; // Energia (Kcal)
@@ -45,7 +45,7 @@ class Alimento {
 
     toFirestore() {
         return {
-            numero: this.numero,
+            categoria: this.categoria,
             descricao: this.descricao,
             umidade: this.umidade,
             energiaKcal: this.energiaKcal,
