@@ -15,183 +15,193 @@ describe('alimentoController', () => {
     jest.clearAllMocks();
   });
 
-  test('deve retornar todos os alimentos', async () => {
-    const mockData = [
-      { id: '1', nome: 'Maçã', calorias: 52 },
-      { id: '2', nome: 'Banana', calorias: 89 },
-    ];
-    db.get.mockResolvedValueOnce({
-      docs: mockData.map(doc => ({ id: doc.id, data: () => doc })),
+  describe('getAll', () => {
+    test('deve retornar todos os alimentos', async () => {
+      const mockData = [
+        { id: '1', nome: 'Maçã', calorias: 52 },
+        { id: '2', nome: 'Banana', calorias: 89 },
+      ];
+      db.get.mockResolvedValueOnce({
+        docs: mockData.map(doc => ({ id: doc.id, data: () => doc })),
+      });
+
+      const req = {};
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await alimentoController.getAll(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(mockData);
     });
 
-    const req = {};
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+    test('deve retornar um erro ao buscar todos os alimentos', async () => {
+      db.get.mockRejectedValueOnce(new Error('Erro ao buscar alimentos.'));
 
-    await alimentoController.getAll(req, res);
+      const req = {};
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
 
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith(mockData);
+      await alimentoController.getAll(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao buscar alimentos.' });
+    });
   });
 
-  test('deve retornar um erro ao buscar todos os alimentos', async () => {
-    db.get.mockRejectedValueOnce(new Error('Erro ao buscar alimentos.'));
+  describe('getById', () => {
+    test('deve retornar um alimento pelo ID', async () => {
+      const mockData = { id: '1', nome: 'Maçã', calorias: 52 };
+      db.get.mockResolvedValueOnce({
+        exists: true,
+        id: mockData.id,
+        data: () => mockData,
+      });
 
-    const req = {};
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+      const req = { params: { id: '1' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
 
-    await alimentoController.getAll(req, res);
+      await alimentoController.getById(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao buscar alimentos.' });
-  });
-
-  test('deve retornar um alimento pelo ID', async () => {
-    const mockData = { id: '1', nome: 'Maçã', calorias: 52 };
-    db.get.mockResolvedValueOnce({
-      exists: true,
-      id: mockData.id,
-      data: () => mockData,
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ id: '1', ...mockData });
     });
 
-    const req = { params: { id: '1' } };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+    test('deve retornar um erro ao buscar um alimento inexistente', async () => {
+      db.get.mockResolvedValueOnce({ exists: false });
 
-    await alimentoController.getById(req, res);
+      const req = { params: { id: '1' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
 
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ id: '1', ...mockData });
+      await alimentoController.getById(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Alimento não encontrado.' });
+    });
+
+    test('deve retornar um erro ao buscar um alimento', async () => {
+      db.get.mockRejectedValueOnce(new Error('Erro ao buscar alimento.'));
+
+      const req = { params: { id: '1' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await alimentoController.getById(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao buscar alimento.' });
+    });
   });
 
-  test('deve retornar um erro ao buscar um alimento inexistente', async () => {
-    db.get.mockResolvedValueOnce({ exists: false });
+  describe('create', () => {
+    test('deve criar um novo alimento', async () => {
+      const novoAlimento = { nome: 'Maçã', calorias: 52 };
+      db.add.mockResolvedValueOnce({ id: '1' });
 
-    const req = { params: { id: '1' } };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+      const req = { body: novoAlimento };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
 
-    await alimentoController.getById(req, res);
+      await alimentoController.create(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Alimento não encontrado.' });
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Alimento criado com sucesso!' });
+    });
+
+    test('deve retornar um erro ao criar um novo alimento', async () => {
+      const novoAlimento = { nome: 'Maçã', calorias: 52 };
+      db.add.mockRejectedValueOnce(new Error('Erro ao criar alimento.'));
+
+      const req = { body: novoAlimento };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await alimentoController.create(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao criar alimento.' });
+    });
   });
 
-  test('deve retornar um erro ao buscar um alimento', async () => {
-    db.get.mockRejectedValueOnce(new Error('Erro ao buscar alimento.'));
+  describe('update', () => {
+    test('deve atualizar um alimento existente', async () => {
+      const alimentoAtualizado = { nome: 'Maçã Verde', calorias: 48 };
+      db.update.mockResolvedValueOnce();
 
-    const req = { params: { id: '1' } };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+      const req = { params: { id: '1' }, body: alimentoAtualizado };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
 
-    await alimentoController.getById(req, res);
+      await alimentoController.update(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao buscar alimento.' });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Alimento atualizado com sucesso!' });
+    });
+
+    test('deve retornar um erro ao atualizar um alimento', async () => {
+      const alimentoAtualizado = { nome: 'Maçã Verde', calorias: 48 };
+      db.update.mockRejectedValueOnce(new Error('Erro ao atualizar alimento.'));
+
+      const req = { params: { id: '1' }, body: alimentoAtualizado };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await alimentoController.update(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao atualizar alimento.' });
+    });
   });
 
-  test('deve criar um novo alimento', async () => {
-    const novoAlimento = { nome: 'Maçã', calorias: 52 };
-    db.add.mockResolvedValueOnce({ id: '1' });
+  describe('delete', () => {
+    test('deve excluir um alimento', async () => {
+      db.delete.mockResolvedValueOnce();
 
-    const req = { body: novoAlimento };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+      const req = { params: { id: '1' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
 
-    await alimentoController.create(req, res);
+      await alimentoController.delete(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Alimento criado com sucesso!' });
-  });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Alimento excluído com sucesso!' });
+    });
 
-  test('deve retornar um erro ao criar um novo alimento', async () => {
-    const novoAlimento = { nome: 'Maçã', calorias: 52 };
-    db.add.mockRejectedValueOnce(new Error('Erro ao criar alimento.'));
+    test('deve retornar um erro ao excluir um alimento', async () => {
+      db.delete.mockRejectedValueOnce(new Error('Erro ao excluir alimento.'));
 
-    const req = { body: novoAlimento };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
+      const req = { params: { id: '1' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
 
-    await alimentoController.create(req, res);
+      await alimentoController.delete(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao criar alimento.' });
-  });
-
-  test('deve atualizar um alimento existente', async () => {
-    const alimentoAtualizado = { nome: 'Maçã Verde', calorias: 48 };
-    db.update.mockResolvedValueOnce();
-
-    const req = { params: { id: '1' }, body: alimentoAtualizado };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    await alimentoController.update(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Alimento atualizado com sucesso!' });
-  });
-
-  test('deve retornar um erro ao atualizar um alimento', async () => {
-    const alimentoAtualizado = { nome: 'Maçã Verde', calorias: 48 };
-    db.update.mockRejectedValueOnce(new Error('Erro ao atualizar alimento.'));
-
-    const req = { params: { id: '1' }, body: alimentoAtualizado };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    await alimentoController.update(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao atualizar alimento.' });
-  });
-
-  test('deve excluir um alimento', async () => {
-    db.delete.mockResolvedValueOnce();
-
-    const req = { params: { id: '1' } };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    await alimentoController.delete(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Alimento excluído com sucesso!' });
-  });
-
-  test('deve retornar um erro ao excluir um alimento', async () => {
-    db.delete.mockRejectedValueOnce(new Error('Erro ao excluir alimento.'));
-
-    const req = { params: { id: '1' } };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    await alimentoController.delete(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao excluir alimento.' });
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao excluir alimento.' });
+    });
   });
 });
