@@ -73,24 +73,20 @@ const planoAlimentarController = {
                 return res.status(400).json({ error: 'O parâmetro paciente é obrigatório.' });
             }
 
-            const planosSnapshot = await db.collection('planosAlimentares')
-                                          .where('paciente', '==', paciente)
-                                          .get();
+            const snapshot = await db.collection('planosAlimentares')
+                                        .where('paciente', '==', paciente)
+                                        .get();
 
-            if (planosSnapshot.empty) {
+            if (snapshot.empty) {
                 return res.status(404).json({ message: 'Nenhum plano alimentar encontrado para este paciente.' });
             }
 
-            const planos = [];
-            planosSnapshot.forEach(doc => {
-                planos.push({ id: doc.id, ...doc.data() });
-            });
+            const planos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
             return res.status(200).json(planos);
 
         } catch (error) {
-            console.error('Erro ao buscar planos alimentares:', error);
-            return res.status(500).json({ error: 'Erro interno do servidor.' });
+            res.status(500).json({ error: error.message });
         }
     }
 };
