@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class NutritionistDashboardScreen extends StatelessWidget {
-  const NutritionistDashboardScreen({Key? key}) : super(key: key);
+  const NutritionistDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +135,10 @@ class NutritionistDashboardScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildQuickAccessItem(Icons.people, 'Pacientes', '/patient_list'),
-              _buildQuickAccessItem(Icons.calendar_today, 'Agenda', '/schedule'),
-              _buildQuickAccessItem(Icons.restaurant_menu, 'Planos', '/meal_plans'),
+              _buildQuickAccessItem(
+                  Icons.calendar_today, 'Agenda', '/schedule'),
+              _buildQuickAccessItem(
+                  Icons.restaurant_menu, 'Planos', '/meal_plans'),
               _buildQuickAccessItem(Icons.message, 'Mensagens', '/messages'),
             ],
           ),
@@ -192,7 +193,8 @@ class NutritionistDashboardScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 15),
-          _buildAppointmentItem('Maria Oliveira', '14:00', 'Consulta de Rotina'),
+          _buildAppointmentItem(
+              'Maria Oliveira', '14:00', 'Consulta de Rotina'),
           _buildAppointmentItem('João Silva', '15:30', 'Avaliação Nutricional'),
           _buildAppointmentItem('Ana Santos', '17:00', 'Revisão de Dieta'),
         ],
@@ -278,9 +280,12 @@ class NutritionistDashboardScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 15),
-          _buildPatientUpdateItem('Carlos Mendes', 'Atingiu meta de peso', '2h atrás'),
-          _buildPatientUpdateItem('Fernanda Lima', 'Novo registro de refeição', '4h atrás'),
-          _buildPatientUpdateItem('Ricardo Souza', 'Solicitou alteração na dieta', '1d atrás'),
+          _buildPatientUpdateItem(
+              'Carlos Mendes', 'Atingiu meta de peso', '2h atrás'),
+          _buildPatientUpdateItem(
+              'Fernanda Lima', 'Novo registro de refeição', '4h atrás'),
+          _buildPatientUpdateItem(
+              'Ricardo Souza', 'Solicitou alteração na dieta', '1d atrás'),
         ],
       ),
     );
@@ -392,4 +397,3 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 }
-

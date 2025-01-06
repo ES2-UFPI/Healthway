@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:healthway_app/geral_screens/alimentos_screen.dart';
-import 'package:healthway_app/geral_screens/apresentationScreen.dart';
-import 'package:healthway_app/screens_patient/profileScreen.dart';
-import 'healthScreen.dart';
 
 class PatientDashboardScreen extends StatelessWidget {
   const PatientDashboardScreen({super.key});
@@ -121,66 +117,70 @@ class PatientDashboardScreen extends StatelessWidget {
   }
 
   Widget _buildQuickAccess(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.all(20),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Acesso Rápido',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Acesso Rápido',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildQuickAccessItem(context, Icons.restaurant_menu, 'Dieta', '/alimentos'),
-            _buildQuickAccessItem(context, Icons.people, 'Nutricionistas', '/nutricionistas'),
-            _buildQuickAccessItem(context, Icons.insert_chart, 'Progresso', '/progress'),
-            _buildQuickAccessItem(context, Icons.message, 'Chat', '/chat'),
-          ],
-        ),
-      ],
-    ),
-  );
-}
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildQuickAccessItem(
+                  context, Icons.restaurant_menu, 'Dieta', '/diet'),
+              _buildQuickAccessItem(
+                  context, Icons.people, 'Nutricionistas', '/nutricionistas'),
+              _buildQuickAccessItem(
+                  context, Icons.insert_chart, 'Progresso', '/progress'),
+              _buildQuickAccessItem(context, Icons.message, 'Chat', '/chat'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
-Widget _buildQuickAccessItem(BuildContext context, IconData icon, String label, String route) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.pushNamed(context, route); // Aqui você agora tem acesso ao 'context'
-    },
-    child: Column(
-      children: [
-        Container(
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: Color(0xFF31BAC2).withOpacity(0.1),
-            borderRadius: BorderRadius.circular(15),
+  Widget _buildQuickAccessItem(
+      BuildContext context, IconData icon, String label, String route) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+            context, route); // Aqui você agora tem acesso ao 'context'
+      },
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: Color(0xFF31BAC2).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Icon(
+              icon,
+              color: Color(0xFF31BAC2),
+              size: 30,
+            ),
           ),
-          child: Icon(
-            icon,
-            color: Color(0xFF31BAC2),
-            size: 30,
+          SizedBox(height: 5),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[600],
+            ),
           ),
-        ),
-        SizedBox(height: 5),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[600],
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
+        ],
+      ),
+    );
+  }
 
   Widget _buildNextAppointment() {
     return Padding(
