@@ -28,7 +28,7 @@ const alimentoController = {
     async getByCategory(req, res) {
         try {
             const { categoria } = req.params;
-            const snapshot = await db.collection('alimentos').where('categoria', '==', categoria).get();
+            const snapshot = await db.collection('alimentos').where('Categoria', '==', categoria).get();
             const alimentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             res.status(200).json(alimentos);
         } catch (error) {
