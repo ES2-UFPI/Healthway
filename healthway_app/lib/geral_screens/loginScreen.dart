@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:healthway_app/screens_patient/signupScreen.dart';
+import 'package:healthway_app/screens_nutricionist/signUpNutritionist.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -53,7 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 30),
                     _buildLoginButton(),
                     SizedBox(height: 20),
-                    _buildRegisterButton(),
+                    _buildPatientButton(),
+                    _buildNutricionistButton(),
                   ],
                 ),
               ),
@@ -144,7 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginButton() {
     return ElevatedButton(
-      child: Text('Entrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       onPressed: _submitForm,
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white, backgroundColor: Color(0xFF31BAC2),
@@ -153,16 +155,29 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(30),
         ),
       ),
+      child: Text('Entrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
     );
   }
 
-  Widget _buildRegisterButton() {
+  Widget _buildPatientButton() {
     return TextButton(
       onPressed: () {
-        // TODO: Navegar para a tela de cadastro
+        MaterialPageRoute(builder: (_) => CadastroPacienteScreen());
       },
       child: Text(
-        'Não tem uma conta? Cadastre-se',
+        'Sou paciente',
+        style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget _buildNutricionistButton() {
+    return TextButton(
+      onPressed: () {
+        MaterialPageRoute(builder: (_) => CadastroNutricionistaScreen());
+      },
+      child: Text(
+        'Sou nutricionista',
         style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
       ),
     );
