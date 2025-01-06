@@ -24,6 +24,18 @@ const alimentoController = {
         }
     },
 
+    // Obter alimentos por categoria
+    async getByCategory(req, res) {
+        try {
+            const { categoria } = req.params;
+            const snapshot = await db.collection('alimentos').where('Categoria', '==', categoria).get();
+            const alimentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            res.status(200).json(alimentos);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    
     //Obter um alimento pelo ID
     async getById(req, res){
         try {

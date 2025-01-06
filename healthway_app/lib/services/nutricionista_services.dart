@@ -11,10 +11,10 @@ class NutricionistaService {
     if (response.statusCode == 200) {
       try {
         // Decodifica o corpo da resposta
-        List<dynamic> data = json.decode(response.body);
+        List<dynamic>? data = json.decode(response.body);
 
         // Verifica se os dados não são nulos e se são uma lista
-        if (data != null && data is List) {
+        if (data != null) {
           return data.map((json) => Nutricionista.fromJson(json)).toList();
         } else {
           // Caso os dados sejam nulos ou não sejam uma lista

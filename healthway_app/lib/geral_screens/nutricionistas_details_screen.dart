@@ -4,7 +4,7 @@ import '../models/nutricionista.dart';
 class NutricionistaDetailScreen extends StatelessWidget {
   final Nutricionista nutricionista;
 
-  const NutricionistaDetailScreen({Key? key, required this.nutricionista}) : super(key: key);
+  const NutricionistaDetailScreen({super.key, required this.nutricionista});
 
   @override
   Widget build(BuildContext context) {
