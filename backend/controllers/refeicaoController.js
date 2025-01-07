@@ -1,5 +1,5 @@
 const db = require('../firebase-config');
-const Refeicao = require('../model/refeicao');
+const Refeicao = require('../model/Refeicao');
 
 const refeicaoController = {
     //Criar uma nova refeição

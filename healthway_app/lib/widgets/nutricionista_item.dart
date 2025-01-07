@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:healthway_app/geral_screens/nutricionistas_details_screen.dart';
+
 import '../models/nutricionista.dart';
-import '../geral_screens/nutricionistas_details_screen.dart';
 
 class NutricionistaItem extends StatelessWidget {
   final Nutricionista nutricionista;
 
-  const NutricionistaItem({Key? key, required this.nutricionista}) : super(key: key);
+  const NutricionistaItem({super.key, required this.nutricionista});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,8 @@ class NutricionistaItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NutricionistaDetailScreen(nutricionista: nutricionista),
+              builder: (context) =>
+                  NutricionistaDetailScreen(nutricionista: nutricionista),
             ),
           );
         },

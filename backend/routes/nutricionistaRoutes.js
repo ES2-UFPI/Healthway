@@ -9,5 +9,6 @@ router.get('/:id', nutricionistaController.getById);
 router.put('/:id', nutricionistaController.update);
 router.delete('/:id', nutricionistaController.delete);
 router.get('/specialty/:specialty', nutricionistaController.getBySpecialty);
+router.get('/nome/:nome', nutricionistaController.getByName);
 
 module.exports = router;

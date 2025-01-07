@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DietManagementScreen extends StatelessWidget {
-  const DietManagementScreen({Key? key}) : super(key: key);
+  const DietManagementScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -87,9 +87,15 @@ class DietManagementScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Refeições de Hoje',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Text(
+            'Refeições do Dia',
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[600]),
+          ),
         ),
         SizedBox(height: 16),
         _buildMealItem('Café da Manhã', '07:30', '400 kcal'),
@@ -115,7 +121,8 @@ class DietManagementScreen extends StatelessWidget {
         subtitle: Text(time),
         trailing: Text(
           calories,
-          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
         ),
         onTap: () {
           // Abrir detalhes da refeição
@@ -143,7 +150,8 @@ class DietManagementScreen extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: 0.6,
                     backgroundColor: Colors.grey[300],
-                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF31BAC2)),
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xFF31BAC2)),
                   ),
                 ),
                 SizedBox(width: 16),
@@ -210,4 +218,3 @@ class DietManagementScreen extends StatelessWidget {
     );
   }
 }
-

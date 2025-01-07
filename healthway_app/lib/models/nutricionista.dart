@@ -5,7 +5,7 @@ class Nutricionista {
   final String nome;
   final String especialidade;
   final String email;
-  final String fotoPerfil;
+  final String? fotoPerfil;
 
   Nutricionista({
     required this.id,

@@ -1,12 +1,12 @@
 const db = require('../firebase-config');
-const Alimento = require('../model/alimento');
+const Alimento = require('../model/Alimento');
 
 const alimentoController = {
     //Criar um novo alimento
     async create(req, res){
         try {
             const alimento = new Alimento(req.body);
-            await db.collection('alimento').add(alimento.toFirestore());
+            await db.collection('alimentos').add(alimento.toFirestore());
             res.status(201).json({ message: 'Alimento criado com sucesso!' });
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -16,7 +16,7 @@ const alimentoController = {
     //Obter todos os alimentos
     async getAll(req, res){
         try {
-            const snapshot = await db.collection('alimento').get();
+            const snapshot = await db.collection('alimentos').get();
             const alimentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             res.status(200).json(alimentos);
         } catch (error) {
@@ -24,11 +24,23 @@ const alimentoController = {
         }
     },
 
+    // Obter alimentos por categoria
+    async getByCategory(req, res) {
+        try {
+            const { categoria } = req.params;
+            const snapshot = await db.collection('alimentos').where('Categoria', '==', categoria).get();
+            const alimentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            res.status(200).json(alimentos);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    
     //Obter um alimento pelo ID
     async getById(req, res){
         try {
             const { id } = req.params;
-            const doc = await db.collection('alimento').doc(id).get();
+            const doc = await db.collection('alimentos').doc(id).get();
 
             if (!doc.exists) {
                 return res.status(404).json({ error: 'Alimento não encontrado.' });
@@ -46,7 +58,7 @@ const alimentoController = {
             const { id } = req.params;
             const alimento = new Alimento(req.body);
 
-            await db.collection('alimento').doc(id).update(alimento.toFirestore());
+            await db.collection('alimentos').doc(id).update(alimento.toFirestore());
             res.status(200).json({ message: 'Alimento atualizado com sucesso!' });
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -57,7 +69,7 @@ const alimentoController = {
     async delete(req, res){
         try {
             const { id } = req.params;
-            await db.collection('alimento').doc(id).delete();
+            await db.collection('alimentos').doc(id).delete();
             res.status(200).json({ message: 'Alimento excluído com sucesso!' });
         } catch (error) {
             res.status(500).json({ error: error.message });
