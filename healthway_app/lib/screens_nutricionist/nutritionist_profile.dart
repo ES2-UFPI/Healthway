@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class NutritionistProfileScreen extends StatefulWidget {
   const NutritionistProfileScreen({super.key});
 
   @override
-  _NutritionistProfileScreenState createState() => _NutritionistProfileScreenState();
+  _NutritionistProfileScreenState createState() =>
+      _NutritionistProfileScreenState();
 }
 
 class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
@@ -67,10 +67,10 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
       ),
       floatingActionButton: _isEditing
           ? FloatingActionButton(
-        onPressed: _saveChanges,
-        backgroundColor: Color(0xFF31BAC2),
-        child: Icon(Icons.save),
-      )
+              onPressed: _saveChanges,
+              backgroundColor: Color(0xFF31BAC2),
+              child: Icon(Icons.save),
+            )
           : null,
     );
   }
@@ -88,9 +88,12 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
                 backgroundImage: NetworkImage(fotoPerfil),
                 child: fotoPerfil.isEmpty
                     ? Text(
-                  nome.isNotEmpty ? nome[0].toUpperCase() : '?',
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
-                )
+                        nome.isNotEmpty ? nome[0].toUpperCase() : '?',
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      )
                     : null,
               ),
               if (!_isEditing)
@@ -111,33 +114,33 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
           SizedBox(height: 16),
           _isEditing
               ? TextFormField(
-            initialValue: nome,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              border: UnderlineInputBorder(),
-            ),
-            onChanged: (value) => nome = value,
-          )
+                  initialValue: nome,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                  ),
+                  onChanged: (value) => nome = value,
+                )
               : Text(
-            nome,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
+                  nome,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
           SizedBox(height: 8),
           _isEditing
               ? TextFormField(
-            initialValue: email,
-            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              border: UnderlineInputBorder(),
-            ),
-            onChanged: (value) => email = value,
-          )
+                  initialValue: email,
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                  ),
+                  onChanged: (value) => email = value,
+                )
               : Text(
-            email,
-            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-          ),
+                  email,
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                ),
         ],
       ),
     );
@@ -152,7 +155,8 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
           children: [
             _buildInfoRow('CPF', cpf, (value) => cpf = value),
             _buildInfoRow('CRN', crn, (value) => crn = value),
-            _buildInfoRow('Especialidade', especialidade, (value) => especialidade = value),
+            _buildInfoRow('Especialidade', especialidade,
+                (value) => especialidade = value),
           ],
         ),
       ),
@@ -166,21 +170,21 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: TextStyle(fontSize: 16, color: Colors.grey[600])),
-          _isEditing && onChanged != null
+          _isEditing
               ? SizedBox(
-            width: 200,
-            child: TextFormField(
-              initialValue: value,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.right,
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-              ),
-              onChanged: onChanged,
-            ),
-          )
+                  width: 200,
+                  child: TextFormField(
+                    initialValue: value,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.right,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                    ),
+                    onChanged: onChanged,
+                  ),
+                )
               : Text(value,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -196,7 +200,8 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
           style: ElevatedButton.styleFrom(
             backgroundColor: Color(0xFF31BAC2),
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
           child: Text('Editar Perfil Detalhado'),
         ),
@@ -206,8 +211,10 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
             // Navigate to change password screen
           },
           style: OutlinedButton.styleFrom(
-            foregroundColor: Color(0xFF31BAC2), padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            foregroundColor: Color(0xFF31BAC2),
+            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             side: BorderSide(color: Color(0xFF31BAC2)),
           ),
           child: Text('Alterar Senha'),
@@ -246,7 +253,8 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
                     ),
                   ),
                   child: fotoDocumento.isEmpty
-                      ? Icon(Icons.add_a_photo, size: 50, color: Color(0xFF31BAC2))
+                      ? Icon(Icons.add_a_photo,
+                          size: 50, color: Color(0xFF31BAC2))
                       : null,
                 ),
               ),
@@ -270,4 +278,3 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
     }
   }
 }
-
