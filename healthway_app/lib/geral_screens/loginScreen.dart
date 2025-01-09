@@ -1,148 +1,201 @@
 import 'package:flutter/material.dart';
+import 'package:healthway_app/screens_patient/signupScreen.dart';
+import 'package:healthway_app/screens_nutricionist/signUpNutritionist.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _senhaController = TextEditingController();
   bool _obscurePassword = true;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE6F7F8), // Tom muito claro de azul
       appBar: AppBar(
-        title: const Text('Login'),
-        backgroundColor: const Color(0xFF31BAC2),
+        title: Text('Login', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Color(0xFF31BAC2),
         elevation: 0,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 48),
-                Icon(
-                  Icons.account_circle,
-                  size: 100,
-                  color: Color(0xFF31BAC2),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: Color(0xFF31BAC2),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
                 ),
-                const SizedBox(height: 48),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    prefixIcon: Icon(Icons.email, color: Color(0xFF31BAC2)),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira seu email';
-                    }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(value)) {
-                      return 'Por favor, insira um email válido';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Senha',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    prefixIcon: Icon(Icons.lock, color: Color(0xFF31BAC2)),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Color(0xFF31BAC2),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
-                  ),
-                  obscureText: _obscurePassword,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira sua senha';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Implementar lógica de login aqui
-                      print('Email: ${_emailController.text}');
-                      print('Senha: ${_passwordController.text}');
-                      // Navegar para a tela principal após o login bem-sucedido
-                      Navigator.pushReplacementNamed(context, '/dashboard');
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF31BAC2),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'Entrar',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signUp');
-                  },
-                  child: const Text(
-                    'Não tem uma conta? Cadastre-se',
-                    style: TextStyle(color: Color(0xFF31BAC2)),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {
-                    // Implementar lógica de recuperação de senha
-                  },
-                  child: const Text(
-                    'Esqueceu sua senha?',
-                    style: TextStyle(color: Color(0xFF31BAC2)),
-                  ),
-                ),
-              ],
+              ),
+              child: Center(
+                child: Icon(Icons.lock_open, size: 100, color: Colors.white),
+              ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildTextField(_emailController, 'E-mail', Icons.email, keyboardType: TextInputType.emailAddress),
+                    SizedBox(height: 20),
+                    _buildPasswordField(),
+                    SizedBox(height: 20),
+                    _buildForgotPasswordButton(),
+                    SizedBox(height: 30),
+                    _buildLoginButton(),
+                    SizedBox(height: 20),
+                    _buildPatientButton(),
+                    _buildNutricionistButton(),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+
+  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {TextInputType? keyboardType}) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: Color(0xFF31BAC2)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+      style: TextStyle(fontSize: 16),
+      keyboardType: keyboardType,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Por favor, preencha este campo';
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return TextFormField(
+      controller: _senhaController,
+      obscureText: _obscurePassword,
+      decoration: InputDecoration(
+        labelText: 'Senha',
+        prefixIcon: Icon(Icons.lock, color: Color(0xFF31BAC2)),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscurePassword ? Icons.visibility : Icons.visibility_off,
+            color: Color(0xFF31BAC2),
+          ),
+          onPressed: () {
+            setState(() {
+              _obscurePassword = !_obscurePassword;
+            });
+          },
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+      style: TextStyle(fontSize: 16),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Por favor, insira sua senha';
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _buildForgotPasswordButton() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: TextButton(
+        onPressed: () {
+          // TODO: Implementar lógica para recuperação de senha
+        },
+        child: Text(
+          'Esqueceu a senha?',
+          style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return ElevatedButton(
+      onPressed: _submitForm,
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white, backgroundColor: Color(0xFF31BAC2),
+        padding: EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+      child: Text('Entrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+    );
+  }
+
+  Widget _buildPatientButton() {
+    return TextButton(
+      onPressed: () {
+        MaterialPageRoute(builder: (_) => CadastroPacienteScreen());
+      },
+      child: Text(
+        'Sou paciente',
+        style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget _buildNutricionistButton() {
+    return TextButton(
+      onPressed: () {
+        MaterialPageRoute(builder: (_) => CadastroNutricionistaScreen());
+      },
+      child: Text(
+        'Sou nutricionista',
+        style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      // TODO: Implementar lógica de autenticação
+      print('Form is valid. Submitting...');
+      // Você normalmente chamaria um método de serviço aqui para autenticar o usuário
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _senhaController.dispose();
+    super.dispose();
+  }
 }
+
