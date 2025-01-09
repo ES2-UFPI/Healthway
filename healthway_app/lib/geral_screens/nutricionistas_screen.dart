@@ -4,8 +4,10 @@ import '../services/nutricionista_services.dart';
 import '../widgets/nutricionista_item.dart';
 
 class NutricionistasScreen extends StatefulWidget {
+  const NutricionistasScreen({super.key});
+
   @override
-  _NutricionistasScreenState createState() => _NutricionistasScreenState();
+  State<NutricionistasScreen> createState() => _NutricionistasScreenState();
 }
 
 class _NutricionistasScreenState extends State<NutricionistasScreen> {
@@ -29,7 +31,8 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Erro: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Nenhum nutricionista encontrado.'));
+            return const Center(
+                child: Text('Nenhum nutricionista encontrado.'));
           } else {
             var nutricionistas = snapshot.data!;
             return ListView.builder(

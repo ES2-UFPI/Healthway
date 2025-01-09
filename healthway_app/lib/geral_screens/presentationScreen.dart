@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard.dart';
 import 'dart:async';
 
-import 'package:healthway_app/screens_patient//dashboardScreen.dart';
+import 'package:flutter/material.dart';
 
 class PresentationScreen extends StatefulWidget {
   const PresentationScreen({super.key});
 
   @override
-  _PresentationScreenState createState() => _PresentationScreenState();
+  State<PresentationScreen> createState() => _PresentationScreenState();
 }
 
 class _PresentationScreenState extends State<PresentationScreen>
@@ -35,9 +33,7 @@ class _PresentationScreenState extends State<PresentationScreen>
 
     // Navegar para a próxima tela após a animação
     Timer(Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => PatientDashboardScreen()),
-      );
+      Navigator.of(context).pushReplacementNamed('/home');
     });
   }
 

@@ -1,13 +1,13 @@
-// lib/screens/alimentos_screen.dart
-
 import 'package:flutter/material.dart';
 import '../services/alimento_services.dart';
-import '../models/alimentos.dart';
+import '../models/alimento.dart';
 import '../widgets/alimento_item.dart';
 
 class AlimentosScreen extends StatefulWidget {
+  const AlimentosScreen({super.key});
+
   @override
-  _AlimentosScreenState createState() => _AlimentosScreenState();
+  State<AlimentosScreen> createState() => _AlimentosScreenState();
 }
 
 class _AlimentosScreenState extends State<AlimentosScreen> {
