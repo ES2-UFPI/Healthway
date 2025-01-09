@@ -341,7 +341,7 @@ Widget _buildQuickAccessItem(BuildContext context, IconData icon, String label, 
               // Já estamos na tela inicial, então não faça nada
               break;
             case 1:
-              Navigator.pushNamed(context, '/diet');
+              Navigator.pushNamed(context, '/health');
               break;
             case 2:
               Navigator.pushNamed(context, '/progress');

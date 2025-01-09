@@ -36,7 +36,7 @@ class _PresentationScreenState extends State<PresentationScreen>
     // Navegar para a próxima tela após a animação
     Timer(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => PatientDashboardScreen()),
+        MaterialPageRoute(builder: (_) => NutritionistDashboardScreen()),
       );
     });
   }
