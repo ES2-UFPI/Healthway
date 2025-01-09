@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NutritionistDashboardScreen extends StatelessWidget {
   const NutritionistDashboardScreen({super.key});
@@ -12,19 +13,19 @@ class NutritionistDashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(),
-              _buildQuickAccess(),
-              _buildAppointments(),
-              _buildPatientUpdates(),
+              _buildHeader(context),
+              _buildQuickAccess(context),
+              _buildAppointments(context),
+              _buildPatientUpdates(context),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -61,13 +62,18 @@ class NutritionistDashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.person,
-                  size: 35,
-                  color: Color(0xFF31BAC2),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/nutritionistProfile');
+                },
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.person,
+                    size: 35,
+                    color: Color(0xFF31BAC2),
+                  ),
                 ),
               ),
             ],
@@ -116,7 +122,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAccess() {
+  Widget _buildQuickAccess(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -134,12 +140,10 @@ class NutritionistDashboardScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildQuickAccessItem(Icons.people, 'Pacientes', '/patient_list'),
-              _buildQuickAccessItem(
-                  Icons.calendar_today, 'Agenda', '/schedule'),
-              _buildQuickAccessItem(
-                  Icons.restaurant_menu, 'Planos', '/meal_plans'),
-              _buildQuickAccessItem(Icons.message, 'Mensagens', '/messages'),
+              _buildQuickAccessItem(context, Icons.people, 'Pacientes', '/patientList'),
+              _buildQuickAccessItem(context, Icons.calendar_today, 'Agenda', '/schedule'),
+              _buildQuickAccessItem(context, Icons.restaurant_menu, 'Planos', '/meal_plans'),
+              _buildQuickAccessItem(context, Icons.message, 'Mensagens', '/chat'),
             ],
           ),
         ],
@@ -147,10 +151,10 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAccessItem(IconData icon, String label, String route) {
+  Widget _buildQuickAccessItem(BuildContext context, IconData icon, String label, String route) {
     return GestureDetector(
       onTap: () {
-        // Navegação para a rota especificada
+        Navigator.pushNamed(context, route);
       },
       child: Column(
         children: [
@@ -179,182 +183,222 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAppointments() {
+  Widget _buildAppointments(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Próximas Consultas',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 15),
-          _buildAppointmentItem(
-              'Maria Oliveira', '14:00', 'Consulta de Rotina'),
-          _buildAppointmentItem('João Silva', '15:30', 'Avaliação Nutricional'),
-          _buildAppointmentItem('Ana Santos', '17:00', 'Revisão de Dieta'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAppointmentItem(String name, String time, String type) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Color(0xFF31BAC2).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(
-              Icons.calendar_today,
-              color: Color(0xFF31BAC2),
-            ),
-          ),
-          SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Próximas Consultas',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/appointments');
+                },
+                child: Text(
+                  'Ver todas',
                   style: TextStyle(
+                    color: Color(0xFF31BAC2),
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 5),
-                Text(
-                  type,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            time,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF31BAC2),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPatientUpdates() {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Atualizações de Pacientes',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+              ),
+            ],
           ),
           SizedBox(height: 15),
-          _buildPatientUpdateItem(
-              'Carlos Mendes', 'Atingiu meta de peso', '2h atrás'),
-          _buildPatientUpdateItem(
-              'Fernanda Lima', 'Novo registro de refeição', '4h atrás'),
-          _buildPatientUpdateItem(
-              'Ricardo Souza', 'Solicitou alteração na dieta', '1d atrás'),
+          _buildAppointmentItem(context, 'Maria Oliveira', '14:00', 'Consulta de Rotina'),
+          _buildAppointmentItem(context, 'João Silva', '15:30', 'Avaliação Nutricional'),
+          _buildAppointmentItem(context, 'Ana Santos', '17:00', 'Revisão de Dieta'),
         ],
       ),
     );
   }
 
-  Widget _buildPatientUpdateItem(String name, String update, String time) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: Color(0xFF31BAC2).withOpacity(0.1),
-            child: Text(
-              name[0],
-              style: TextStyle(
+  Widget _buildAppointmentItem(BuildContext context, String name, String time, String type) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/appointment_details', arguments: {'name': name, 'time': time, 'type': type});
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Color(0xFF31BAC2).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.calendar_today,
                 color: Color(0xFF31BAC2),
-                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
+            SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    type,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              time,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF31BAC2),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPatientUpdates(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Atualizações de Pacientes',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/patient_updates');
+                },
+                child: Text(
+                  'Ver todas',
                   style: TextStyle(
+                    color: Color(0xFF31BAC2),
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 5),
-                Text(
-                  update,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Text(
-            time,
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 12,
-            ),
-          ),
+          SizedBox(height: 15),
+          _buildPatientUpdateItem(context, 'Carlos Mendes', 'Atingiu meta de peso', '2h atrás'),
+          _buildPatientUpdateItem(context, 'Fernanda Lima', 'Novo registro de refeição', '4h atrás'),
+          _buildPatientUpdateItem(context, 'Ricardo Souza', 'Solicitou alteração na dieta', '1d atrás'),
         ],
       ),
     );
   }
 
-  Widget _buildBottomNavigationBar() {
+  Widget _buildPatientUpdateItem(BuildContext context, String name, String update, String time) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/patient_details', arguments: {'name': name});
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: Color(0xFF31BAC2).withOpacity(0.1),
+              child: Text(
+                name[0],
+                style: TextStyle(
+                  color: Color(0xFF31BAC2),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    update,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              time,
+              style: TextStyle(
+                color: Colors.grey[400],
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -375,6 +419,23 @@ class NutritionistDashboardScreen extends StatelessWidget {
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
+        currentIndex: 0,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+            // Already on home screen
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/patientList');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/schedule');
+              break;
+            case 3:
+              Navigator.pushNamed(context, '/chat');
+              break;
+          }
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -397,3 +458,4 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 }
+

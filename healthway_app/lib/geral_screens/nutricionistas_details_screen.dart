@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/nutricionista.dart';
+import '../widgets/rating_stars.dart';
+import '../widgets/review_card.dart';
 
 class NutricionistaDetailScreen extends StatelessWidget {
   final Nutricionista nutricionista;
@@ -9,55 +11,185 @@ class NutricionistaDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(nutricionista.nome),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            // Foto do nutricionista
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(
-                nutricionista.fotoPerfil ??
-                    'https://www.w3schools.com/w3images/avatar2.png', // Imagem padrão
+      backgroundColor: Color(0xFFF5F5F5),
+      body: CustomScrollView(
+        slivers: [
+          _buildSliverAppBar(),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildInfoCard(),
+                  SizedBox(height: 16),
+                  _buildAboutSection(),
+                  SizedBox(height: 16),
+                  _buildReviewsSection(),
+                ],
               ),
             ),
-            const SizedBox(height: 16),
-            // Nome
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // TODO: Implement appointment scheduling
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Funcionalidade de agendamento em desenvolvimento')),
+          );
+        },
+        icon: Icon(Icons.calendar_today),
+        label: Text('Agendar Consulta'),
+        backgroundColor: Color(0xFF31BAC2),
+      ),
+    );
+  }
+
+  Widget _buildSliverAppBar() {
+    return SliverAppBar(
+      expandedHeight: 200.0,
+      floating: false,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text(nutricionista.nome),
+        background: Image.network(
+          nutricionista.fotoPerfil ?? 'https://www.w3schools.com/w3images/avatar2.png',
+          fit: BoxFit.cover,
+        ),
+      ),
+      backgroundColor: Color(0xFF31BAC2),
+    );
+  }
+
+  Widget _buildInfoCard() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Text(
               nutricionista.nome,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            // Especialidade
+            SizedBox(height: 8),
             Text(
-              'Especialidade: ${nutricionista.especialidade}',
-              style: const TextStyle(fontSize: 18),
+              nutricionista.especialidade,
+              style: TextStyle(fontSize: 18, color: Colors.grey[600]),
             ),
-            const SizedBox(height: 8),
-            // Email
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Icon(Icons.star, color: Colors.amber),
+                SizedBox(width: 4),
+                Text(
+                  '${nutricionista.avaliacao.toStringAsFixed(1)}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 16),
+                Icon(Icons.person, color: Color(0xFF31BAC2)),
+                SizedBox(width: 4),
+                Text(
+                  '${nutricionista.numeroClientes} clientes',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            _buildInfoRow(Icons.email, nutricionista.email),
+            SizedBox(height: 8),
+            _buildInfoRow(Icons.badge, 'CRN: ${nutricionista.crn}'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(icon, color: Color(0xFF31BAC2), size: 20),
+        SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(fontSize: 16),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAboutSection() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Text(
-              'Email: ${nutricionista.email}',
-              style: const TextStyle(fontSize: 18),
+              'Sobre',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            // CPF
+            SizedBox(height: 8),
             Text(
-              'CPF: ${nutricionista.cpf}',
-              style: const TextStyle(fontSize: 18),
+              nutricionista.sobre ?? 'Informações sobre o nutricionista não disponíveis.',
+              style: TextStyle(fontSize: 16),
             ),
-            const SizedBox(height: 8),
-            // CRN
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildReviewsSection() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Text(
-              'CRN: ${nutricionista.crn}',
-              style: const TextStyle(fontSize: 18),
+              'Avaliações',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            // Outros dados que você achar necessário
+            SizedBox(height: 16),
+            RatingStars(rating: nutricionista.avaliacao),
+            SizedBox(height: 16),
+            // Aqui você pode adicionar uma lista de ReviewCard widgets
+            // representando as avaliações reais dos clientes
+            ReviewCard(
+              authorName: 'Maria Silva',
+              rating: 5,
+              comment: 'Excelente profissional! Muito atencioso e competente.',
+              date: '10/05/2023',
+            ),
+            ReviewCard(
+              authorName: 'João Santos',
+              rating: 4,
+              comment: 'Ótimo atendimento e resultados satisfatórios.',
+              date: '05/05/2023',
+            ),
+            // Adicione mais ReviewCards conforme necessário
           ],
         ),
       ),
     );
   }
 }
+
+extension on Nutricionista {
+  get avaliacao => 5.0;
+  get sobre => "Sou um nutricionista muito bom";
+
+  get numeroClientes => 12;
+}
+

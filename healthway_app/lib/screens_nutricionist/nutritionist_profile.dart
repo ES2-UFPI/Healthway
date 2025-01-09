@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
-class PatientProfileScreen extends StatefulWidget {
-  const PatientProfileScreen({Key? key}) : super(key: key);
+class NutritionistProfileScreen extends StatefulWidget {
+  const NutritionistProfileScreen({super.key});
 
   @override
-  _PatientProfileScreenState createState() => _PatientProfileScreenState();
+  _NutritionistProfileScreenState createState() => _NutritionistProfileScreenState();
 }
 
-class _PatientProfileScreenState extends State<PatientProfileScreen> {
+class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
   bool _isEditing = false;
   final _formKey = GlobalKey<FormState>();
 
   // Mock data - replace with actual data fetching in a real app
-  String name = 'João Silva';
-  String email = 'joao.silva@email.com';
-  int age = 35;
-  double height = 1.75;
-  double weight = 70.0;
-  String objective = 'Manutenção de peso';
+  String nome = 'Dr. Silva';
+  String email = 'dr.silva@email.com';
+  String cpf = '123.456.789-00';
+  String crn = 'CRN-1 12345';
+  String especialidade = 'Nutrição Esportiva';
+  String fotoPerfil = 'https://example.com/dr_silva_profile.jpg';
+  String fotoDocumento = 'https://example.com/dr_silva_document.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +59,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                 SizedBox(height: 24),
                 _buildActionButtons(),
                 SizedBox(height: 24),
-                _buildHealthMetrics(),
-                SizedBox(height: 24),
-                _buildProgressChart(),
+                _buildDocumentSection(),
               ],
             ),
           ),
@@ -87,11 +85,13 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
               CircleAvatar(
                 radius: 60,
                 backgroundColor: Color(0xFF31BAC2),
-                backgroundImage: NetworkImage('https://example.com/profile_image.jpg'),
-                child: Text(
-                  name.isNotEmpty ? name[0].toUpperCase() : '?',
+                backgroundImage: NetworkImage(fotoPerfil),
+                child: fotoPerfil.isEmpty
+                    ? Text(
+                  nome.isNotEmpty ? nome[0].toUpperCase() : '?',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
+                )
+                    : null,
               ),
               if (!_isEditing)
                 Container(
@@ -111,16 +111,16 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
           SizedBox(height: 16),
           _isEditing
               ? TextFormField(
-            initialValue: name,
+            initialValue: nome,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
             ),
-            onChanged: (value) => name = value,
+            onChanged: (value) => nome = value,
           )
               : Text(
-            name,
+            nome,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8),
@@ -150,18 +150,16 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            _buildInfoRow('Idade', '$age anos', (value) => age = int.parse(value)),
-            _buildInfoRow('Altura', '${height.toStringAsFixed(2)} m', (value) => height = double.parse(value)),
-            _buildInfoRow('Peso', '${weight.toStringAsFixed(1)} kg', (value) => weight = double.parse(value)),
-            _buildInfoRow('IMC', '${_calculateBMI().toStringAsFixed(1)} (${_getBMICategory()})', null),
-            _buildInfoRow('Objetivo', objective, (value) => objective = value),
+            _buildInfoRow('CPF', cpf, (value) => cpf = value),
+            _buildInfoRow('CRN', crn, (value) => crn = value),
+            _buildInfoRow('Especialidade', especialidade, (value) => especialidade = value),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoRow(String label, String value, Function(String)? onChanged) {
+  Widget _buildInfoRow(String label, String value, Function(String) onChanged) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -170,7 +168,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
           Text(label, style: TextStyle(fontSize: 16, color: Colors.grey[600])),
           _isEditing && onChanged != null
               ? SizedBox(
-            width: 120,
+            width: 200,
             child: TextFormField(
               initialValue: value,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -208,8 +206,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
             // Navigate to change password screen
           },
           style: OutlinedButton.styleFrom(
-            foregroundColor: Color(0xFF31BAC2),
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+            foregroundColor: Color(0xFF31BAC2), padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             side: BorderSide(color: Color(0xFF31BAC2)),
           ),
@@ -219,7 +216,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
     );
   }
 
-  Widget _buildHealthMetrics() {
+  Widget _buildDocumentSection() {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
@@ -228,65 +225,35 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Métricas de Saúde',
+              'Documento',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
-            _buildMetricItem('Pressão Arterial', '120/80 mmHg'),
-            _buildMetricItem('Glicemia em Jejum', '90 mg/dL'),
-            _buildMetricItem('Colesterol Total', '180 mg/dL'),
-            _buildMetricItem('Triglicerídeos', '150 mg/dL'),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMetricItem(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: TextStyle(fontSize: 16)),
-          Text(value,
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF31BAC2))),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProgressChart() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Progresso de Peso',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            Container(
-              height: 200,
-              child: _buildWeightChart(),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  // Implement document image viewing or updating functionality
+                },
+                child: Container(
+                  width: 200,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xFF31BAC2)),
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: NetworkImage(fotoDocumento),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: fotoDocumento.isEmpty
+                      ? Icon(Icons.add_a_photo, size: 50, color: Color(0xFF31BAC2))
+                      : null,
+                ),
+              ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildWeightChart() {
-    // This is a placeholder for the chart
-    // You should implement an actual chart using a charting library
-    return Center(
-      child: Text('Gráfico de Progresso de Peso'),
     );
   }
 
@@ -301,18 +268,6 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
         SnackBar(content: Text('Perfil atualizado com sucesso!')),
       );
     }
-  }
-
-  double _calculateBMI() {
-    return weight / (height * height);
-  }
-
-  String _getBMICategory() {
-    double bmi = _calculateBMI();
-    if (bmi < 18.5) return 'Abaixo do peso';
-    if (bmi < 25) return 'Normal';
-    if (bmi < 30) return 'Sobrepeso';
-    return 'Obeso';
   }
 }
 
