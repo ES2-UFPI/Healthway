@@ -215,3 +215,13 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 }
+
+_buildForgotPasswordButton() {
+  return TextButton(
+    onPressed: () {  },
+    child: Text(
+      'Esqueceu sua senha?',
+      style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
+    ),
+  );
+}
