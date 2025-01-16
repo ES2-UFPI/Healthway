@@ -30,10 +30,11 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
 
   void _filtrarAlimentos(String query) {
     setState(() {
-      alimentosFiltrados = alimentos
-          .where((alimento) =>
-          alimento.nome.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      alimentosFiltrados = alimentos.where((alimento) {
+        final descricaoMatch = alimento.descricao.toLowerCase().contains(query.toLowerCase());
+        final categoriaMatch = alimento.categoria.toLowerCase().contains(query.toLowerCase());
+        return descricaoMatch || categoriaMatch;
+      }).toList();
     });
   }
 
@@ -44,7 +45,9 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
       appBar: AppBar(
         title: Text('Alimentos'),
         backgroundColor: Color(0xFF31BAC2),
-        elevation: 0,
+        elevation: 5,
+        // Remover o arredondamento da parte superior do AppBar
+        shape: null,
       ),
       body: Column(
         children: [
@@ -107,10 +110,12 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Card(
-            elevation: 2,
+            elevation: 6,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(20),
             ),
+            shadowColor: Colors.black.withOpacity(0.2),
+            color: Colors.transparent,  // Garantir que o fundo do card seja transparente
             child: AlimentoItem(alimento: alimentosFiltrados[index]),
           ),
         );
@@ -156,4 +161,3 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
     );
   }
 }
-
