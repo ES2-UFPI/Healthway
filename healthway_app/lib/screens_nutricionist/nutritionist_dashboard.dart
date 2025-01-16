@@ -143,7 +143,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
               _buildQuickAccessItem(context, Icons.people, 'Pacientes', '/patientList'),
               _buildQuickAccessItem(context, Icons.calendar_today, 'Agenda', '/schedule'),
               _buildQuickAccessItem(context, Icons.restaurant_menu, 'Planos', '/meal_plans'),
-              _buildQuickAccessItem(context, Icons.message, 'Mensagens', '/chat'),
+              _buildQuickAccessItem(context, Icons.food_bank_outlined, 'Alimentos', '/alimentos'),
             ],
           ),
         ],
