@@ -35,7 +35,7 @@ const alimentoController = {
             res.status(500).json({ error: error.message });
         }
     },
-    
+
     //Obter um alimento pelo ID
     async getById(req, res){
         try {
@@ -74,7 +74,31 @@ const alimentoController = {
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }
+    },
+
+    async getByCategory(req, res) {
+        try {
+          const { nome } = req.params;
+
+          const startAt = nome;
+          const endAt = nome + '\uf8ff';
+
+          const snapshot = await db.collection('alimentos')
+                                                .orderBy('Categoria')
+                                                .startAt(startAt)
+                                                .endAt(endAt)
+                                                .get();
+
+          if (snapshot.empty) {
+            return res.status(404).json({ message: 'Nenhum alimento encontrado nessa categoria.' });
+          }
+
+          const alimentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          res.status(200).json(alimentos);
+        } catch (error) {
+          res.status(500).json({ error: error.message });
+        }
+      },
 };
 
 module.exports = alimentoController;
