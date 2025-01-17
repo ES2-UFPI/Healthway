@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:healthway_app/models/paciente.dart';
 import 'package:intl/intl.dart';
-import '../services/paciente_services.dart';
+import '../services/services_facade.dart';
 
 class CadastroPacienteScreen extends StatefulWidget {
   const CadastroPacienteScreen({super.key});
 
   @override
-  _CadastroPacienteScreenState createState() => _CadastroPacienteScreenState();
+  State<CadastroPacienteScreen> createState() => _CadastroPacienteScreenState();
 }
 
 class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
@@ -27,9 +28,9 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
   final _confirmarSenhaController = TextEditingController();
 
   String? _sexo;
-  DateTime? _dataNascimento;
 
-  final PacienteService _pacienteService = PacienteService();
+  // final PacienteService _pacienteService = PacienteService();
+  final ServicesFacade _servicesFacade = ServicesFacade();
 
   bool _isLoading = false;
   bool _obscurePassword = true;
@@ -40,7 +41,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFE6F7F8),
       appBar: AppBar(
-        title: Text('Cadastro de Paciente', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('Cadastro de Paciente',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFF31BAC2),
         elevation: 0,
       ),
@@ -67,20 +69,28 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildTextField(_nomeController, 'Nome completo', Icons.person),
-                    _buildTextField(_emailController, 'E-mail', Icons.email, keyboardType: TextInputType.emailAddress),
-                    _buildTextField(_cpfController, 'CPF', Icons.badge, inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+                    _buildTextField(
+                        _nomeController, 'Nome completo', Icons.person),
+                    _buildTextField(_emailController, 'E-mail', Icons.email,
+                        keyboardType: TextInputType.emailAddress),
+                    _buildTextField(_cpfController, 'CPF', Icons.badge,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ]),
                     _buildDateField(),
                     _buildDropdownField(),
                     _buildMeasurementFields(),
-                    _buildTextField(_alergiasController, 'Alergias', Icons.warning),
-                    _buildTextField(_preferenciasController, 'Preferências Alimentares', Icons.restaurant),
+                    _buildTextField(
+                        _alergiasController, 'Alergias', Icons.warning),
+                    _buildTextField(_preferenciasController,
+                        'Preferências Alimentares', Icons.restaurant),
                     _buildPasswordFields(),
                     SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: _isLoading ? null : _submitForm,
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white, backgroundColor: Color(0xFF31BAC2),
+                        foregroundColor: Colors.white,
+                        backgroundColor: Color(0xFF31BAC2),
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -88,7 +98,9 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
                       ),
                       child: _isLoading
                           ? CircularProgressIndicator(color: Colors.white)
-                          : Text('Cadastrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          : Text('Cadastrar',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ],
                 ),
@@ -100,7 +112,10 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {TextInputType? keyboardType, List<TextInputFormatter>? inputFormatters}) {
+  Widget _buildTextField(
+      TextEditingController controller, String label, IconData icon,
+      {TextInputType? keyboardType,
+      List<TextInputFormatter>? inputFormatters}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
@@ -161,7 +176,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
                   primaryColor: Color(0xFF31BAC2),
                   hintColor: Color(0xFF31BAC2),
                   colorScheme: ColorScheme.light(primary: Color(0xFF31BAC2)),
-                  buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                  buttonTheme:
+                      ButtonThemeData(textTheme: ButtonTextTheme.primary),
                 ),
                 child: child!,
               );
@@ -169,8 +185,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           );
           if (pickedDate != null) {
             setState(() {
-              _dataNascimento = pickedDate;
-              _dataNascimentoController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+              _dataNascimentoController.text =
+                  DateFormat('dd/MM/yyyy').format(pickedDate);
             });
           }
         },
@@ -204,9 +220,9 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
         style: TextStyle(fontSize: 16, color: Colors.black),
         items: ['Masculino', 'Feminino', 'Outro']
             .map((label) => DropdownMenuItem(
-          child: Text(label),
-          value: label,
-        ))
+                  value: label,
+                  child: Text(label),
+                ))
             .toList(),
         onChanged: (value) {
           setState(() {
@@ -235,24 +251,36 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           children: [
             Text(
               'Medidas Corporais',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF31BAC2)),
             ),
             SizedBox(height: 16),
             Row(
               children: [
-                Expanded(child: _buildMeasurementField(_alturaController, 'Altura (cm)', Icons.height)),
+                Expanded(
+                    child: _buildMeasurementField(
+                        _alturaController, 'Altura (cm)', Icons.height)),
                 SizedBox(width: 16),
-                Expanded(child: _buildMeasurementField(_pesoController, 'Peso (kg)', Icons.fitness_center)),
+                Expanded(
+                    child: _buildMeasurementField(
+                        _pesoController, 'Peso (kg)', Icons.fitness_center)),
               ],
             ),
             SizedBox(height: 16),
-            _buildMeasurementField(_circunferenciaAbdominalController, 'Circunferência Abdominal (cm)', Icons.straighten),
+            _buildMeasurementField(_circunferenciaAbdominalController,
+                'Circunferência Abdominal (cm)', Icons.straighten),
             SizedBox(height: 16),
             Row(
               children: [
-                Expanded(child: _buildMeasurementField(_gorduraCorporalController, 'Gordura Corporal (%)', Icons.percent)),
+                Expanded(
+                    child: _buildMeasurementField(_gorduraCorporalController,
+                        'Gordura Corporal (%)', Icons.percent)),
                 SizedBox(width: 16),
-                Expanded(child: _buildMeasurementField(_massaMuscularController, 'Massa Muscular (kg)', Icons.fitness_center)),
+                Expanded(
+                    child: _buildMeasurementField(_massaMuscularController,
+                        'Massa Muscular (kg)', Icons.fitness_center)),
               ],
             ),
           ],
@@ -261,7 +289,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
     );
   }
 
-  Widget _buildMeasurementField(TextEditingController controller, String label, IconData icon) {
+  Widget _buildMeasurementField(
+      TextEditingController controller, String label, IconData icon) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
@@ -300,16 +329,21 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           children: [
             Text(
               'Segurança',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF31BAC2)),
             ),
             SizedBox(height: 16),
-            _buildPasswordField(_senhaController, 'Senha', _obscurePassword, () {
+            _buildPasswordField(_senhaController, 'Senha', _obscurePassword,
+                () {
               setState(() {
                 _obscurePassword = !_obscurePassword;
               });
             }),
             SizedBox(height: 16),
-            _buildPasswordField(_confirmarSenhaController, 'Confirmar Senha', _obscureConfirmPassword, () {
+            _buildPasswordField(_confirmarSenhaController, 'Confirmar Senha',
+                _obscureConfirmPassword, () {
               setState(() {
                 _obscureConfirmPassword = !_obscureConfirmPassword;
               });
@@ -320,7 +354,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
     );
   }
 
-  Widget _buildPasswordField(TextEditingController controller, String label, bool obscureText, Function() onTap) {
+  Widget _buildPasswordField(TextEditingController controller, String label,
+      bool obscureText, Function() onTap) {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
@@ -367,7 +402,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
       });
 
       try {
-        await _pacienteService.cadastrarPaciente(
+        await _servicesFacade.cadastrar(Paciente(
           nome: _nomeController.text,
           email: _emailController.text,
           cpf: _cpfController.text,
@@ -375,13 +410,14 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           sexo: _sexo!,
           altura: double.parse(_alturaController.text),
           peso: double.parse(_pesoController.text),
-          circunferenciaAbdominal: double.parse(_circunferenciaAbdominalController.text),
+          circunferenciaAbdominal:
+              double.parse(_circunferenciaAbdominalController.text),
           gorduraCorporal: double.parse(_gorduraCorporalController.text),
           massaMuscular: double.parse(_massaMuscularController.text),
           alergias: _alergiasController.text,
           preferencias: _preferenciasController.text,
           senha: _senhaController.text,
-        );
+        ));
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Paciente cadastrado com sucesso!')),
@@ -390,7 +426,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
         Navigator.of(context).pop();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao cadastrar paciente: ${e.toString()}')),
+          SnackBar(
+              content: Text('Erro ao cadastrar paciente: ${e.toString()}')),
         );
       } finally {
         setState(() {
@@ -418,4 +455,3 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
     super.dispose();
   }
 }
-

@@ -1,7 +1,8 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../models/nutricionista.dart';
-import 'dart:io';
 
 class NutricionistaService {
   static const String apiUrl = 'http://localhost:3000/api/nutricionistas';
@@ -11,9 +12,9 @@ class NutricionistaService {
 
     if (response.statusCode == 200) {
       try {
-        List<dynamic> data = json.decode(response.body);
+        List<dynamic>? data = json.decode(response.body);
 
-        if (data != null && data is List) {
+        if (data != null) {
           return data.map((json) => Nutricionista.fromJson(json)).toList();
         } else {
           throw Exception('Dados não encontrados ou formato inválido');
@@ -26,28 +27,21 @@ class NutricionistaService {
     }
   }
 
-  Future<void> cadastrarNutricionista({
-    required String nome,
-    required String email,
-    required String cpf,
-    required String crn,
-    required String especialidade,
-    required File fotoPerfil,
-    required File fotoDocumento,
-    required String senha,
-  }) async {
-    var uri = Uri.parse('$apiUrl');
+  Future<void> cadastrarNutricionista(Nutricionista nutricionista) async {
+    var uri = Uri.parse(apiUrl);
     var request = http.MultipartRequest('POST', uri);
 
-    request.fields['nome'] = nome;
-    request.fields['email'] = email;
-    request.fields['cpf'] = cpf;
-    request.fields['crn'] = crn;
-    request.fields['especialidade'] = especialidade;
-    request.fields['senha'] = senha;
+    request.fields['nome'] = nutricionista.nome;
+    request.fields['email'] = nutricionista.email;
+    request.fields['cpf'] = nutricionista.cpf;
+    request.fields['crn'] = nutricionista.crn;
+    request.fields['especialidade'] = nutricionista.especialidade;
+    request.fields['senha'] = nutricionista.senha;
 
-    request.files.add(await http.MultipartFile.fromPath('foto_perfil', fotoPerfil.path));
-    request.files.add(await http.MultipartFile.fromPath('foto_documento', fotoDocumento.path));
+    // request.files
+    //     .add(await http.MultipartFile.fromPath('foto_perfil', fotoPerfil.path));
+    // request.files.add(await http.MultipartFile.fromPath(
+    //     'foto_documento', fotoDocumento.path));
 
     var response = await request.send();
     if (response.statusCode != 201) {
@@ -55,4 +49,3 @@ class NutricionistaService {
     }
   }
 }
-

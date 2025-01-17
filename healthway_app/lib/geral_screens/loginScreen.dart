@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:healthway_app/screens_patient/signupScreen.dart';
-import 'package:healthway_app/screens_nutricionist/signUpNutritionist.dart';
+import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
+import 'package:healthway_app/screens_nutricionist/signup_nutritionist.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -47,7 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildTextField(_emailController, 'E-mail', Icons.email, keyboardType: TextInputType.emailAddress),
+                    _buildTextField(_emailController, 'E-mail', Icons.email,
+                        keyboardType: TextInputType.emailAddress),
                     SizedBox(height: 20),
                     _buildPasswordField(),
                     SizedBox(height: 20),
@@ -67,7 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {TextInputType? keyboardType}) {
+  Widget _buildTextField(
+      TextEditingController controller, String label, IconData icon,
+      {TextInputType? keyboardType}) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
@@ -139,7 +142,8 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         child: Text(
           'Esqueceu a senha?',
-          style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
+          style:
+              TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -149,13 +153,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return ElevatedButton(
       onPressed: _submitForm,
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white, backgroundColor: Color(0xFF31BAC2),
+        foregroundColor: Colors.white,
+        backgroundColor: Color(0xFF31BAC2),
         padding: EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
       ),
-      child: Text('Entrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      child: Text('Entrar',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -198,4 +204,3 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 }
-

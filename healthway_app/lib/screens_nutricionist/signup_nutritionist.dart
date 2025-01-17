@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:healthway_app/models/nutricionista.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import '../services/nutricionista_services.dart';
+import 'package:healthway_app/services/services_facade.dart';
 
 class CadastroNutricionistaScreen extends StatefulWidget {
   const CadastroNutricionistaScreen({super.key});
 
   @override
-  _CadastroNutricionistaScreenState createState() => _CadastroNutricionistaScreenState();
+  State<CadastroNutricionistaScreen> createState() =>
+      _CadastroNutricionistaScreenState();
 }
 
-class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScreen> {
+class _CadastroNutricionistaScreenState
+    extends State<CadastroNutricionistaScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nomeController = TextEditingController();
   final _emailController = TextEditingController();
@@ -24,7 +27,7 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
   File? _fotoPerfil;
   File? _fotoDocumento;
 
-  final NutricionistaService _nutricionistaService = NutricionistaService();
+  final ServicesFacade _servicesFacade = ServicesFacade();
 
   bool _isLoading = false;
   bool _obscurePassword = true;
@@ -35,7 +38,8 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
     return Scaffold(
       backgroundColor: Color(0xFFE6F7F8),
       appBar: AppBar(
-        title: Text('Cadastro de Nutricionista', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('Cadastro de Nutricionista',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFF31BAC2),
         elevation: 0,
       ),
@@ -62,22 +66,32 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildTextField(_nomeController, 'Nome completo', Icons.person),
-                    _buildTextField(_emailController, 'E-mail', Icons.email, keyboardType: TextInputType.emailAddress),
-                    _buildTextField(_cpfController, 'CPF', Icons.badge, inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
-                    _buildTextField(_crnController, 'CRN', Icons.card_membership),
-                    _buildTextField(_especialidadeController, 'Especialidade', Icons.star),
+                    _buildTextField(
+                        _nomeController, 'Nome completo', Icons.person),
+                    _buildTextField(_emailController, 'E-mail', Icons.email,
+                        keyboardType: TextInputType.emailAddress),
+                    _buildTextField(_cpfController, 'CPF', Icons.badge,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ]),
+                    _buildTextField(
+                        _crnController, 'CRN', Icons.card_membership),
+                    _buildTextField(
+                        _especialidadeController, 'Especialidade', Icons.star),
                     SizedBox(height: 20),
-                    _buildImageUploadField('Foto de Perfil', _fotoPerfil, _pickProfileImage),
+                    _buildImageUploadField(
+                        'Foto de Perfil', _fotoPerfil, _pickProfileImage),
                     SizedBox(height: 20),
-                    _buildImageUploadField('Foto do Documento', _fotoDocumento, _pickDocumentImage),
+                    _buildImageUploadField('Foto do Documento', _fotoDocumento,
+                        _pickDocumentImage),
                     SizedBox(height: 20),
                     _buildPasswordFields(),
                     SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: _isLoading ? null : _submitForm,
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white, backgroundColor: Color(0xFF31BAC2),
+                        foregroundColor: Colors.white,
+                        backgroundColor: Color(0xFF31BAC2),
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -85,7 +99,9 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
                       ),
                       child: _isLoading
                           ? CircularProgressIndicator(color: Colors.white)
-                          : Text('Cadastrar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          : Text('Cadastrar',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ],
                 ),
@@ -97,7 +113,10 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {TextInputType? keyboardType, List<TextInputFormatter>? inputFormatters}) {
+  Widget _buildTextField(
+      TextEditingController controller, String label, IconData icon,
+      {TextInputType? keyboardType,
+      List<TextInputFormatter>? inputFormatters}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
@@ -139,17 +158,20 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
         ),
         child: image == null
             ? Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.add_a_photo, size: 50, color: Color(0xFF31BAC2)),
-            SizedBox(height: 10),
-            Text(label, style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold)),
-          ],
-        )
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.add_a_photo, size: 50, color: Color(0xFF31BAC2)),
+                  SizedBox(height: 10),
+                  Text(label,
+                      style: TextStyle(
+                          color: Color(0xFF31BAC2),
+                          fontWeight: FontWeight.bold)),
+                ],
+              )
             : ClipRRect(
-          borderRadius: BorderRadius.circular(13),
-          child: Image.file(image, fit: BoxFit.cover),
-        ),
+                borderRadius: BorderRadius.circular(13),
+                child: Image.file(image, fit: BoxFit.cover),
+              ),
       ),
     );
   }
@@ -166,16 +188,21 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
           children: [
             Text(
               'Segurança',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF31BAC2)),
             ),
             SizedBox(height: 16),
-            _buildPasswordField(_senhaController, 'Senha', _obscurePassword, () {
+            _buildPasswordField(_senhaController, 'Senha', _obscurePassword,
+                () {
               setState(() {
                 _obscurePassword = !_obscurePassword;
               });
             }),
             SizedBox(height: 16),
-            _buildPasswordField(_confirmarSenhaController, 'Confirmar Senha', _obscureConfirmPassword, () {
+            _buildPasswordField(_confirmarSenhaController, 'Confirmar Senha',
+                _obscureConfirmPassword, () {
               setState(() {
                 _obscureConfirmPassword = !_obscureConfirmPassword;
               });
@@ -186,7 +213,8 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
     );
   }
 
-  Widget _buildPasswordField(TextEditingController controller, String label, bool obscureText, Function() onTap) {
+  Widget _buildPasswordField(TextEditingController controller, String label,
+      bool obscureText, Function() onTap) {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
@@ -220,7 +248,8 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
   }
 
   Future<void> _pickProfileImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _fotoPerfil = File(pickedFile.path);
@@ -229,7 +258,8 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
   }
 
   Future<void> _pickDocumentImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _fotoDocumento = File(pickedFile.path);
@@ -241,7 +271,9 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
     if (_formKey.currentState!.validate()) {
       if (_fotoPerfil == null || _fotoDocumento == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Por favor, selecione as fotos de perfil e documento')),
+          SnackBar(
+              content:
+                  Text('Por favor, selecione as fotos de perfil e documento')),
         );
         return;
       }
@@ -258,16 +290,14 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
       });
 
       try {
-        await _nutricionistaService.cadastrarNutricionista(
+        await _servicesFacade.cadastrar(Nutricionista(
           nome: _nomeController.text,
           email: _emailController.text,
           cpf: _cpfController.text,
           crn: _crnController.text,
           especialidade: _especialidadeController.text,
-          fotoPerfil: _fotoPerfil!,
-          fotoDocumento: _fotoDocumento!,
           senha: _senhaController.text,
-        );
+        ));
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Nutricionista cadastrado com sucesso!')),
@@ -276,7 +306,9 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
         Navigator.of(context).pop();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao cadastrar nutricionista: ${e.toString()}')),
+          SnackBar(
+              content:
+                  Text('Erro ao cadastrar nutricionista: ${e.toString()}')),
         );
       } finally {
         setState(() {
@@ -298,4 +330,3 @@ class _CadastroNutricionistaScreenState extends State<CadastroNutricionistaScree
     super.dispose();
   }
 }
-
