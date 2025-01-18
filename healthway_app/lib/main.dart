@@ -12,7 +12,11 @@ import 'package:healthway_app/screens_patient/dietScreen.dart';
 import 'package:healthway_app/screens_patient/notificationScreen.dart';
 import 'package:healthway_app/screens_patient/profileScreen.dart';
 import 'package:healthway_app/screens_patient/setingsScreen.dart';
-import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
+import 'package:healthway_app/screens_patient/signupScreen.dart';
+import 'package:healthway_app/widgets/paciente_item.dart';
+
+import 'geral_screens/chat_screen.dart';
+import 'geral_screens/presentationScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,7 +57,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => PatientProfileScreen(),
         '/notifications': (context) => NotificationScreen(),
         '/settings': (context) => SettingsScreen(),
-        '/patientList': (context) => PatientListScreen(),
+        '/patientList': (context) => PacientesScreen(),
         '/nutritionistProfile': (context) => NutritionistProfileScreen(),
         '/schedule': (context) => ScheduleScreen(),
         '/meal_plans': (context) => MealPlanScreen(
@@ -73,19 +77,6 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Home')),
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: Center(child: Text('Tela Inicial')),
-    );
-  }
-}
-
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Chat')),
-      bottomNavigationBar: CustomBottomNavigationBar(),
-      body: Center(child: Text('Tela de Chat')),
     );
   }
 }

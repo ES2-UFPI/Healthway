@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
-import 'package:healthway_app/screens_nutricionist/signup_nutritionist.dart';
+import 'package:healthway_app/geral_screens/forgot_screen.dart';
+import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard.dart';
+import 'package:healthway_app/screens_patient/dashboardScreen.dart';
+import 'package:healthway_app/screens_patient/signupScreen.dart';
+import 'package:healthway_app/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,13 +15,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _senhaController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE6F7F8), // Tom muito claro de azul
+      backgroundColor: Color(0xFFE6F7F8),
       appBar: AppBar(
         title: Text('Login', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFF31BAC2),
@@ -56,8 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 30),
                     _buildLoginButton(),
                     SizedBox(height: 20),
-                    _buildPatientButton(),
-                    _buildNutricionistButton(),
+                    _buildSignUpButton(),
                   ],
                 ),
               ),
@@ -98,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildPasswordField() {
     return TextFormField(
-      controller: _senhaController,
+      controller: _passwordController,
       obscureText: _obscurePassword,
       decoration: InputDecoration(
         labelText: 'Senha',
@@ -133,25 +136,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordButton() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () {
-          // TODO: Implementar lógica para recuperação de senha
-        },
-        child: Text(
-          'Esqueceu a senha?',
-          style:
-              TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-
   Widget _buildLoginButton() {
     return ElevatedButton(
-      onPressed: _submitForm,
+      onPressed: _isLoading ? null : _submitForm,
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
         backgroundColor: Color(0xFF31BAC2),
@@ -160,47 +147,81 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(30),
         ),
       ),
-      child: Text('Entrar',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      child: _isLoading
+          ? CircularProgressIndicator(color: Colors.white)
+          : Text('Entrar',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
     );
   }
 
-  Widget _buildPatientButton() {
+  Widget _buildSignUpButton() {
     return TextButton(
       onPressed: () {
-        MaterialPageRoute(builder: (_) => CadastroPacienteScreen());
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CadastroPacienteScreen()),
+        );
       },
       child: Text(
-        'Sou paciente',
+        'Não tem uma conta? Cadastre-se',
         style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  Widget _buildNutricionistButton() {
-    return TextButton(
-      onPressed: () {
-        MaterialPageRoute(builder: (_) => CadastroNutricionistaScreen());
-      },
-      child: Text(
-        'Sou nutricionista',
-        style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // TODO: Implementar lógica de autenticação
-      print('Form is valid. Submitting...');
-      // Você normalmente chamaria um método de serviço aqui para autenticar o usuário
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        final userType = await AuthService.signIn(
+          _emailController.text,
+          _passwordController.text,
+        );
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (userType == UserType.patient) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => PatientDashboardScreen()),
+          );
+        } else if (userType == UserType.nutritionist) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NutritionistDashboardScreen()),
+          );
+        }
+      } catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao fazer login: ${e.toString()}')),
+        );
+      }
     }
   }
 
   @override
   void dispose() {
     _emailController.dispose();
-    _senhaController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
+}
+
+_buildForgotPasswordButton() {
+  return TextButton(
+    onPressed: () {  },
+    child: Text(
+      'Esqueceu sua senha?',
+      style: TextStyle(color: Color(0xFF31BAC2), fontWeight: FontWeight.bold),
+    ),
+  );
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:healthway_app/geral_screens/loginScreen.dart';
 import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard.dart';
 import 'dart:async';
 
-import 'package:healthway_app/screens_patient//dashboardScreen.dart';
+import 'package:healthway_app/screens_nutricionist/patient_list_screen.dart';
 
 class PresentationScreen extends StatefulWidget {
   const PresentationScreen({super.key});
