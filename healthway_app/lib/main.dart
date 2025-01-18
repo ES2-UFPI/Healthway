@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:healthway_app/geral_screens/presentationScreen.dart';
 import 'package:healthway_app/geral_screens/alimentos_screen.dart';
+import 'package:healthway_app/geral_screens/loginScreen.dart';
 import 'package:healthway_app/geral_screens/nutricionistas_screen.dart';
+import 'package:healthway_app/geral_screens/presentationScreen.dart';
+import 'package:healthway_app/screens_nutricionist/meal_plan_screen.dart';
 import 'package:healthway_app/screens_nutricionist/nutritionist_profile.dart';
 import 'package:healthway_app/screens_nutricionist/patient_list_screen.dart';
 import 'package:healthway_app/screens_nutricionist/schedule_screen.dart';
 import 'package:healthway_app/screens_patient/dashboardScreen.dart';
 import 'package:healthway_app/screens_patient/dietScreen.dart';
-import 'package:healthway_app/geral_screens/loginScreen.dart';
 import 'package:healthway_app/screens_patient/notificationScreen.dart';
 import 'package:healthway_app/screens_patient/profileScreen.dart';
 import 'package:healthway_app/screens_patient/setingsScreen.dart';
@@ -47,7 +48,9 @@ class MyApp extends StatelessWidget {
         '/signUp': (context) => CadastroPacienteScreen(),
         '/login': (context) => LoginScreen(),
         '/chat': (context) => ChatScreen(),
-        '/health': (context) => PlanoAlimentarScreen(pacienteId: '',),
+        '/health': (context) => PlanoAlimentarScreen(
+              pacienteId: '',
+            ),
         '/alimentos': (context) => AlimentosScreen(),
         '/nutricionistas': (context) => NutricionistasScreen(),
         '/menu': (context) => MenuScreen(),
@@ -57,6 +60,9 @@ class MyApp extends StatelessWidget {
         '/patientList': (context) => PacientesScreen(),
         '/nutritionistProfile': (context) => NutritionistProfileScreen(),
         '/schedule': (context) => ScheduleScreen(),
+        '/meal_plans': (context) => MealPlanScreen(
+              patientName: '',
+            ),
       },
     );
   }
