@@ -4,10 +4,10 @@ import 'package:intl/intl.dart';
 class PlanoAlimentarScreen extends StatefulWidget {
   final String pacienteId;
 
-  const PlanoAlimentarScreen({Key? key, required this.pacienteId}) : super(key: key);
+  const PlanoAlimentarScreen({super.key, required this.pacienteId});
 
   @override
-  _PlanoAlimentarScreenState createState() => _PlanoAlimentarScreenState();
+  State<PlanoAlimentarScreen> createState() => _PlanoAlimentarScreenState();
 }
 
 class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
@@ -30,9 +30,18 @@ class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
           dtInicio: DateTime.now(),
           dtFim: DateTime.now().add(Duration(days: 30)),
           refeicoes: [
-            Refeicao('Café da Manhã', ['2 fatias de pão integral', '1 ovo cozido', '1 maçã']),
-            Refeicao('Almoço', ['150g de frango grelhado', '1 xícara de arroz integral', 'Salada verde']),
-            Refeicao('Jantar', ['150g de peixe assado', '1 batata doce média', 'Legumes no vapor']),
+            Refeicao('Café da Manhã',
+                ['2 fatias de pão integral', '1 ovo cozido', '1 maçã']),
+            Refeicao('Almoço', [
+              '150g de frango grelhado',
+              '1 xícara de arroz integral',
+              'Salada verde'
+            ]),
+            Refeicao('Jantar', [
+              '150g de peixe assado',
+              '1 batata doce média',
+              'Legumes no vapor'
+            ]),
           ],
           paciente: widget.pacienteId,
         ),
@@ -46,15 +55,16 @@ class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: Text('Plano Alimentar', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('Plano Alimentar',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFF31BAC2),
         elevation: 0,
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator(color: Color(0xFF31BAC2)))
           : planosAlimentares.isEmpty
-          ? _buildEmptyState()
-          : _buildPlanoAlimentarList(),
+              ? _buildEmptyState()
+              : _buildPlanoAlimentarList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // TODO: Implementar a criação de um novo plano alimentar
@@ -96,13 +106,16 @@ class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
           child: ExpansionTile(
             title: Text(
               plano.consulta,
-              style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
             ),
             subtitle: Text(
               '${DateFormat('dd/MM/yyyy').format(plano.dtInicio)} - ${DateFormat('dd/MM/yyyy').format(plano.dtFim)}',
               style: TextStyle(color: Colors.grey[600]),
             ),
-            children: plano.refeicoes.map((refeicao) => _buildRefeicaoItem(refeicao)).toList(),
+            children: plano.refeicoes
+                .map((refeicao) => _buildRefeicaoItem(refeicao))
+                .toList(),
           ),
         );
       },
@@ -121,9 +134,9 @@ class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
           ),
           SizedBox(height: 4),
           ...refeicao.alimentos.map((alimento) => Padding(
-            padding: const EdgeInsets.only(left: 16, top: 2),
-            child: Text('• $alimento'),
-          )),
+                padding: const EdgeInsets.only(left: 16, top: 2),
+                child: Text('• $alimento'),
+              )),
         ],
       ),
     );
@@ -152,4 +165,3 @@ class Refeicao {
 
   Refeicao(this.nome, this.alimentos);
 }
-

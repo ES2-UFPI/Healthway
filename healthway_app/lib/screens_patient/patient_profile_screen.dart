@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:healthway_app/models/paciente.dart';
 import 'package:healthway_app/services/services_facade.dart';
+import 'package:intl/intl.dart';
 
 class PatientProfileScreen extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -36,12 +37,9 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
     name = widget.userData['nome'];
     email = widget.userData['email'];
     var birthDate = widget.userData['dt_nascimento'];
-    age = DateTime.now()
-            .difference(DateTime.fromMillisecondsSinceEpoch(
-                birthDate['_seconds'] * 1000 +
-                    birthDate['_nanoseconds'] ~/ 1000000))
-            .inDays ~/
-        365;
+    var ageDuration =
+        DateTime.now().difference(DateFormat('dd/MM/yyyy').parse(birthDate));
+    age = ageDuration.inDays ~/ 365;
     altura = widget.userData['altura'].toDouble();
     peso = widget.userData['peso'].toDouble();
     circunferenciaAbdominal =
@@ -318,21 +316,28 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
 
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
-      // Save the changes
-      setState(() {
-        _edited = false;
-      });
-      widget.userData['altura'] = altura;
-      widget.userData['peso'] = peso;
-      widget.userData['circunferencia_abdominal'] = circunferenciaAbdominal;
-      widget.userData['massa_muscular'] = massaMuscular;
-      widget.userData['gordura_corporal'] = gorduraCorporal;
-      widget.userData['preferencias'] = preferencias;
-      widget.userData['alergias'] = alergias;
-      _servicesFacade.atualizar(Paciente.fromJson(widget.userData));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Perfil atualizado com sucesso!')),
-      );
+      try {
+        // Save the changes
+        setState(() {
+          _edited = false;
+        });
+        widget.userData['altura'] = altura.toDouble();
+        widget.userData['peso'] = peso.toDouble();
+        widget.userData['circunferencia_abdominal'] =
+            circunferenciaAbdominal.toDouble();
+        widget.userData['massa_muscular'] = massaMuscular.toDouble();
+        widget.userData['gordura_corporal'] = gorduraCorporal.toDouble();
+        widget.userData['preferencias'] = preferencias;
+        widget.userData['alergias'] = alergias;
+        _servicesFacade.atualizar(Paciente.fromJson(widget.userData));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Perfil atualizado com sucesso')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao atualizar perfil: $e')),
+        );
+      }
     }
   }
 

@@ -46,9 +46,17 @@ class ServicesFacade {
 
   Future<void> atualizar(dynamic entity) async {
     if (entity is Nutricionista) {
-      await _nutricionistaService.atualizarNutricionista(entity);
+      try {
+        await _nutricionistaService.atualizarNutricionista(entity);
+      } catch (e) {
+        throw Exception('Erro ao atualizar Nutricionista: $e');
+      }
     } else if (entity is Paciente) {
-      await _pacienteService.atualizarPaciente(entity);
+      try {
+        await _pacienteService.atualizarPaciente(entity);
+      } catch (e) {
+        throw Exception('Erro ao atualizar Paciente: $e');
+      }
     } else {
       throw Exception('Tipo de entidade desconhecido');
     }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -144,7 +143,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Adicionar Consulta'),
-          content: Text('Funcionalidade de adicionar consulta a ser implementada.'),
+          content:
+              Text('Funcionalidade de adicionar consulta a ser implementada.'),
           actions: [
             TextButton(
               child: Text('OK'),
@@ -195,4 +195,3 @@ class Appointment {
 
   Appointment(this.patientName, this.type, this.time);
 }
-

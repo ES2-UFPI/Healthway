@@ -1,73 +1,161 @@
 import 'package:flutter/material.dart';
+import '../models/paciente.dart';
+import '../services/paciente_services.dart';
+import '../widgets/paciente_item.dart';
 
-class PatientListScreen extends StatelessWidget {
-  const PatientListScreen({super.key});
+class PacientesScreen extends StatefulWidget {
+  const PacientesScreen({super.key});
+
+  @override
+  _PacientesScreenState createState() => _PacientesScreenState();
+}
+
+class _PacientesScreenState extends State<PacientesScreen> {
+  late Future<List<Paciente>> _pacientes;
+  List<Paciente> pacientes = [];
+  List<Paciente> pacientesFiltrados = [];
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarPacientes();
+  }
+
+  void _carregarPacientes() {
+    setState(() {
+      _pacientes = PacienteService().fetchPacientes();
+    });
+  }
+
+  void _filtrarPacientes(String query) {
+    setState(() {
+      pacientesFiltrados = pacientes
+          .where((paciente) =>
+              paciente.nome.toLowerCase().contains(query.toLowerCase()) ||
+              paciente.email.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text('Meus Pacientes'),
-        backgroundColor: const Color(0xFF31BAC2),
+        title: Text('Pacientes'),
+        backgroundColor: Color(0xFF31BAC2),
         elevation: 0,
       ),
-      body: SafeArea(
-        child: ListView.builder(
-          itemCount: 10, // Exemplo com 10 pacientes
-          itemBuilder: (context, index) {
-            return _buildPatientItem('Paciente ${index + 1}', 'Última consulta: ${10 - index}d atrás');
-          },
-        ),
+      body: Column(
+        children: [
+          _buildSearchBar(),
+          Expanded(
+            child: FutureBuilder<List<Paciente>>(
+              future: _pacientes,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                      child:
+                          CircularProgressIndicator(color: Color(0xFF31BAC2)));
+                } else if (snapshot.hasError) {
+                  return _buildErrorWidget(snapshot.error.toString());
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return _buildEmptyWidget();
+                } else {
+                  pacientes = snapshot.data!;
+                  if (pacientesFiltrados.isEmpty) {
+                    pacientesFiltrados = pacientes;
+                  }
+                  return _buildPacientesList();
+                }
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Adicionar novo paciente
-        },
+        onPressed: _carregarPacientes,
         backgroundColor: Color(0xFF31BAC2),
-        child: Icon(Icons.add),
+        child: Icon(Icons.refresh),
       ),
     );
   }
 
-  Widget _buildPatientItem(String name, String lastConsultation) {
+  Widget _buildSearchBar() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 3),
+      padding: EdgeInsets.all(16),
+      color: Color(0xFF31BAC2),
+      child: TextField(
+        controller: searchController,
+        onChanged: _filtrarPacientes,
+        decoration: InputDecoration(
+          hintText: 'Pesquisar por nome ou email...',
+          prefixIcon: Icon(Icons.search, color: Color(0xFF31BAC2)),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPacientesList() {
+    return ListView.builder(
+      itemCount: pacientesFiltrados.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: PacienteItem(paciente: pacientesFiltrados[index]),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildErrorWidget(String error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.error_outline, size: 60, color: Colors.red),
+          SizedBox(height: 16),
+          Text(
+            'Erro ao carregar pacientes',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 8),
+          Text(
+            error,
+            style: TextStyle(color: Colors.grey[600]),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        leading: CircleAvatar(
-          backgroundColor: Color(0xFF31BAC2),
-          child: Text(
-            name[0],
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget _buildEmptyWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.person_off, size: 60, color: Color(0xFF31BAC2)),
+          SizedBox(height: 16),
+          Text(
+            'Nenhum paciente encontrado',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-        ),
-        title: Text(
-          name,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        subtitle: Text(
-          lastConsultation,
-          style: TextStyle(color: Colors.grey[600], fontSize: 14),
-        ),
-        trailing: Icon(Icons.chevron_right, color: Color(0xFF31BAC2)),
-        onTap: () {
-          // Navegar para os detalhes do paciente
-        },
+        ],
       ),
     );
   }
 }
-

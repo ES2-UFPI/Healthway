@@ -46,16 +46,16 @@ class PacienteService {
     request.fields['nome'] = paciente.nome;
     request.fields['email'] = paciente.email;
     request.fields['cpf'] = paciente.cpf;
-    request.fields['dataNascimento'] = paciente.dataNascimento.toString();
+    request.fields['dt_nascimento'] = paciente.dataNascimento.toString();
     request.fields['sexo'] = paciente.sexo;
     request.fields['altura'] = paciente.altura.toString();
     request.fields['peso'] = paciente.peso.toString();
-    request.fields['circunferenciaAbdominal'] =
+    request.fields['circunferencia_abdominal'] =
         paciente.circunferenciaAbdominal.toString();
-    request.fields['gorduraCorporal'] = paciente.gorduraCorporal.toString();
-    request.fields['massaMuscular'] = paciente.massaMuscular.toString();
-    request.fields['alergias'] = paciente.alergias;
-    request.fields['preferencias'] = paciente.preferencias;
+    request.fields['gordura_corporal'] = paciente.gorduraCorporal.toString();
+    request.fields['massa_muscular'] = paciente.massaMuscular.toString();
+    request.fields['alergias'] = paciente.alergias.toString();
+    request.fields['preferencias'] = paciente.preferencias.toString();
     request.fields['senha'] = paciente.senha;
 
     var response = await request.send();
@@ -81,24 +81,25 @@ class PacienteService {
 
   Future<void> atualizarPaciente(Paciente paciente) async {
     var uri = Uri.parse('$apiUrl/${paciente.id}');
-    var request = http.MultipartRequest('PUT', uri);
-
-    request.fields['nome'] = paciente.nome;
-    request.fields['email'] = paciente.email;
-    request.fields['cpf'] = paciente.cpf;
-    request.fields['dataNascimento'] = paciente.dataNascimento.toString();
-    request.fields['sexo'] = paciente.sexo;
-    request.fields['altura'] = paciente.altura.toString();
-    request.fields['peso'] = paciente.peso.toString();
-    request.fields['circunferenciaAbdominal'] =
-        paciente.circunferenciaAbdominal.toString();
-    request.fields['gorduraCorporal'] = paciente.gorduraCorporal.toString();
-    request.fields['massaMuscular'] = paciente.massaMuscular.toString();
-    request.fields['alergias'] = paciente.alergias;
-    request.fields['preferencias'] = paciente.preferencias;
-    request.fields['senha'] = paciente.senha;
-
-    var response = await request.send();
+    var response = await http.put(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'nome': paciente.nome,
+        'email': paciente.email,
+        'cpf': paciente.cpf,
+        'dt_nascimento': paciente.dataNascimento.toString(),
+        'sexo': paciente.sexo,
+        'altura': paciente.altura.toString(),
+        'peso': paciente.peso.toString(),
+        'circunferencia_abdominal': paciente.circunferenciaAbdominal.toString(),
+        'gordura_corporal': paciente.gorduraCorporal.toString(),
+        'massa_muscular': paciente.massaMuscular.toString(),
+        'alergias': paciente.alergias,
+        'preferencias': paciente.preferencias,
+        'senha': paciente.senha,
+      }),
+    );
     if (response.statusCode != 200) {
       throw Exception('Falha ao atualizar paciente');
     }

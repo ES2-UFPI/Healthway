@@ -60,7 +60,8 @@ const pacienteController = {
     async update(req, res) {
         try {
         const { id } = req.params;
-        const paciente = new Paciente(req.body);
+        const paciente = new Paciente();
+        paciente.fromJson(req.body);
 
         await db.collection('paciente').doc(id).update(paciente.toFirestore());
         res.status(200).json({ message: 'Paciente atualizado com sucesso!' });

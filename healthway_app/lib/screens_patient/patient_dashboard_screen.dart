@@ -84,9 +84,13 @@ class PatientDashboardScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildStatItem('IMC', '22.5'),
-                _buildStatItem('Peso', '70 kg'),
-                _buildStatItem('Altura', '1.75 m'),
+                _buildStatItem(
+                  'IMC',
+                  _calculateBMI(userData['altura'], userData['peso'])
+                      .toStringAsFixed(1),
+                ),
+                _buildStatItem('Peso', '${userData['peso'].toInt()} kg'),
+                _buildStatItem('Altura', '${userData['altura'].toInt()} cm'),
               ],
             ),
           ),
@@ -136,13 +140,14 @@ class PatientDashboardScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              _buildQuickAccessItem(context, Icons.restaurant_menu, 'Dieta',
+                  '/meal_plan', userData),
+              _buildQuickAccessItem(context, Icons.people, 'Nutricionistas',
+                  '/nutricionistas', null),
               _buildQuickAccessItem(
-                  context, Icons.restaurant_menu, 'Dieta', '/diet'),
+                  context, Icons.insert_chart, 'Progresso', '/progress', null),
               _buildQuickAccessItem(
-                  context, Icons.people, 'Nutricionistas', '/nutricionistas'),
-              _buildQuickAccessItem(
-                  context, Icons.insert_chart, 'Progresso', '/progress'),
-              _buildQuickAccessItem(context, Icons.message, 'Chat', '/chat'),
+                  context, Icons.message, 'Chat', '/chat', null),
             ],
           ),
         ],
@@ -150,12 +155,12 @@ class PatientDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAccessItem(
-      BuildContext context, IconData icon, String label, String route) {
+  Widget _buildQuickAccessItem(BuildContext context, IconData icon,
+      String label, String route, Object? args) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-            context, route); // Aqui você agora tem acesso ao 'context'
+        Navigator.pushNamed(context, route,
+            arguments: args); // Aqui você agora tem acesso ao 'context'
       },
       child: Column(
         children: [
@@ -343,7 +348,7 @@ class PatientDashboardScreen extends StatelessWidget {
               // Já estamos na tela inicial, então não faça nada
               break;
             case 1:
-              Navigator.pushNamed(context, '/health');
+              Navigator.pushNamed(context, '/meal_plan', arguments: userData);
               break;
             case 2:
               Navigator.pushNamed(context, '/progress');
@@ -356,5 +361,10 @@ class PatientDashboardScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  double _calculateBMI(alturaM, peso) {
+    var alturaCm = alturaM / 100;
+    return peso / (alturaCm * alturaCm);
   }
 }

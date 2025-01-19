@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoading = false;
   String _userType = 'Paciente';
   final ServicesFacade _servicesFacade = ServicesFacade();
 
@@ -191,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginButton() {
     return ElevatedButton(
-      onPressed: _submitForm,
+      onPressed: _isLoading ? null : _submitForm,
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
         backgroundColor: kPrimaryColor,
@@ -211,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushNamed(context, '/signup_patient');
       },
       child: Text(
-        'Sou paciente',
+        'Cadastrar como paciente',
         style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
       ),
     );
@@ -223,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushNamed(context, '/signup_nutritionist');
       },
       child: Text(
-        'Sou nutricionista',
+        'Cadastrar como nutricionista',
         style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
       ),
     );
@@ -231,6 +232,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       String email = _emailController.text;
       String senha = _senhaController.text;
       String userType = _userType;
@@ -255,10 +259,11 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       }).catchError((error) {
-        // Handle any errors that occur during login
+        setState(() {
+          _isLoading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text('Ocorreu um erro. Tente novamente mais tarde.')),
+          SnackBar(content: Text('Erro ao fazer login: ${error.toString()}')),
         );
       });
     }

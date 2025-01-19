@@ -404,19 +404,11 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
       try {
         final dataNascimento =
             DateFormat('dd/MM/yyyy').parse(_dataNascimentoController.text);
-        final dataNascimentoEmSegundos =
-            dataNascimento.millisecondsSinceEpoch ~/ 1000;
-        final dataNascimentoEmNanosegundos =
-            dataNascimento.microsecondsSinceEpoch * 1000;
-        final dataNascimentoMap = {
-          '_seconds': dataNascimentoEmSegundos,
-          '_nanoseconds': dataNascimentoEmNanosegundos,
-        };
         await _servicesFacade.cadastrar(Paciente(
           nome: _nomeController.text,
           email: _emailController.text,
           cpf: _cpfController.text,
-          dataNascimento: dataNascimentoMap,
+          dataNascimento: DateFormat('dd/MM/yyyy').format(dataNascimento),
           sexo: _sexo!,
           altura: double.parse(_alturaController.text),
           peso: double.parse(_pesoController.text),
@@ -424,8 +416,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
               double.parse(_circunferenciaAbdominalController.text),
           gorduraCorporal: double.parse(_gorduraCorporalController.text),
           massaMuscular: double.parse(_massaMuscularController.text),
-          alergias: _alergiasController.text,
-          preferencias: _preferenciasController.text,
+          alergias: [],
+          preferencias: [],
           senha: _senhaController.text,
         ));
 
