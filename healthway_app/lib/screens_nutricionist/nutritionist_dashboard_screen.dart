@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class NutritionistDashboardScreen extends StatelessWidget {
@@ -6,7 +7,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -28,7 +29,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF31BAC2),
+        color: kPrimaryColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
@@ -71,7 +72,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
                   child: Icon(
                     Icons.person,
                     size: 35,
-                    color: Color(0xFF31BAC2),
+                    color: kPrimaryColor,
                   ),
                 ),
               ),
@@ -106,7 +107,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF31BAC2),
+            color: kPrimaryColor,
           ),
         ),
         SizedBox(height: 5),
@@ -165,12 +166,12 @@ class NutritionistDashboardScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: Color(0xFF31BAC2).withOpacity(0.1),
+              color: kPrimaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Icon(
               icon,
-              color: Color(0xFF31BAC2),
+              color: kPrimaryColor,
               size: 30,
             ),
           ),
@@ -210,7 +211,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
                 child: Text(
                   'Ver todas',
                   style: TextStyle(
-                    color: Color(0xFF31BAC2),
+                    color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -256,12 +257,12 @@ class NutritionistDashboardScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Color(0xFF31BAC2).withOpacity(0.1),
+                color: kPrimaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 Icons.calendar_today,
-                color: Color(0xFF31BAC2),
+                color: kPrimaryColor,
               ),
             ),
             SizedBox(width: 15),
@@ -291,7 +292,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
               time,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF31BAC2),
+                color: kPrimaryColor,
               ),
             ),
           ],
@@ -323,7 +324,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
                 child: Text(
                   'Ver todas',
                   style: TextStyle(
-                    color: Color(0xFF31BAC2),
+                    color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -367,11 +368,11 @@ class NutritionistDashboardScreen extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-              backgroundColor: Color(0xFF31BAC2).withOpacity(0.1),
+              backgroundColor: kPrimaryColor.withOpacity(0.1),
               child: Text(
                 name[0],
                 style: TextStyle(
-                  color: Color(0xFF31BAC2),
+                  color: kPrimaryColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -428,7 +429,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
       child: BottomNavigationBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        selectedItemColor: Color(0xFF31BAC2),
+        selectedItemColor: kPrimaryColor,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: true,
         showUnselectedLabels: true,

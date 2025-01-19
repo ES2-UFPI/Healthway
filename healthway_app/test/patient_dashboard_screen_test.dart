@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:healthway_app/screens_nutricionist/meal_plan_screen.dart';
 import 'package:healthway_app/screens_patient/patient_dashboard_screen.dart';
+import 'package:healthway_app/screens_patient/patient_profile_screen.dart';
 
 void main() {
   final Map<String, dynamic> mockUserData = {
     'nome': 'John Doe',
+    'email': 'exemplo@email.com',
+    'dt_nascimento': '01/01/2000',
     'altura': 180,
     'peso': 75,
+    'circunferencia_abdominal': 88,
+    'massa_muscular': 6.5,
+    'gordura_corporal': 15.5,
+    'alergias': ['Amendoim', 'Leite'],
+    'preferencias': ['Vegano'],
   };
 
   testWidgets('PatientDashboardScreen displays user data correctly',
@@ -25,10 +34,21 @@ void main() {
   testWidgets('PatientDashboardScreen navigates to meal plan on tap',
       (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/meal_plan':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => MealPlanScreen(patientData: args),
+            );
+          default:
+            return null;
+        }
+      },
       home: PatientDashboardScreen(userData: mockUserData),
     ));
 
-    await tester.tap(find.text('Dieta'));
+    await tester.tap(find.byKey(Key('dashboard_dieta')));
     await tester.pumpAndSettle();
 
     expect(find.byType(PatientDashboardScreen), findsNothing);
@@ -60,19 +80,37 @@ void main() {
   testWidgets('PatientDashboardScreen bottom navigation works',
       (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/meal_plan':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => MealPlanScreen(patientData: args),
+            );
+          case '/patient_profile':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PatientProfileScreen(userData: args),
+            );
+          default:
+            return null;
+        }
+      },
       home: PatientDashboardScreen(userData: mockUserData),
     ));
 
-    await tester.tap(find.text('Dieta'));
+    await tester.tap(find.byKey(Key('bottom_nav_inicio')));
     await tester.pumpAndSettle();
-    expect(find.byType(PatientDashboardScreen), findsNothing);
+    expect(find.byType(PatientDashboardScreen), findsOneWidget);
 
-    await tester.tap(find.text('Progresso'));
+    await tester.tap(find.byKey(Key('bottom_nav_dieta')));
     await tester.pumpAndSettle();
-    expect(find.byType(PatientDashboardScreen), findsNothing);
+    expect(find.byType(MealPlanScreen), findsOneWidget);
 
-    await tester.tap(find.text('Perfil'));
+    await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
-    expect(find.byType(PatientDashboardScreen), findsNothing);
+    await tester.tap(find.byKey(Key('bottom_nav_perfil')));
+    await tester.pumpAndSettle();
+    expect(find.byType(PatientProfileScreen), findsOneWidget);
   });
 }

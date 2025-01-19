@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import '../models/paciente.dart';
 
@@ -60,7 +61,7 @@ class PacienteDetalhesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Detalhes do Paciente'),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

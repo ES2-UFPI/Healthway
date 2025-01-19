@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class DietManagementScreen extends StatelessWidget {
@@ -6,10 +7,10 @@ class DietManagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: const Text('Gerenciamento de Dieta'),
-        backgroundColor: const Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
       body: SafeArea(
@@ -33,7 +34,7 @@ class DietManagementScreen extends StatelessWidget {
         onPressed: () {
           // Adicionar refeição
         },
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         child: Icon(Icons.add),
       ),
     );
@@ -114,15 +115,14 @@ class DietManagementScreen extends StatelessWidget {
       child: ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
-          backgroundColor: Color(0xFF31BAC2).withOpacity(0.1),
-          child: Icon(Icons.restaurant, color: Color(0xFF31BAC2)),
+          backgroundColor: kPrimaryColor.withOpacity(0.1),
+          child: Icon(Icons.restaurant, color: kPrimaryColor),
         ),
         title: Text(mealName, style: TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(time),
         trailing: Text(
           calories,
-          style:
-              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+          style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),
         ),
         onTap: () {
           // Abrir detalhes da refeição
@@ -150,8 +150,7 @@ class DietManagementScreen extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: 0.6,
                     backgroundColor: Colors.grey[300],
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Color(0xFF31BAC2)),
+                    valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
                   ),
                 ),
                 SizedBox(width: 16),
@@ -203,7 +202,7 @@ class DietManagementScreen extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: progress,
                 backgroundColor: Colors.grey[300],
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF31BAC2)),
+                valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
               ),
             ),
             SizedBox(width: 16),

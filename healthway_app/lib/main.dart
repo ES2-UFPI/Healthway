@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:healthway_app/geral_screens/alimentos_screen.dart';
 import 'package:healthway_app/geral_screens/chat_screen.dart';
@@ -29,13 +30,19 @@ class MyApp extends StatelessWidget {
       title: 'Health Dashboard',
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: const Color(0xFF4CAF50),
+        primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: kPrimaryColor, // Define a cor do cursor
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color(0xFF4CAF50),
+        primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.black,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: kPrimaryColor, // Define a cor do cursor
+        ),
       ),
       themeMode:
           ThemeMode.system, // Alterna automaticamente entre claro e escuro
@@ -97,7 +104,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      selectedItemColor: Color(0xFF31BAC2),
+      selectedItemColor: kPrimaryColor,
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.fixed,
       items: const [

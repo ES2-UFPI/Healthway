@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class _PresentationScreenState extends State<PresentationScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF31BAC2),
+      backgroundColor: kPrimaryColor,
       body: Center(
         child: FadeTransition(
           opacity: _animation,

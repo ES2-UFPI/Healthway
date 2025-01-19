@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:healthway_app/models/paciente.dart';
@@ -39,11 +40,11 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE6F7F8),
+      backgroundColor: kAccentColor,
       appBar: AppBar(
         title: Text('Cadastro de Paciente',
             style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -52,7 +53,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
             Container(
               height: 150,
               decoration: BoxDecoration(
-                color: Color(0xFF31BAC2),
+                color: kPrimaryColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
@@ -90,7 +91,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
                       onPressed: _isLoading ? null : _submitForm,
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Color(0xFF31BAC2),
+                        backgroundColor: kPrimaryColor,
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -122,14 +123,14 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          prefixIcon: Icon(icon, color: Color(0xFF31BAC2)),
+          prefixIcon: Icon(icon, color: kPrimaryColor),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
           ),
           filled: true,
           fillColor: Colors.white,
-          labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+          labelStyle: TextStyle(color: kPrimaryColor),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
         style: TextStyle(fontSize: 16),
@@ -152,14 +153,14 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
         controller: _dataNascimentoController,
         decoration: InputDecoration(
           labelText: 'Data de Nascimento',
-          prefixIcon: Icon(Icons.calendar_today, color: Color(0xFF31BAC2)),
+          prefixIcon: Icon(Icons.calendar_today, color: kPrimaryColor),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
           ),
           filled: true,
           fillColor: Colors.white,
-          labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+          labelStyle: TextStyle(color: kPrimaryColor),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
         style: TextStyle(fontSize: 16),
@@ -173,9 +174,9 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
             builder: (context, child) {
               return Theme(
                 data: ThemeData.light().copyWith(
-                  primaryColor: Color(0xFF31BAC2),
-                  hintColor: Color(0xFF31BAC2),
-                  colorScheme: ColorScheme.light(primary: Color(0xFF31BAC2)),
+                  primaryColor: kPrimaryColor,
+                  hintColor: kPrimaryColor,
+                  colorScheme: ColorScheme.light(primary: kPrimaryColor),
                   buttonTheme:
                       ButtonThemeData(textTheme: ButtonTextTheme.primary),
                 ),
@@ -207,14 +208,14 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
         value: _sexo,
         decoration: InputDecoration(
           labelText: 'Sexo',
-          prefixIcon: Icon(Icons.wc, color: Color(0xFF31BAC2)),
+          prefixIcon: Icon(Icons.wc, color: kPrimaryColor),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
           ),
           filled: true,
           fillColor: Colors.white,
-          labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+          labelStyle: TextStyle(color: kPrimaryColor),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
         style: TextStyle(fontSize: 16, color: Colors.black),
@@ -254,7 +255,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF31BAC2)),
+                  color: kPrimaryColor),
             ),
             SizedBox(height: 16),
             Row(
@@ -295,16 +296,16 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: Color(0xFF31BAC2)),
+        prefixIcon: Icon(icon, color: kPrimaryColor),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Color(0xFF31BAC2)),
+          borderSide: BorderSide(color: kPrimaryColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Color(0xFF31BAC2), width: 2),
+          borderSide: BorderSide(color: kPrimaryColor, width: 2),
         ),
-        labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+        labelStyle: TextStyle(color: kPrimaryColor),
       ),
       keyboardType: TextInputType.number,
       style: TextStyle(fontSize: 16),
@@ -332,7 +333,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF31BAC2)),
+                  color: kPrimaryColor),
             ),
             SizedBox(height: 16),
             _buildPasswordField(_senhaController, 'Senha', _obscurePassword,
@@ -361,11 +362,11 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(Icons.lock, color: Color(0xFF31BAC2)),
+        prefixIcon: Icon(Icons.lock, color: kPrimaryColor),
         suffixIcon: IconButton(
           icon: Icon(
             obscureText ? Icons.visibility : Icons.visibility_off,
-            color: Color(0xFF31BAC2),
+            color: kPrimaryColor,
           ),
           onPressed: onTap,
         ),
@@ -375,7 +376,7 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
         ),
         filled: true,
         fillColor: Colors.white,
-        labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+        labelStyle: TextStyle(color: kPrimaryColor),
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       style: TextStyle(fontSize: 16),

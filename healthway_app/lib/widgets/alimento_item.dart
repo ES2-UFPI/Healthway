@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import '../models/alimento.dart';
 
@@ -23,8 +24,7 @@ class AlimentoItem extends StatelessWidget {
               // Título com nome e categoria do alimento
               Row(
                 children: [
-                  Icon(Icons.fastfood,
-                      color: Color(0xFF31BAC2)), // Ícone de comida
+                  Icon(Icons.fastfood, color: kPrimaryColor), // Ícone de comida
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(

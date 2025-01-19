@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -53,15 +54,15 @@ class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: Text('Plano Alimentar',
             style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator(color: Color(0xFF31BAC2)))
+          ? Center(child: CircularProgressIndicator(color: kPrimaryColor))
           : planosAlimentares.isEmpty
               ? _buildEmptyState()
               : _buildPlanoAlimentarList(),
@@ -70,7 +71,7 @@ class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
           // TODO: Implementar a criação de um novo plano alimentar
         },
         child: Icon(Icons.add),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
       ),
     );
   }
@@ -80,7 +81,7 @@ class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.no_meals, size: 80, color: Color(0xFF31BAC2)),
+          Icon(Icons.no_meals, size: 80, color: kPrimaryColor),
           SizedBox(height: 16),
           Text(
             'Nenhum plano alimentar encontrado',
@@ -106,8 +107,8 @@ class _PlanoAlimentarScreenState extends State<PlanoAlimentarScreen> {
           child: ExpansionTile(
             title: Text(
               plano.consulta,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Color(0xFF31BAC2)),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),
             ),
             subtitle: Text(
               '${DateFormat('dd/MM/yyyy').format(plano.dtInicio)} - ${DateFormat('dd/MM/yyyy').format(plano.dtFim)}',

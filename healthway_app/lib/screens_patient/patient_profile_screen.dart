@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:healthway_app/models/paciente.dart';
@@ -18,9 +19,9 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   static final ServicesFacade _servicesFacade = ServicesFacade();
 
-  late String name;
+  late String nome;
   late String email;
-  late int age;
+  late int idade;
   late double altura;
   late double peso;
   late double circunferenciaAbdominal;
@@ -34,12 +35,12 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
     super.initState();
     preferencias = List<String>.from(widget.userData['preferencias']);
     alergias = List<String>.from(widget.userData['alergias']);
-    name = widget.userData['nome'];
+    nome = widget.userData['nome'];
     email = widget.userData['email'];
     var birthDate = widget.userData['dt_nascimento'];
     var ageDuration =
         DateTime.now().difference(DateFormat('dd/MM/yyyy').parse(birthDate));
-    age = ageDuration.inDays ~/ 365;
+    idade = ageDuration.inDays ~/ 365;
     altura = widget.userData['altura'].toDouble();
     peso = widget.userData['peso'].toDouble();
     circunferenciaAbdominal =
@@ -51,10 +52,11 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: const Text('Meu Perfil'),
-        backgroundColor: const Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -90,7 +92,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
       floatingActionButton: _edited
           ? FloatingActionButton(
               onPressed: _saveChanges,
-              backgroundColor: Color(0xFF31BAC2),
+              backgroundColor: kPrimaryColor,
               child: Icon(Icons.save),
             )
           : null,
@@ -106,11 +108,9 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
             children: [
               CircleAvatar(
                 radius: 60,
-                backgroundColor: Color(0xFF31BAC2),
-                backgroundImage:
-                    NetworkImage('https://example.com/profile_image.jpg'),
+                backgroundColor: kPrimaryColor,
                 child: Text(
-                  name.isNotEmpty ? name[0].toUpperCase() : '?',
+                  nome.isNotEmpty ? nome[0].toUpperCase() : '?',
                   style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
               if (!_isEditing)
                 Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFF31BAC2),
+                    color: kPrimaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -134,13 +134,15 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
           ),
           SizedBox(height: 16),
           Text(
-            name,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            nome,
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold, color: kTextColor),
           ),
           SizedBox(height: 8),
           Text(
             email,
-            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            style: TextStyle(
+                fontSize: 16, color: kTextColor.withValues(alpha: 0.7)),
           ),
         ],
       ),
@@ -154,7 +156,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            _buildInfoRow('Idade', '$age anos', null),
+            _buildInfoRow('Idade', '$idade anos', null),
             _buildInfoRow('Altura', altura.toStringAsFixed(1), (value) {
               if (value.isNotEmpty) {
                 _edited = true;
@@ -206,7 +208,13 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontSize: 16, color: Colors.grey[600])),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(fontSize: 16, color: kPrimaryColor),
+              overflow: TextOverflow.visible,
+            ),
+          ),
           _isEditing && onChanged != null
               ? SizedBox(
                   width: 120,
@@ -242,7 +250,17 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
             Text('Alergias',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ...alergias.map((alergia) => ListTile(
-                  title: Text(alergia),
+                  title: Row(
+                    children: [
+                      Icon(Icons.fiber_manual_record,
+                          size: 8, color: kPrimaryColor),
+                      SizedBox(width: 8),
+                      Text(
+                        alergia,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
                   trailing: _isEditing
                       ? IconButton(
                           icon: Icon(Icons.delete),
@@ -283,7 +301,17 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
             Text('Preferências',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ...preferencias.map((preferencia) => ListTile(
-                  title: Text(preferencia),
+                  title: Row(
+                    children: [
+                      Icon(Icons.fiber_manual_record,
+                          size: 8, color: kPrimaryColor),
+                      SizedBox(width: 8),
+                      Text(
+                        preferencia,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
                   trailing: _isEditing
                       ? IconButton(
                           icon: Icon(Icons.delete),

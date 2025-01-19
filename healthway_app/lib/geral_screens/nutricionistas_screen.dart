@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:healthway_app/constants.dart';
+import 'package:healthway_app/services/services_facade.dart';
+
 import '../models/nutricionista.dart';
-import '../services/nutricionista_services.dart';
 import '../widgets/nutricionista_item.dart';
 
 class NutricionistasScreen extends StatefulWidget {
+  const NutricionistasScreen({super.key});
+
   @override
-  _NutricionistasScreenState createState() => _NutricionistasScreenState();
+  State<NutricionistasScreen> createState() => _NutricionistasScreenState();
 }
 
 class _NutricionistasScreenState extends State<NutricionistasScreen> {
@@ -22,7 +26,7 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
 
   void _carregarNutricionistas() {
     setState(() {
-      _nutricionistas = NutricionistaService().fetchNutricionistas();
+      _nutricionistas = ServicesFacade().obterNutricionistas();
     });
   }
 
@@ -30,8 +34,10 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
     setState(() {
       nutricionistasFiltrados = nutricionistas
           .where((nutricionista) =>
-      nutricionista.nome.toLowerCase().contains(query.toLowerCase()) ||
-          nutricionista.especialidade.toLowerCase().contains(query.toLowerCase()))
+              nutricionista.nome.toLowerCase().contains(query.toLowerCase()) ||
+              nutricionista.especialidade
+                  .toLowerCase()
+                  .contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -39,10 +45,11 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: Text('Nutricionistas'),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
         elevation: 0,
       ),
       body: Column(
@@ -53,7 +60,8 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
               future: _nutricionistas,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator(color: Color(0xFF31BAC2)));
+                  return Center(
+                      child: CircularProgressIndicator(color: kPrimaryColor));
                 } else if (snapshot.hasError) {
                   return _buildErrorWidget(snapshot.error.toString());
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -72,8 +80,9 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _carregarNutricionistas,
+        backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
         child: Icon(Icons.refresh),
-        backgroundColor: Color(0xFF31BAC2),
       ),
     );
   }
@@ -81,13 +90,13 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
   Widget _buildSearchBar() {
     return Container(
       padding: EdgeInsets.all(16),
-      color: Color(0xFF31BAC2),
+      color: kPrimaryColor,
       child: TextField(
         controller: searchController,
         onChanged: _filtrarNutricionistas,
         decoration: InputDecoration(
           hintText: 'Pesquisar por nome ou especialidade...',
-          prefixIcon: Icon(Icons.search, color: Color(0xFF31BAC2)),
+          prefixIcon: Icon(Icons.search, color: kPrimaryColor),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
@@ -110,7 +119,8 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            child: NutricionistaItem(nutricionista: nutricionistasFiltrados[index]),
+            child: NutricionistaItem(
+                nutricionista: nutricionistasFiltrados[index]),
           ),
         );
       },
@@ -144,7 +154,7 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.person_off, size: 60, color: Color(0xFF31BAC2)),
+          Icon(Icons.person_off, size: 60, color: kPrimaryColor),
           SizedBox(height: 16),
           Text(
             'Nenhum nutricionista encontrado',
@@ -155,4 +165,3 @@ class _NutricionistasScreenState extends State<NutricionistasScreen> {
     );
   }
 }
-

@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatelessWidget {
@@ -6,10 +7,10 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: const Text('Notificações'),
-        backgroundColor: const Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
       body: SafeArea(
@@ -52,15 +53,16 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildNotificationItem(String title, String description, String time, IconData icon) {
+  Widget _buildNotificationItem(
+      String title, String description, String time, IconData icon) {
     return Card(
       margin: EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
-          backgroundColor: Color(0xFF31BAC2).withOpacity(0.1),
-          child: Icon(icon, color: Color(0xFF31BAC2)),
+          backgroundColor: kPrimaryColor.withOpacity(0.1),
+          child: Icon(icon, color: kPrimaryColor),
         ),
         title: Text(
           title,
@@ -85,4 +87,3 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 }
-

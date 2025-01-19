@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import '../models/paciente.dart';
 import '../services/paciente_services.dart';
@@ -41,10 +42,10 @@ class _PacientesScreenState extends State<PacientesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: Text('Pacientes'),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
       body: Column(
@@ -56,8 +57,7 @@ class _PacientesScreenState extends State<PacientesScreen> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                      child:
-                          CircularProgressIndicator(color: Color(0xFF31BAC2)));
+                      child: CircularProgressIndicator(color: kPrimaryColor));
                 } else if (snapshot.hasError) {
                   return _buildErrorWidget(snapshot.error.toString());
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -76,7 +76,7 @@ class _PacientesScreenState extends State<PacientesScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _carregarPacientes,
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         child: Icon(Icons.refresh),
       ),
     );
@@ -85,13 +85,13 @@ class _PacientesScreenState extends State<PacientesScreen> {
   Widget _buildSearchBar() {
     return Container(
       padding: EdgeInsets.all(16),
-      color: Color(0xFF31BAC2),
+      color: kPrimaryColor,
       child: TextField(
         controller: searchController,
         onChanged: _filtrarPacientes,
         decoration: InputDecoration(
           hintText: 'Pesquisar por nome ou email...',
-          prefixIcon: Icon(Icons.search, color: Color(0xFF31BAC2)),
+          prefixIcon: Icon(Icons.search, color: kPrimaryColor),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
@@ -148,7 +148,7 @@ class _PacientesScreenState extends State<PacientesScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.person_off, size: 60, color: Color(0xFF31BAC2)),
+          Icon(Icons.person_off, size: 60, color: kPrimaryColor),
           SizedBox(height: 16),
           Text(
             'Nenhum paciente encontrado',

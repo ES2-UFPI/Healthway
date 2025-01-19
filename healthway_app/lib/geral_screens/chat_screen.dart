@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,12 +13,13 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: Row(
           children: [
             CircleAvatar(
-              backgroundColor: Color(0xFF31BAC2),
-              child: Icon(Icons.person, color: Colors.white),
+              backgroundColor: kPrimaryColor,
               radius: 20,
+              child: Icon(Icons.person, color: Colors.white),
             ),
             SizedBox(width: 10),
             Column(
@@ -31,7 +33,7 @@ class ChatScreen extends StatelessWidget {
             ),
           ],
         ),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         actions: [
           IconButton(icon: Icon(Icons.video_call), onPressed: () {}),
           IconButton(icon: Icon(Icons.call), onPressed: () {}),
