@@ -4,7 +4,7 @@ import '../models/alimento.dart';
 class AlimentoItem extends StatelessWidget {
   final Alimento alimento;
 
-  const AlimentoItem({Key? key, required this.alimento}) : super(key: key);
+  const AlimentoItem({super.key, required this.alimento});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +13,8 @@ class AlimentoItem extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 3,
-        shadowColor: Colors.black.withOpacity(0.1),  // Sombra suave
-        color: Colors.white,  // Cor de fundo do card
+        shadowColor: Colors.black.withOpacity(0.1), // Sombra suave
+        color: Colors.white, // Cor de fundo do card
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -23,12 +23,16 @@ class AlimentoItem extends StatelessWidget {
               // Título com nome e categoria do alimento
               Row(
                 children: [
-                  Icon(Icons.fastfood, color: Color(0xFF31BAC2)),  // Ícone de comida
+                  Icon(Icons.fastfood,
+                      color: Color(0xFF31BAC2)), // Ícone de comida
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       alimento.descricao,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87),
                     ),
                   ),
                 ],
@@ -36,10 +40,11 @@ class AlimentoItem extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 'Categoria: ${alimento.categoria}',
-                style: TextStyle(color: Colors.grey[700]), // Cor mais suave para a categoria
+                style: TextStyle(
+                    color: Colors.grey[700]), // Cor mais suave para a categoria
               ),
               const Divider(), // Linha separadora
-              
+
               // Informações nutricionais
               _buildNutritionalInfo(),
             ],
@@ -64,8 +69,7 @@ class AlimentoItem extends StatelessWidget {
         _buildNutritionalItem('Proteína', alimento.proteina, 'g'),
         _buildNutritionalItem('Lipídeos', alimento.lipideos, 'g'),
         _buildNutritionalItem('Fibra Alimentar', alimento.fibraAlimentar, 'g'),
-        if (alimento.colesterol != null)
-          _buildNutritionalItem('Colesterol', alimento.colesterol, 'mg'),
+        _buildNutritionalItem('Colesterol', alimento.colesterol, 'mg'),
         _buildNutritionalItem('Cálcio', alimento.calcio, 'mg'),
         _buildNutritionalItem('Ferro', alimento.ferro, 'mg'),
         _buildNutritionalItem('Potássio', alimento.potassio, 'mg'),
