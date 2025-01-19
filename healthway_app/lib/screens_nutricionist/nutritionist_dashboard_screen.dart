@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class NutritionistDashboardScreen extends StatelessWidget {
   const NutritionistDashboardScreen({super.key});
@@ -140,10 +139,14 @@ class NutritionistDashboardScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildQuickAccessItem(context, Icons.people, 'Pacientes', '/patientList'),
-              _buildQuickAccessItem(context, Icons.calendar_today, 'Agenda', '/schedule'),
-              _buildQuickAccessItem(context, Icons.restaurant_menu, 'Planos', '/meal_plans'),
-              _buildQuickAccessItem(context, Icons.food_bank_outlined, 'Alimentos', '/alimentos'),
+              _buildQuickAccessItem(
+                  context, Icons.people, 'Pacientes', '/patientList'),
+              _buildQuickAccessItem(
+                  context, Icons.calendar_today, 'Agenda', '/schedule'),
+              _buildQuickAccessItem(
+                  context, Icons.restaurant_menu, 'Planos', '/meal_plans'),
+              _buildQuickAccessItem(
+                  context, Icons.food_bank_outlined, 'Alimentos', '/alimentos'),
             ],
           ),
         ],
@@ -151,7 +154,8 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAccessItem(BuildContext context, IconData icon, String label, String route) {
+  Widget _buildQuickAccessItem(
+      BuildContext context, IconData icon, String label, String route) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, route);
@@ -214,18 +218,23 @@ class NutritionistDashboardScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15),
-          _buildAppointmentItem(context, 'Maria Oliveira', '14:00', 'Consulta de Rotina'),
-          _buildAppointmentItem(context, 'João Silva', '15:30', 'Avaliação Nutricional'),
-          _buildAppointmentItem(context, 'Ana Santos', '17:00', 'Revisão de Dieta'),
+          _buildAppointmentItem(
+              context, 'Maria Oliveira', '14:00', 'Consulta de Rotina'),
+          _buildAppointmentItem(
+              context, 'João Silva', '15:30', 'Avaliação Nutricional'),
+          _buildAppointmentItem(
+              context, 'Ana Santos', '17:00', 'Revisão de Dieta'),
         ],
       ),
     );
   }
 
-  Widget _buildAppointmentItem(BuildContext context, String name, String time, String type) {
+  Widget _buildAppointmentItem(
+      BuildContext context, String name, String time, String type) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/appointment_details', arguments: {'name': name, 'time': time, 'type': type});
+        Navigator.pushNamed(context, '/appointment_details',
+            arguments: {'name': name, 'time': time, 'type': type});
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
@@ -322,18 +331,23 @@ class NutritionistDashboardScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15),
-          _buildPatientUpdateItem(context, 'Carlos Mendes', 'Atingiu meta de peso', '2h atrás'),
-          _buildPatientUpdateItem(context, 'Fernanda Lima', 'Novo registro de refeição', '4h atrás'),
-          _buildPatientUpdateItem(context, 'Ricardo Souza', 'Solicitou alteração na dieta', '1d atrás'),
+          _buildPatientUpdateItem(
+              context, 'Carlos Mendes', 'Atingiu meta de peso', '2h atrás'),
+          _buildPatientUpdateItem(context, 'Fernanda Lima',
+              'Novo registro de refeição', '4h atrás'),
+          _buildPatientUpdateItem(context, 'Ricardo Souza',
+              'Solicitou alteração na dieta', '1d atrás'),
         ],
       ),
     );
   }
 
-  Widget _buildPatientUpdateItem(BuildContext context, String name, String update, String time) {
+  Widget _buildPatientUpdateItem(
+      BuildContext context, String name, String update, String time) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/patient_details', arguments: {'name': name});
+        Navigator.pushNamed(context, '/patient_details',
+            arguments: {'name': name});
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
@@ -423,7 +437,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-            // Already on home screen
+              // Already on home screen
               break;
             case 1:
               Navigator.pushNamed(context, '/patientList');
@@ -458,4 +472,3 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 }
-

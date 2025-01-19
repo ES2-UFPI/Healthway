@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:healthway_app/screens_patient/dashboardScreen.dart';
+import 'package:healthway_app/screens_patient/patient_dashboard_screen.dart';
 
 void main() {
-  testWidgets('PatientDashboardScreen displays correctly', (WidgetTester tester) async {
+  testWidgets('PatientDashboardScreen displays correctly',
+      (WidgetTester tester) async {
     // Build the PatientDashboardScreen widget.
     await tester.pumpWidget(MaterialApp(home: PatientDashboardScreen()));
 

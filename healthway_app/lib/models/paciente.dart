@@ -3,7 +3,7 @@ class Paciente {
   final String nome;
   final String email;
   final String cpf;
-  final String dataNascimento;
+  final Map<String, int> dataNascimento;
   final String sexo;
   final double altura;
   final double peso;
@@ -37,7 +37,7 @@ class Paciente {
       nome: json['nome'],
       email: json['email'],
       cpf: json['cpf'],
-      dataNascimento: json['dataNascimento'],
+      dataNascimento: Map<String, int>.from(json['dt_nascimento']),
       sexo: json['sexo'],
       altura: json['altura'].toDouble(),
       peso: json['peso'].toDouble(),
@@ -56,7 +56,7 @@ class Paciente {
       'nome': nome,
       'email': email,
       'cpf': cpf,
-      'dataNascimento': dataNascimento,
+      'dt_nascimento': dataNascimento,
       'sexo': sexo,
       'altura': altura,
       'peso': peso,
@@ -73,7 +73,7 @@ class Paciente {
     String? nome,
     String? email,
     String? cpf,
-    String? dataNascimento,
+    Map<String, int>? dataNascimento,
     String? sexo,
     double? altura,
     double? peso,
@@ -105,6 +105,6 @@ class Paciente {
 
   @override
   String toString() {
-    return 'Paciente(id: $id, nome: $nome, email: $email, cpf: $cpf, dataNascimento: $dataNascimento, sexo: $sexo, altura: $altura, peso: $peso, circunferenciaAbdominal: $circunferenciaAbdominal, gorduraCorporal: $gorduraCorporal, massaMuscular: $massaMuscular, alergias: $alergias, preferencias: $preferencias)';
+    return 'Paciente(id: $id, nome: $nome, email: $email, cpf: $cpf, dt_nascimento: $dataNascimento, sexo: $sexo, altura: $altura, peso: $peso, circunferenciaAbdominal: $circunferenciaAbdominal, gorduraCorporal: $gorduraCorporal, massaMuscular: $massaMuscular, alergias: $alergias, preferencias: $preferencias)';
   }
 }

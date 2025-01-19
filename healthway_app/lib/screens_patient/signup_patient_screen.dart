@@ -402,11 +402,21 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
       });
 
       try {
+        final dataNascimento =
+            DateFormat('dd/MM/yyyy').parse(_dataNascimentoController.text);
+        final dataNascimentoEmSegundos =
+            dataNascimento.millisecondsSinceEpoch ~/ 1000;
+        final dataNascimentoEmNanosegundos =
+            dataNascimento.microsecondsSinceEpoch * 1000;
+        final dataNascimentoMap = {
+          '_seconds': dataNascimentoEmSegundos,
+          '_nanoseconds': dataNascimentoEmNanosegundos,
+        };
         await _servicesFacade.cadastrar(Paciente(
           nome: _nomeController.text,
           email: _emailController.text,
           cpf: _cpfController.text,
-          dataNascimento: _dataNascimentoController.text,
+          dataNascimento: dataNascimentoMap,
           sexo: _sexo!,
           altura: double.parse(_alturaController.text),
           peso: double.parse(_pesoController.text),

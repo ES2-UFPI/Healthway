@@ -40,6 +40,22 @@ const pacienteController = {
         }
     },
 
+    async getByEmailAndPassword(req, res) {
+        try {
+        const { email, senha } = req.body;
+        const snapshot = await db.collection('paciente').where('email', '==', email).where('senha', '==', senha).get();
+        const paciente = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        if (paciente.length === 0) {
+            return res.status(404).json({ error: 'Paciente não encontrado.' });
+        }
+
+        res.status(200).json(paciente[0]);
+        } catch (error) {
+        res.status(500).json({ error: error.message });
+        }
+    },
+
     // Atualizar um paciente
     async update(req, res) {
         try {

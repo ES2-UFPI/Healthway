@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PatientDashboardScreen extends StatelessWidget {
-  const PatientDashboardScreen({super.key});
+  final Map<String, dynamic> userData;
+
+  const PatientDashboardScreen({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class PatientDashboardScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Olá, João',
+                    userData['nome'],
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -347,7 +349,8 @@ class PatientDashboardScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/progress');
               break;
             case 3:
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushNamed(context, '/patient_profile',
+                  arguments: userData);
               break;
           }
         },

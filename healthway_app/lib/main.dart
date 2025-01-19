@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:healthway_app/geral_screens/alimentos_screen.dart';
 import 'package:healthway_app/geral_screens/loginScreen.dart';
 import 'package:healthway_app/geral_screens/nutricionistas_screen.dart';
-import 'package:healthway_app/geral_screens/presentationScreen.dart';
+import 'package:healthway_app/geral_screens/presentation_screen.dart';
 import 'package:healthway_app/screens_nutricionist/meal_plan_screen.dart';
+import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard_screen.dart';
 import 'package:healthway_app/screens_nutricionist/nutritionist_profile.dart';
 import 'package:healthway_app/screens_nutricionist/patient_list_screen.dart';
 import 'package:healthway_app/screens_nutricionist/schedule_screen.dart';
-import 'package:healthway_app/screens_patient/dashboardScreen.dart';
+import 'package:healthway_app/screens_nutricionist/signup_nutritionist_screen.dart';
+import 'package:healthway_app/screens_patient/patient_dashboard_screen.dart';
 import 'package:healthway_app/screens_patient/dietScreen.dart';
 import 'package:healthway_app/screens_patient/notificationScreen.dart';
-import 'package:healthway_app/screens_patient/profileScreen.dart';
+import 'package:healthway_app/screens_patient/patient_profile_screen.dart';
 import 'package:healthway_app/screens_patient/setingsScreen.dart';
 import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
 
@@ -40,8 +42,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => PresentationScreen(),
-        '/home': (context) => PatientDashboardScreen(),
-        '/signUp': (context) => CadastroPacienteScreen(),
+        '/signup_patient': (context) => CadastroPacienteScreen(),
+        '/signup_nutritionist': (context) => CadastroNutricionistaScreen(),
         '/login': (context) => LoginScreen(),
         '/chat': (context) => ChatScreen(),
         '/health': (context) => PlanoAlimentarScreen(
@@ -50,7 +52,6 @@ class MyApp extends StatelessWidget {
         '/alimentos': (context) => AlimentosScreen(),
         '/nutricionistas': (context) => NutricionistasScreen(),
         '/menu': (context) => MenuScreen(),
-        '/profile': (context) => PatientProfileScreen(),
         '/notifications': (context) => NotificationScreen(),
         '/settings': (context) => SettingsScreen(),
         '/patientList': (context) => PatientListScreen(),
@@ -59,6 +60,26 @@ class MyApp extends StatelessWidget {
         '/meal_plans': (context) => MealPlanScreen(
               patientName: '',
             ),
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/home_patient':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PatientDashboardScreen(userData: args),
+            );
+          case '/home_nutritionist':
+            return MaterialPageRoute(
+              builder: (context) => NutritionistDashboardScreen(),
+            );
+          case '/patient_profile':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PatientProfileScreen(userData: args),
+            );
+          default:
+            return null;
+        }
       },
     );
   }
