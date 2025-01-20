@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => PatientProfileScreen(),
         '/notifications': (context) => NotificationScreen(),
         '/settings': (context) => SettingsScreen(),
-        '/patientList': (context) => PatientListScreen(),
+        '/patientList': (context) => PacientesScreen(),
         '/nutritionistProfile': (context) => NutritionistProfileScreen(),
         '/schedule': (context) => ScheduleScreen(),
         '/meal_plans': (context) => MealPlanScreen(
@@ -62,6 +62,9 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+class PatientListScreen {
 }
 
 class HomeScreen extends StatelessWidget {
