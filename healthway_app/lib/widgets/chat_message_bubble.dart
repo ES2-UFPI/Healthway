@@ -24,7 +24,9 @@ class ChatMessageBubble extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: isMe ? kPrimaryColor.withOpacity(0.2) : Colors.grey[200],
+                color: isMe
+                    ? kPrimaryColor.withValues(alpha: 0.2)
+                    : Colors.grey[200],
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(

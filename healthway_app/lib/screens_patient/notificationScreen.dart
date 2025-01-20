@@ -61,7 +61,7 @@ class NotificationScreen extends StatelessWidget {
       child: ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
-          backgroundColor: kPrimaryColor.withOpacity(0.1),
+          backgroundColor: kPrimaryColor.withValues(alpha: 0.1),
           child: Icon(icon, color: kPrimaryColor),
         ),
         title: Text(

@@ -118,7 +118,7 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            shadowColor: Colors.black.withOpacity(0.2),
+            shadowColor: Colors.black.withValues(alpha: 0.2),
             color: Colors
                 .transparent, // Garantir que o fundo do card seja transparente
             child: AlimentoItem(alimento: alimentosFiltrados[index]),

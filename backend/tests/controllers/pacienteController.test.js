@@ -4,6 +4,7 @@ const db = require('../../firebase-config');
 jest.mock('../../firebase-config', () => ({
   collection: jest.fn().mockReturnThis(),
   doc: jest.fn().mockReturnThis(),
+  where: jest.fn().mockReturnThis(),
   get: jest.fn().mockResolvedValue(),
   add: jest.fn(),
   update: jest.fn(),
@@ -218,7 +219,7 @@ describe('pacienteController', () => {
         json: jest.fn(),
       };
 
-      await pacienteController.getByEmailAndPassword(req, res);
+      const result = await pacienteController.getByEmailAndPassword(req, res);
 
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith(mockData);

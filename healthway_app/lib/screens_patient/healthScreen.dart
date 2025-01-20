@@ -115,7 +115,7 @@ class DietManagementScreen extends StatelessWidget {
       child: ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
-          backgroundColor: kPrimaryColor.withOpacity(0.1),
+          backgroundColor: kPrimaryColor.withValues(alpha: 0.1),
           child: Icon(Icons.restaurant, color: kPrimaryColor),
         ),
         title: Text(mealName, style: TextStyle(fontWeight: FontWeight.bold)),

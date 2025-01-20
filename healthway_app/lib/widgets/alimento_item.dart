@@ -14,7 +14,7 @@ class AlimentoItem extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 3,
-        shadowColor: Colors.black.withOpacity(0.1), // Sombra suave
+        shadowColor: Colors.black.withValues(alpha: 0.1), // Sombra suave
         color: Colors.white, // Cor de fundo do card
         child: Padding(
           padding: const EdgeInsets.all(16.0),

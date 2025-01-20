@@ -168,7 +168,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: kPrimaryColor.withOpacity(0.1),
+              color: kPrimaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Icon(
@@ -247,7 +247,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 3),
@@ -259,7 +259,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.1),
+                color: kPrimaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -360,7 +360,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 3),
@@ -370,7 +370,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-              backgroundColor: kPrimaryColor.withOpacity(0.1),
+              backgroundColor: kPrimaryColor.withValues(alpha: 0.1),
               child: Text(
                 name[0],
                 style: TextStyle(
@@ -421,7 +421,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withValues(alpha: 0.3),
             spreadRadius: 1,
             blurRadius: 5,
             offset: Offset(0, -3),

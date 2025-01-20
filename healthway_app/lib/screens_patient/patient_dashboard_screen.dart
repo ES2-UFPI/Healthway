@@ -23,7 +23,7 @@ class PatientDashboardScreen extends StatelessWidget {
           ),
         ),
       ),
-      // bottomNavigationBar: _buildBottomNavigationBar(context),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
@@ -211,7 +211,7 @@ class PatientDashboardScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 3),
@@ -223,7 +223,7 @@ class PatientDashboardScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.1),
+                color: kPrimaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -315,70 +315,70 @@ class PatientDashboardScreen extends StatelessWidget {
     );
   }
 
-  // Widget _buildBottomNavigationBar(BuildContext context) {
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       boxShadow: [
-  //         BoxShadow(
-  //           color: Colors.grey.withValues(alpha: 0.3),
-  //           spreadRadius: 1,
-  //           blurRadius: 5,
-  //           offset: Offset(0, -3),
-  //         ),
-  //       ],
-  //     ),
-  //     child: BottomNavigationBar(
-  //       backgroundColor: Colors.transparent,
-  //       elevation: 0,
-  //       selectedItemColor: kPrimaryColor,
-  //       unselectedItemColor: Colors.grey,
-  //       showSelectedLabels: true,
-  //       showUnselectedLabels: true,
-  //       type: BottomNavigationBarType.fixed,
-  //       items: [
-  //         BottomNavigationBarItem(
-  //           icon: Icon(Icons.home),
-  //           label: 'Início',
-  //           key: Key('bottom_nav_inicio'),
-  //         ),
-  //         BottomNavigationBarItem(
-  //           icon: Icon(Icons.restaurant_menu),
-  //           label: 'Dieta',
-  //           key: Key('bottom_nav_dieta'),
-  //         ),
-  //         // BottomNavigationBarItem(
-  //         //   icon: Icon(Icons.insert_chart),
-  //         //   label: 'Progresso',
-  //         //   key: Key('bottom_nav_progresso'),
-  //         // ),
-  //         BottomNavigationBarItem(
-  //           icon: Icon(Icons.person),
-  //           label: 'Perfil',
-  //           key: Key('bottom_nav_perfil'),
-  //         ),
-  //       ],
-  //       onTap: (index) {
-  //         switch (index) {
-  //           case 0:
-  //             // Já estamos na tela inicial, então não faça nada
-  //             break;
-  //           case 1:
-  //             Navigator.pushNamed(context, '/meal_plan', arguments: userData);
-  //             break;
-  //           // case 2:
-  //           //   Navigator.pushNamed(context, '/progress');
-  //           //   break;
-  //           // case 3:
-  //           case 2:
-  //             Navigator.pushNamed(context, '/patient_profile',
-  //                 arguments: userData);
-  //             break;
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
+  Widget _buildBottomNavigationBar(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.3),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, -3),
+          ),
+        ],
+      ),
+      child: BottomNavigationBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        selectedItemColor: kPrimaryColor,
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Início',
+            key: Key('bottom_nav_inicio'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant_menu),
+            label: 'Dieta',
+            key: Key('bottom_nav_dieta'),
+          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.insert_chart),
+          //   label: 'Progresso',
+          //   key: Key('bottom_nav_progresso'),
+          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Perfil',
+            key: Key('bottom_nav_perfil'),
+          ),
+        ],
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              // Já estamos na tela inicial, então não faça nada
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/meal_plan', arguments: userData);
+              break;
+            // case 2:
+            //   Navigator.pushNamed(context, '/progress');
+            //   break;
+            // case 3:
+            case 2:
+              Navigator.pushNamed(context, '/patient_profile',
+                  arguments: userData);
+              break;
+          }
+        },
+      ),
+    );
+  }
 
   double _calculateBMI(alturaM, peso) {
     var alturaCm = alturaM / 100;
