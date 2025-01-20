@@ -5,11 +5,12 @@ const pacienteController = {
     // Criar um paciente
     async create(req, res) {
         try {
-        const paciente = new Paciente(req.body);
-        await db.collection('paciente').add(paciente.toFirestore());
-        res.status(201).json({ message: 'Paciente criado com sucesso!' });
+            const paciente = new Paciente();
+            paciente.fromJson(req.body);
+            await db.collection('paciente').add(paciente.toFirestore());
+            res.status(201).json({ message: 'Paciente criado com sucesso!' });
         } catch (error) {
-        res.status(500).json({ error: error.message });
+            res.status(500).json({ error: error.message });
         }
     },
 

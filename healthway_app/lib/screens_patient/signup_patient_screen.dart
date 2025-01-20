@@ -23,8 +23,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
   final _circunferenciaAbdominalController = TextEditingController();
   final _gorduraCorporalController = TextEditingController();
   final _massaMuscularController = TextEditingController();
-  final _alergiasController = TextEditingController();
-  final _preferenciasController = TextEditingController();
+  final List<TextEditingController> _alergiasController = [];
+  final List<TextEditingController> _preferenciasController = [];
   final _senhaController = TextEditingController();
   final _confirmarSenhaController = TextEditingController();
 
@@ -77,14 +77,15 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
                     _buildTextField(_cpfController, 'CPF', Icons.badge,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
-                        ]),
+                        ],
+                        maxLength: 11),
                     _buildDateField(),
                     _buildDropdownField(),
                     _buildMeasurementFields(),
-                    _buildTextField(
+                    _buildListField(
                         _alergiasController, 'Alergias', Icons.warning),
-                    _buildTextField(_preferenciasController,
-                        'Preferências Alimentares', Icons.restaurant),
+                    _buildListField(_preferenciasController, 'Preferências',
+                        Icons.restaurant),
                     _buildPasswordFields(),
                     SizedBox(height: 30),
                     ElevatedButton(
@@ -113,10 +114,75 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
     );
   }
 
+  Widget _buildListField(
+      List<TextEditingController> controllerList, String label, IconData icon) {
+    return Column(
+      children: [
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: controllerList.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: controllerList[index],
+                      decoration: InputDecoration(
+                        labelText: '$label ${index + 1}',
+                        prefixIcon: Icon(icon, color: kPrimaryColor),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        labelStyle: TextStyle(color: kPrimaryColor),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
+                      style: TextStyle(fontSize: 16),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, preencha este campo';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.remove_circle, color: Colors.red),
+                    onPressed: () {
+                      setState(() {
+                        controllerList.removeAt(index);
+                      });
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        TextButton.icon(
+          onPressed: () {
+            setState(() {
+              controllerList.add(TextEditingController());
+            });
+          },
+          icon: Icon(Icons.add, color: kPrimaryColor),
+          label:
+              Text('Adicionar $label', style: TextStyle(color: kPrimaryColor)),
+        ),
+      ],
+    );
+  }
+
   Widget _buildTextField(
       TextEditingController controller, String label, IconData icon,
       {TextInputType? keyboardType,
-      List<TextInputFormatter>? inputFormatters}) {
+      List<TextInputFormatter>? inputFormatters,
+      int? maxLength}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
@@ -133,9 +199,14 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           labelStyle: TextStyle(color: kPrimaryColor),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+            fontSize: 16, color: kTextColor, fontWeight: FontWeight.w500),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
+        maxLength: maxLength,
+        buildCounter: (context,
+                {required currentLength, required isFocused, maxLength}) =>
+            null,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Por favor, preencha este campo';
@@ -163,7 +234,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           labelStyle: TextStyle(color: kPrimaryColor),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(
+            fontSize: 16, color: kTextColor, fontWeight: FontWeight.w500),
         readOnly: true,
         onTap: () async {
           final pickedDate = await showDatePicker(
@@ -218,7 +290,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           labelStyle: TextStyle(color: kPrimaryColor),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
-        style: TextStyle(fontSize: 16, color: Colors.black),
+        style: TextStyle(
+            fontSize: 16, color: kTextColor, fontWeight: FontWeight.w500),
         items: ['Masculino', 'Feminino', 'Outro']
             .map((label) => DropdownMenuItem(
                   value: label,
@@ -241,53 +314,50 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
   }
 
   Widget _buildMeasurementFields() {
-    return Card(
-      elevation: 4,
-      color: Color(0xFFF0FAFB),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Medidas Corporais',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: kPrimaryColor),
-            ),
-            SizedBox(height: 16),
-            Row(
+    return Padding(
+        padding: EdgeInsets.only(bottom: 20.0),
+        child: Card(
+          elevation: 4,
+          color: Color(0xFFF0FAFB),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                    child: _buildMeasurementField(
-                        _alturaController, 'Altura (cm)', Icons.height)),
-                SizedBox(width: 16),
-                Expanded(
-                    child: _buildMeasurementField(
-                        _pesoController, 'Peso (kg)', Icons.fitness_center)),
+                Text(
+                  'Medidas Corporais',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor),
+                ),
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                        child: _buildMeasurementField(
+                            _alturaController, 'Altura (cm)', Icons.height)),
+                    SizedBox(width: 16),
+                    Expanded(
+                        child: _buildMeasurementField(_pesoController,
+                            'Peso (kg)', Icons.fitness_center)),
+                  ],
+                ),
+                SizedBox(height: 16),
+                _buildMeasurementField(_circunferenciaAbdominalController,
+                    'Circunferência Abdominal (cm)', Icons.straighten),
+                SizedBox(height: 16),
+                _buildMeasurementField(_gorduraCorporalController,
+                    'Gordura Corporal (%)', Icons.percent),
+                SizedBox(height: 16),
+                _buildMeasurementField(_massaMuscularController,
+                    'Massa Muscular (kg)', Icons.fitness_center),
               ],
             ),
-            SizedBox(height: 16),
-            _buildMeasurementField(_circunferenciaAbdominalController,
-                'Circunferência Abdominal (cm)', Icons.straighten),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                    child: _buildMeasurementField(_gorduraCorporalController,
-                        'Gordura Corporal (%)', Icons.percent)),
-                SizedBox(width: 16),
-                Expanded(
-                    child: _buildMeasurementField(_massaMuscularController,
-                        'Massa Muscular (kg)', Icons.fitness_center)),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget _buildMeasurementField(
@@ -307,8 +377,12 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
         ),
         labelStyle: TextStyle(color: kPrimaryColor),
       ),
-      keyboardType: TextInputType.number,
-      style: TextStyle(fontSize: 16),
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*(\,|\.)?\d*')),
+      ],
+      style: TextStyle(
+          fontSize: 16, color: kTextColor, fontWeight: FontWeight.w500),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Preencha este campo';
@@ -379,7 +453,8 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
         labelStyle: TextStyle(color: kPrimaryColor),
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
-      style: TextStyle(fontSize: 16),
+      style: TextStyle(
+          fontSize: 16, color: kTextColor, fontWeight: FontWeight.w500),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor, insira uma senha';
@@ -411,14 +486,16 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
           cpf: _cpfController.text,
           dataNascimento: DateFormat('dd/MM/yyyy').format(dataNascimento),
           sexo: _sexo!,
-          altura: double.parse(_alturaController.text),
-          peso: double.parse(_pesoController.text),
-          circunferenciaAbdominal:
-              double.parse(_circunferenciaAbdominalController.text),
-          gorduraCorporal: double.parse(_gorduraCorporalController.text),
-          massaMuscular: double.parse(_massaMuscularController.text),
-          alergias: [],
-          preferencias: [],
+          altura: double.parse(_alturaController.text.replaceFirst(',', '.')),
+          peso: double.parse(_pesoController.text.replaceFirst(',', '.')),
+          circunferenciaAbdominal: double.parse(
+              _circunferenciaAbdominalController.text.replaceFirst(',', '.')),
+          gorduraCorporal: double.parse(
+              _gorduraCorporalController.text.replaceFirst(',', '.')),
+          massaMuscular: double.parse(
+              _massaMuscularController.text.replaceFirst(',', '.')),
+          alergias: _alergiasController.map((e) => e.text).toList(),
+          preferencias: _preferenciasController.map((e) => e.text).toList(),
           senha: _senhaController.text,
         ));
 
@@ -451,8 +528,12 @@ class _CadastroPacienteScreenState extends State<CadastroPacienteScreen> {
     _circunferenciaAbdominalController.dispose();
     _gorduraCorporalController.dispose();
     _massaMuscularController.dispose();
-    _alergiasController.dispose();
-    _preferenciasController.dispose();
+    for (var controller in _alergiasController) {
+      controller.dispose();
+    }
+    for (var controller in _preferenciasController) {
+      controller.dispose();
+    }
     _senhaController.dispose();
     _confirmarSenhaController.dispose();
     super.dispose();

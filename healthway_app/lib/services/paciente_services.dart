@@ -64,24 +64,48 @@ class PacienteService {
 
   Future<void> cadastrarPaciente(Paciente paciente) async {
     var uri = Uri.parse(apiUrl);
-    var request = http.MultipartRequest('POST', uri);
+    // var request = http.MultipartRequest('POST', uri);
 
-    request.fields['nome'] = paciente.nome;
-    request.fields['email'] = paciente.email;
-    request.fields['cpf'] = paciente.cpf;
-    request.fields['dt_nascimento'] = paciente.dataNascimento.toString();
-    request.fields['sexo'] = paciente.sexo;
-    request.fields['altura'] = paciente.altura.toString();
-    request.fields['peso'] = paciente.peso.toString();
-    request.fields['circunferencia_abdominal'] =
-        paciente.circunferenciaAbdominal.toString();
-    request.fields['gordura_corporal'] = paciente.gorduraCorporal.toString();
-    request.fields['massa_muscular'] = paciente.massaMuscular.toString();
-    request.fields['alergias'] = paciente.alergias.toString();
-    request.fields['preferencias'] = paciente.preferencias.toString();
-    request.fields['senha'] = paciente.senha;
+    // request.fields['nome'] = paciente.nome;
+    // request.fields['email'] = paciente.email;
+    // request.fields['cpf'] = paciente.cpf;
+    // request.fields['dt_nascimento'] = paciente.dataNascimento.toString();
+    // request.fields['sexo'] = paciente.sexo;
+    // request.fields['altura'] = paciente.altura.toString();
+    // request.fields['peso'] = paciente.peso.toString();
+    // request.fields['circunferencia_abdominal'] =
+    //     paciente.circunferenciaAbdominal.toString();
+    // request.fields['gordura_corporal'] = paciente.gorduraCorporal.toString();
+    // request.fields['massa_muscular'] = paciente.massaMuscular.toString();
+    // request.fields['alergias'] = paciente.alergias.toString();
+    // request.fields['preferencias'] = paciente.preferencias.toString();
+    // request.fields['senha'] = paciente.senha;
 
-    var response = await request.send();
+    // var response = await request.send();
+    // if (response.statusCode != 201) {
+    //   throw Exception('Falha ao cadastrar paciente');
+    // }
+
+    var response = await http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'nome': paciente.nome,
+        'email': paciente.email,
+        'cpf': paciente.cpf,
+        'dt_nascimento': paciente.dataNascimento,
+        'sexo': paciente.sexo,
+        'altura': paciente.altura,
+        'peso': paciente.peso,
+        'circunferencia_abdominal': paciente.circunferenciaAbdominal,
+        'gordura_corporal': paciente.gorduraCorporal,
+        'massa_muscular': paciente.massaMuscular,
+        'alergias': paciente.alergias,
+        'preferencias': paciente.preferencias,
+        'senha': paciente.senha,
+      }),
+    );
+
     if (response.statusCode != 201) {
       throw Exception('Falha ao cadastrar paciente');
     }
