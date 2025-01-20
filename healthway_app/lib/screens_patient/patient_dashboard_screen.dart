@@ -155,6 +155,8 @@ class PatientDashboardScreen extends StatelessWidget {
                   '/meal_plan', 'dashboard_dieta', userData),
               _buildQuickAccessItem(context, Icons.people, 'Nutricionistas',
                   '/nutricionistas', 'dashboard_nutricionistas', null),
+              _buildQuickAccessItem(context, Icons.local_dining, 'Alimentos',
+                  '/alimentos', 'dashboard_alimentos', null),
               // _buildQuickAccessItem(
               //     context, Icons.insert_chart, 'Progresso', '/progress', 'dashboard_', null),
               _buildQuickAccessItem(context, Icons.message, 'Chat', '/chat',

@@ -47,6 +47,7 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: Text('Alimentos'),
+        foregroundColor: Colors.white,
         backgroundColor: kPrimaryColor,
         elevation: 5,
         // Remover o arredondamento da parte superior do AppBar

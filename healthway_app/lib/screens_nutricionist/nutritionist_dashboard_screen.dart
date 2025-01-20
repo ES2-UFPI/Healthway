@@ -443,7 +443,8 @@ class NutritionistDashboardScreen extends StatelessWidget {
               // Already on home screen
               break;
             case 1:
-              Navigator.pushNamed(context, '/patientList');
+              Navigator.pushNamed(context, '/patient_list',
+                  arguments: userData);
               break;
             case 2:
               Navigator.pushNamed(context, '/schedule');
