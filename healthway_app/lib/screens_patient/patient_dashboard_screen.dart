@@ -387,3 +387,7 @@ class PatientDashboardScreen extends StatelessWidget {
     return peso / (alturaCm * alturaCm);
   }
 }
+
+extension on Color {
+  withValues({required double alpha}) {}
+}

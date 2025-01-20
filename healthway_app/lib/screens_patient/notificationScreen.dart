@@ -87,3 +87,7 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 }
+
+extension on Color {
+  withValues({required double alpha}) {}
+}

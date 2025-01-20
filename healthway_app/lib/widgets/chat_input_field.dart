@@ -91,3 +91,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
     );
   }
 }
+
+extension on Color {
+  withValues({required double alpha}) {}
+}

@@ -382,3 +382,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
     return 'Obeso';
   }
 }
+
+extension on Color {
+  withValues({required double alpha}) {}
+}
