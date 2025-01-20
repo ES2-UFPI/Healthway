@@ -1,13 +1,15 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class NutritionistDashboardScreen extends StatelessWidget {
-  const NutritionistDashboardScreen({super.key});
+  final Map<String, dynamic> userData;
+
+  const NutritionistDashboardScreen({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -29,7 +31,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF31BAC2),
+        color: kPrimaryColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
@@ -45,7 +47,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Olá, Dr. Silva',
+                    userData['nome'],
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -72,7 +74,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
                   child: Icon(
                     Icons.person,
                     size: 35,
-                    color: Color(0xFF31BAC2),
+                    color: kPrimaryColor,
                   ),
                 ),
               ),
@@ -88,7 +90,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildStatItem('Pacientes', '42'),
+                _buildStatItem('Pacientes', '${userData['pacientes'].length}'),
                 _buildStatItem('Consultas Hoje', '8'),
                 _buildStatItem('Mensagens', '15'),
               ],
@@ -107,7 +109,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF31BAC2),
+            color: kPrimaryColor,
           ),
         ),
         SizedBox(height: 5),
@@ -140,10 +142,14 @@ class NutritionistDashboardScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildQuickAccessItem(context, Icons.people, 'Pacientes', '/patientList'),
-              _buildQuickAccessItem(context, Icons.calendar_today, 'Agenda', '/schedule'),
-              _buildQuickAccessItem(context, Icons.restaurant_menu, 'Planos', '/meal_plans'),
-              _buildQuickAccessItem(context, Icons.food_bank_outlined, 'Alimentos', '/alimentos'),
+              _buildQuickAccessItem(context, Icons.people, 'Pacientes',
+                  '/patient_list', userData),
+              _buildQuickAccessItem(
+                  context, Icons.calendar_today, 'Agenda', '/schedule', null),
+              // _buildQuickAccessItem(
+              //     context, Icons.restaurant_menu, 'Planos', '/meal_plans'),
+              _buildQuickAccessItem(context, Icons.food_bank_outlined,
+                  'Alimentos', '/alimentos', null),
             ],
           ),
         ],
@@ -151,22 +157,23 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAccessItem(BuildContext context, IconData icon, String label, String route) {
+  Widget _buildQuickAccessItem(BuildContext context, IconData icon,
+      String label, String route, Object? args) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, route);
+        Navigator.pushNamed(context, route, arguments: args);
       },
       child: Column(
         children: [
           Container(
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: Color(0xFF31BAC2).withOpacity(0.1),
+              color: kPrimaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Icon(
               icon,
-              color: Color(0xFF31BAC2),
+              color: kPrimaryColor,
               size: 30,
             ),
           ),
@@ -206,7 +213,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
                 child: Text(
                   'Ver todas',
                   style: TextStyle(
-                    color: Color(0xFF31BAC2),
+                    color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -214,18 +221,23 @@ class NutritionistDashboardScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15),
-          _buildAppointmentItem(context, 'Maria Oliveira', '14:00', 'Consulta de Rotina'),
-          _buildAppointmentItem(context, 'João Silva', '15:30', 'Avaliação Nutricional'),
-          _buildAppointmentItem(context, 'Ana Santos', '17:00', 'Revisão de Dieta'),
+          _buildAppointmentItem(
+              context, 'Maria Oliveira', '14:00', 'Consulta de Rotina'),
+          _buildAppointmentItem(
+              context, 'João Silva', '15:30', 'Avaliação Nutricional'),
+          _buildAppointmentItem(
+              context, 'Ana Santos', '17:00', 'Revisão de Dieta'),
         ],
       ),
     );
   }
 
-  Widget _buildAppointmentItem(BuildContext context, String name, String time, String type) {
+  Widget _buildAppointmentItem(
+      BuildContext context, String name, String time, String type) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/appointment_details', arguments: {'name': name, 'time': time, 'type': type});
+        Navigator.pushNamed(context, '/appointment_details',
+            arguments: {'name': name, 'time': time, 'type': type});
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
@@ -235,7 +247,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 3),
@@ -247,12 +259,12 @@ class NutritionistDashboardScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Color(0xFF31BAC2).withOpacity(0.1),
+                color: kPrimaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 Icons.calendar_today,
-                color: Color(0xFF31BAC2),
+                color: kPrimaryColor,
               ),
             ),
             SizedBox(width: 15),
@@ -282,7 +294,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
               time,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF31BAC2),
+                color: kPrimaryColor,
               ),
             ),
           ],
@@ -314,7 +326,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
                 child: Text(
                   'Ver todas',
                   style: TextStyle(
-                    color: Color(0xFF31BAC2),
+                    color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -322,18 +334,23 @@ class NutritionistDashboardScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15),
-          _buildPatientUpdateItem(context, 'Carlos Mendes', 'Atingiu meta de peso', '2h atrás'),
-          _buildPatientUpdateItem(context, 'Fernanda Lima', 'Novo registro de refeição', '4h atrás'),
-          _buildPatientUpdateItem(context, 'Ricardo Souza', 'Solicitou alteração na dieta', '1d atrás'),
+          _buildPatientUpdateItem(
+              context, 'Carlos Mendes', 'Atingiu meta de peso', '2h atrás'),
+          _buildPatientUpdateItem(context, 'Fernanda Lima',
+              'Novo registro de refeição', '4h atrás'),
+          _buildPatientUpdateItem(context, 'Ricardo Souza',
+              'Solicitou alteração na dieta', '1d atrás'),
         ],
       ),
     );
   }
 
-  Widget _buildPatientUpdateItem(BuildContext context, String name, String update, String time) {
+  Widget _buildPatientUpdateItem(
+      BuildContext context, String name, String update, String time) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/patient_details', arguments: {'name': name});
+        Navigator.pushNamed(context, '/patient_details',
+            arguments: {'name': name});
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
@@ -343,7 +360,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 3),
@@ -353,11 +370,11 @@ class NutritionistDashboardScreen extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-              backgroundColor: Color(0xFF31BAC2).withOpacity(0.1),
+              backgroundColor: kPrimaryColor.withValues(alpha: 0.1),
               child: Text(
                 name[0],
                 style: TextStyle(
-                  color: Color(0xFF31BAC2),
+                  color: kPrimaryColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -404,7 +421,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withValues(alpha: 0.3),
             spreadRadius: 1,
             blurRadius: 5,
             offset: Offset(0, -3),
@@ -414,7 +431,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
       child: BottomNavigationBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        selectedItemColor: Color(0xFF31BAC2),
+        selectedItemColor: kPrimaryColor,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: true,
         showUnselectedLabels: true,
@@ -423,10 +440,11 @@ class NutritionistDashboardScreen extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-            // Already on home screen
+              // Already on home screen
               break;
             case 1:
-              Navigator.pushNamed(context, '/patientList');
+              Navigator.pushNamed(context, '/patient_list',
+                  arguments: userData);
               break;
             case 2:
               Navigator.pushNamed(context, '/schedule');
@@ -458,4 +476,3 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 }
-

@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import '../models/nutricionista.dart';
 import '../widgets/rating_stars.dart';
@@ -11,7 +12,7 @@ class NutricionistaDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       body: CustomScrollView(
         slivers: [
           _buildSliverAppBar(),
@@ -36,12 +37,15 @@ class NutricionistaDetailScreen extends StatelessWidget {
         onPressed: () {
           // TODO: Implement appointment scheduling
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Funcionalidade de agendamento em desenvolvimento')),
+            SnackBar(
+                content:
+                    Text('Funcionalidade de agendamento em desenvolvimento')),
           );
         },
         icon: Icon(Icons.calendar_today),
         label: Text('Agendar Consulta'),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
       ),
     );
   }
@@ -52,13 +56,13 @@ class NutricionistaDetailScreen extends StatelessWidget {
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        title: Text(nutricionista.nome),
+        title: Text(nutricionista.nome, style: TextStyle(color: Colors.white)),
         background: Image.network(
-          nutricionista.fotoPerfil ?? 'https://www.w3schools.com/w3images/avatar2.png',
+          'https://www.w3schools.com/w3images/avatar2.png',
           fit: BoxFit.cover,
         ),
       ),
-      backgroundColor: Color(0xFF31BAC2),
+      backgroundColor: kPrimaryColor,
     );
   }
 
@@ -73,7 +77,10 @@ class NutricionistaDetailScreen extends StatelessWidget {
           children: [
             Text(
               nutricionista.nome,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 8),
             Text(
@@ -90,7 +97,7 @@ class NutricionistaDetailScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(width: 16),
-                Icon(Icons.person, color: Color(0xFF31BAC2)),
+                Icon(Icons.person, color: kPrimaryColor),
                 SizedBox(width: 4),
                 Text(
                   '${nutricionista.numeroClientes} clientes',
@@ -111,7 +118,7 @@ class NutricionistaDetailScreen extends StatelessWidget {
   Widget _buildInfoRow(IconData icon, String text) {
     return Row(
       children: [
-        Icon(icon, color: Color(0xFF31BAC2), size: 20),
+        Icon(icon, color: kPrimaryColor, size: 20),
         SizedBox(width: 8),
         Expanded(
           child: Text(
@@ -139,7 +146,8 @@ class NutricionistaDetailScreen extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              nutricionista.sobre ?? 'Informações sobre o nutricionista não disponíveis.',
+              nutricionista.sobre ??
+                  'Informações sobre o nutricionista não disponíveis.',
               style: TextStyle(fontSize: 16),
             ),
           ],
@@ -192,4 +200,3 @@ extension on Nutricionista {
 
   get numeroClientes => 12;
 }
-

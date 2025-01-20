@@ -6,6 +6,7 @@ const nutricionistaController = require('../controllers/nutricionistaController'
 router.post('/', nutricionistaController.create);
 router.get('/', nutricionistaController.getAll);
 router.get('/:id', nutricionistaController.getById);
+router.post('/login', nutricionistaController.getByEmailAndPassword);
 router.put('/:id', nutricionistaController.update);
 router.delete('/:id', nutricionistaController.delete);
 router.get('/specialty/:specialty', nutricionistaController.getBySpecialty);

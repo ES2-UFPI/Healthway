@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/message_model.dart';
@@ -9,19 +10,23 @@ class ChatMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMe = message.senderId == 'currentUser'; // Replace with actual user ID check
+    final isMe =
+        message.senderId == 'currentUser'; // Replace with actual user ID check
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Row(
-        mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment:
+            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!isMe) SizedBox(width: 40),
           Flexible(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: isMe ? Color(0xFF31BAC2).withOpacity(0.2) : Colors.grey[200],
+                color: isMe
+                    ? kPrimaryColor.withValues(alpha: 0.2)
+                    : Colors.grey[200],
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -54,11 +59,12 @@ class ChatMessageBubble extends StatelessWidget {
                         ),
                       ),
                       if (isMe) SizedBox(width: 4),
-                      if (isMe) Icon(
-                        Icons.done_all,
-                        size: 16,
-                        color: Color(0xFF31BAC2),
-                      ),
+                      if (isMe)
+                        Icon(
+                          Icons.done_all,
+                          size: 16,
+                          color: kPrimaryColor,
+                        ),
                     ],
                   ),
                 ],
@@ -71,4 +77,3 @@ class ChatMessageBubble extends StatelessWidget {
     );
   }
 }
-

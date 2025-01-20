@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthway_app/constants.dart';
 import '../services/alimento_services.dart';
 import '../models/alimento.dart';
 import '../widgets/alimento_item.dart';
@@ -31,8 +32,10 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
   void _filtrarAlimentos(String query) {
     setState(() {
       alimentosFiltrados = alimentos.where((alimento) {
-        final descricaoMatch = alimento.descricao.toLowerCase().contains(query.toLowerCase());
-        final categoriaMatch = alimento.categoria.toLowerCase().contains(query.toLowerCase());
+        final descricaoMatch =
+            alimento.descricao.toLowerCase().contains(query.toLowerCase());
+        final categoriaMatch =
+            alimento.categoria.toLowerCase().contains(query.toLowerCase());
         return descricaoMatch || categoriaMatch;
       }).toList();
     });
@@ -41,10 +44,11 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: Text('Alimentos'),
-        backgroundColor: Color(0xFF31BAC2),
+        foregroundColor: Colors.white,
+        backgroundColor: kPrimaryColor,
         elevation: 5,
         // Remover o arredondamento da parte superior do AppBar
         shape: null,
@@ -57,7 +61,8 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
               future: futureAlimentos,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator(color: Color(0xFF31BAC2)));
+                  return Center(
+                      child: CircularProgressIndicator(color: kPrimaryColor));
                 } else if (snapshot.hasError) {
                   return _buildErrorWidget(snapshot.error.toString());
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -77,7 +82,7 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _carregarAlimentos,
         child: Icon(Icons.refresh),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
       ),
     );
   }
@@ -85,13 +90,13 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
   Widget _buildSearchBar() {
     return Container(
       padding: EdgeInsets.all(16),
-      color: Color(0xFF31BAC2),
+      color: kPrimaryColor,
       child: TextField(
         controller: searchController,
         onChanged: _filtrarAlimentos,
         decoration: InputDecoration(
           hintText: 'Pesquisar alimentos...',
-          prefixIcon: Icon(Icons.search, color: Color(0xFF31BAC2)),
+          prefixIcon: Icon(Icons.search, color: kPrimaryColor),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
@@ -114,8 +119,9 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            shadowColor: Colors.black.withOpacity(0.2),
-            color: Colors.transparent,  // Garantir que o fundo do card seja transparente
+            shadowColor: Colors.black.withValues(alpha: 0.2),
+            color: Colors
+                .transparent, // Garantir que o fundo do card seja transparente
             child: AlimentoItem(alimento: alimentosFiltrados[index]),
           ),
         );
@@ -150,7 +156,7 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.no_food, size: 60, color: Color(0xFF31BAC2)),
+          Icon(Icons.no_food, size: 60, color: kPrimaryColor),
           SizedBox(height: 16),
           Text(
             'Nenhum alimento encontrado',
