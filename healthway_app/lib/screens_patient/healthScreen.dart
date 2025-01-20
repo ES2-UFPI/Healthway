@@ -217,3 +217,7 @@ class DietManagementScreen extends StatelessWidget {
     );
   }
 }
+
+extension on Color {
+  withValues({required double alpha}) {}
+}
