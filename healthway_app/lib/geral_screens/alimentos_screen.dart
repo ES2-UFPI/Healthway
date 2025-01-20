@@ -167,7 +167,3 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
     );
   }
 }
-
-extension on Color {
-  withValues({required double alpha}) {}
-}

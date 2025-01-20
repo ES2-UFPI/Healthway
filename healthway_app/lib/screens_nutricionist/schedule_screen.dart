@@ -189,10 +189,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   }
 }
 
-extension on Color {
-  withValues({required double alpha}) {}
-}
-
 class Appointment {
   final String patientName;
   final String type;
