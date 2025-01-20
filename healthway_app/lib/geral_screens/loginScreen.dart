@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:healthway_app/geral_screens/forgot_screen.dart';
 import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard.dart';
 import 'package:healthway_app/screens_patient/dashboardScreen.dart';
-import 'package:healthway_app/screens_patient/signupScreen.dart';
+import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
 import 'package:healthway_app/services/auth_service.dart';
+
+import '../screens_patient/signup_patient_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

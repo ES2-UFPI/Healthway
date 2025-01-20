@@ -12,7 +12,8 @@ import 'package:healthway_app/screens_patient/dietScreen.dart';
 import 'package:healthway_app/screens_patient/notificationScreen.dart';
 import 'package:healthway_app/screens_patient/profileScreen.dart';
 import 'package:healthway_app/screens_patient/setingsScreen.dart';
-import 'package:healthway_app/screens_patient/signupScreen.dart';
+import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
+import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
 import 'package:healthway_app/widgets/paciente_item.dart';
 
 import 'geral_screens/chat_screen.dart';
