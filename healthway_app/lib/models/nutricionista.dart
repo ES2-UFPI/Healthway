@@ -25,16 +25,14 @@ class Nutricionista {
 
   factory Nutricionista.fromJson(Map<String, dynamic> json) {
     return Nutricionista(
-      id: json['id'],
-      cpf: json['cpf'],
-      crn: json['crn'],
-      nome: json['nome'],
-      especialidade: json['especialidade'],
-      email: json['email'],
-      senha: json['senha'],
-      fotoPerfil: json['foto_perfil'],
-      fotoDocumento: json['foto_documento'],
-      pacientes: List<String>.from(['pacientes']),
+      id: json['id'] ?? '',
+      cpf: json['cpf'] ?? '',
+      crn: json['crn'] ?? '',
+      nome: json['nome'] ?? '',
+      especialidade: json['especialidade'] ?? '',
+      email: json['email'] ?? '',
+      senha: json['senha'] ?? '',
+      pacientes: List<String>.from(json['pacientes'] ?? []),
     );
   }
 
@@ -47,8 +45,6 @@ class Nutricionista {
       'especialidade': especialidade,
       'email': email,
       'senha': senha,
-      'foto_perfil': fotoPerfil,
-      'foto_documento': fotoDocumento,
       'pacientes': pacientes,
     };
   }

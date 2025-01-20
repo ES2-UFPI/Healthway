@@ -152,13 +152,11 @@ class PatientDashboardScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildQuickAccessItem(context, Icons.restaurant_menu, 'Dieta',
-                  '/meal_plan', 'dashboard_dieta', userData),
+                  '/meal_plan_patient', 'dashboard_dieta', userData),
               _buildQuickAccessItem(context, Icons.people, 'Nutricionistas',
                   '/nutricionistas', 'dashboard_nutricionistas', null),
-              _buildQuickAccessItem(context, Icons.local_dining, 'Alimentos',
-                  '/alimentos', 'dashboard_alimentos', null),
-              // _buildQuickAccessItem(
-              //     context, Icons.insert_chart, 'Progresso', '/progress', 'dashboard_', null),
+              _buildQuickAccessItem(context, Icons.food_bank_outlined,
+                  'Alimentos', '/alimentos', 'dashboard_alimentos', null),
               _buildQuickAccessItem(context, Icons.message, 'Chat', '/chat',
                   'dashboard_chat', null),
             ],
@@ -366,7 +364,8 @@ class PatientDashboardScreen extends StatelessWidget {
               // Já estamos na tela inicial, então não faça nada
               break;
             case 1:
-              Navigator.pushNamed(context, '/meal_plan', arguments: userData);
+              Navigator.pushNamed(context, '/meal_plan_patient',
+                  arguments: userData);
               break;
             // case 2:
             //   Navigator.pushNamed(context, '/progress');

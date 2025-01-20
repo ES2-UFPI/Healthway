@@ -64,8 +64,8 @@ const planoAlimentarController = {
         }
     },
 
-    // Obter planos alimentares de um paciente passando o seu id como parâmetro
-    async getByPaciente(req, res)  {
+    // Obter um plano alimentar de um paciente passando o seu id como parâmetro
+    async getByPaciente(req, res) {
         try {
             const { paciente } = req.params;
 
@@ -73,12 +73,38 @@ const planoAlimentarController = {
                 return res.status(400).json({ error: 'O parâmetro paciente é obrigatório.' });
             }
 
-            const snapshot = await db.collection('planosAlimentares')
-                                        .where('paciente', '==', paciente)
+            const snapshot = await db.collection('plano_alimentar')
+                                        .where('id_paciente', '==', paciente)
+                                        .limit(1)
                                         .get();
 
             if (snapshot.empty) {
                 return res.status(404).json({ message: 'Nenhum plano alimentar encontrado para este paciente.' });
+            }
+
+            const plano = snapshot.docs[0].data();
+
+            return res.status(200).json({ id: snapshot.docs[0].id, ...plano });
+
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    async getByNutricionista (req, res) {
+        try {
+            const { nutricionista } = req.params;
+
+            if (!nutricionista) {
+                return res.status(400).json({ error: 'O parâmetro nutricionista é obrigatório.' });
+            }
+
+            const snapshot = await db.collection('plano_alimentar')
+                                        .where('id_nutricionista', '==', nutricionista)
+                                        .get();
+
+            if (snapshot.empty) {
+                return res.status(404).json({ message: 'Nenhum plano alimentar encontrado para este nutricionista.' });
             }
 
             const planos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
