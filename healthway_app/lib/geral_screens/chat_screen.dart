@@ -1,35 +1,41 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/chat_controller.dart';
-import '../models/message_model.dart';
-import '../widgets/chat_message_bubble.dart';
 import '../widgets/chat_input_field.dart';
+import '../widgets/chat_message_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
   final ChatController chatController = Get.put(ChatController());
+
+  ChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: Row(
           children: [
             CircleAvatar(
-              backgroundColor: Color(0xFF31BAC2),
-              child: Icon(Icons.person, color: Colors.white),
+              backgroundColor: kPrimaryColor,
               radius: 20,
+              child: Icon(Icons.person, color: Colors.white),
             ),
             SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Nutricionista', style: TextStyle(fontSize: 16, color: Colors.white)),
-                Text('Online', style: TextStyle(fontSize: 12, color: Colors.white70)),
+                Text('Nutricionista',
+                    style: TextStyle(fontSize: 16, color: Colors.white)),
+                Text('Online',
+                    style: TextStyle(fontSize: 12, color: Colors.white70)),
               ],
             ),
           ],
         ),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         actions: [
           IconButton(icon: Icon(Icons.video_call), onPressed: () {}),
           IconButton(icon: Icon(Icons.call), onPressed: () {}),
@@ -65,4 +71,3 @@ class ChatScreen extends StatelessWidget {
     );
   }
 }
-

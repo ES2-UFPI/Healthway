@@ -8,6 +8,7 @@ class Nutricionista {
   final String senha;
   final String? fotoPerfil;
   final String? fotoDocumento;
+  final List<String> pacientes;
 
   Nutricionista({
     this.id,
@@ -19,6 +20,7 @@ class Nutricionista {
     required this.senha,
     this.fotoPerfil,
     this.fotoDocumento,
+    this.pacientes = const [],
   });
 
   factory Nutricionista.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class Nutricionista {
       senha: json['senha'],
       fotoPerfil: json['foto_perfil'],
       fotoDocumento: json['foto_documento'],
+      pacientes: List<String>.from(['pacientes']),
     );
   }
 
@@ -46,6 +49,7 @@ class Nutricionista {
       'senha': senha,
       'foto_perfil': fotoPerfil,
       'foto_documento': fotoDocumento,
+      'pacientes': pacientes,
     };
   }
 }

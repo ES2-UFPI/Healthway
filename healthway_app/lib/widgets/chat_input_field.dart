@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatInputField extends StatefulWidget {
@@ -6,7 +7,7 @@ class ChatInputField extends StatefulWidget {
   const ChatInputField({super.key, required this.onSendMessage});
 
   @override
-  _ChatInputFieldState createState() => _ChatInputFieldState();
+  State<ChatInputField> createState() => _ChatInputFieldState();
 }
 
 class _ChatInputFieldState extends State<ChatInputField> {
@@ -30,7 +31,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
           BoxShadow(
             offset: Offset(0, -2),
             blurRadius: 4,
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
           ),
         ],
       ),
@@ -40,7 +41,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
           child: Row(
             children: [
               IconButton(
-                icon: Icon(Icons.emoji_emotions_outlined, color: Color(0xFF31BAC2)),
+                icon: Icon(Icons.emoji_emotions_outlined, color: kPrimaryColor),
                 onPressed: () {
                   // TODO: Implement emoji picker
                 },
@@ -62,24 +63,26 @@ class _ChatInputFieldState extends State<ChatInputField> {
                     ),
                     filled: true,
                     fillColor: Colors.grey[100],
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   ),
                   style: TextStyle(color: Colors.black87, fontSize: 16),
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.attach_file, color: Color(0xFF31BAC2)),
+                icon: Icon(Icons.attach_file, color: kPrimaryColor),
                 onPressed: () {
                   // TODO: Implement file attachment
                 },
               ),
               IconButton(
-                icon: Icon(_isComposing ? Icons.send : Icons.mic, color: Color(0xFF31BAC2)),
+                icon: Icon(_isComposing ? Icons.send : Icons.mic,
+                    color: kPrimaryColor),
                 onPressed: _isComposing
                     ? () => _handleSubmitted(_textController.text)
                     : () {
-                  // TODO: Implement voice recording
-                },
+                        // TODO: Implement voice recording
+                      },
               ),
             ],
           ),
@@ -89,3 +92,6 @@ class _ChatInputFieldState extends State<ChatInputField> {
   }
 }
 
+extension on Color {
+  withValues({required double alpha}) {}
+}

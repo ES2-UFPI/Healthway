@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:healthway_app/models/nutricionista.dart';
@@ -36,11 +37,11 @@ class _CadastroNutricionistaScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE6F7F8),
+      backgroundColor: kAccentColor,
       appBar: AppBar(
         title: Text('Cadastro de Nutricionista',
             style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -49,7 +50,7 @@ class _CadastroNutricionistaScreenState
             Container(
               height: 150,
               decoration: BoxDecoration(
-                color: Color(0xFF31BAC2),
+                color: kPrimaryColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
@@ -91,7 +92,7 @@ class _CadastroNutricionistaScreenState
                       onPressed: _isLoading ? null : _submitForm,
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Color(0xFF31BAC2),
+                        backgroundColor: kPrimaryColor,
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -123,14 +124,14 @@ class _CadastroNutricionistaScreenState
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          prefixIcon: Icon(icon, color: Color(0xFF31BAC2)),
+          prefixIcon: Icon(icon, color: kPrimaryColor),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
           ),
           filled: true,
           fillColor: Colors.white,
-          labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+          labelStyle: TextStyle(color: kPrimaryColor),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
         style: TextStyle(fontSize: 16),
@@ -154,18 +155,17 @@ class _CadastroNutricionistaScreenState
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color(0xFF31BAC2), width: 2),
+          border: Border.all(color: kPrimaryColor, width: 2),
         ),
         child: image == null
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.add_a_photo, size: 50, color: Color(0xFF31BAC2)),
+                  Icon(Icons.add_a_photo, size: 50, color: kPrimaryColor),
                   SizedBox(height: 10),
                   Text(label,
                       style: TextStyle(
-                          color: Color(0xFF31BAC2),
-                          fontWeight: FontWeight.bold)),
+                          color: kPrimaryColor, fontWeight: FontWeight.bold)),
                 ],
               )
             : ClipRRect(
@@ -191,7 +191,7 @@ class _CadastroNutricionistaScreenState
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF31BAC2)),
+                  color: kPrimaryColor),
             ),
             SizedBox(height: 16),
             _buildPasswordField(_senhaController, 'Senha', _obscurePassword,
@@ -220,11 +220,11 @@ class _CadastroNutricionistaScreenState
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(Icons.lock, color: Color(0xFF31BAC2)),
+        prefixIcon: Icon(Icons.lock, color: kPrimaryColor),
         suffixIcon: IconButton(
           icon: Icon(
             obscureText ? Icons.visibility : Icons.visibility_off,
-            color: Color(0xFF31BAC2),
+            color: kPrimaryColor,
           ),
           onPressed: onTap,
         ),
@@ -234,7 +234,7 @@ class _CadastroNutricionistaScreenState
         ),
         filled: true,
         fillColor: Colors.white,
-        labelStyle: TextStyle(color: Color(0xFF31BAC2)),
+        labelStyle: TextStyle(color: kPrimaryColor),
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       style: TextStyle(fontSize: 16),

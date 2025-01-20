@@ -1,23 +1,21 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:healthway_app/geral_screens/alimentos_screen.dart';
-import 'package:healthway_app/geral_screens/loginScreen.dart';
+import 'package:healthway_app/geral_screens/chat_screen.dart';
+import 'package:healthway_app/geral_screens/login_screen.dart' as login;
 import 'package:healthway_app/geral_screens/nutricionistas_screen.dart';
-import 'package:healthway_app/geral_screens/presentationScreen.dart';
+import 'package:healthway_app/geral_screens/presentation_screen.dart';
 import 'package:healthway_app/screens_nutricionist/meal_plan_screen.dart';
+import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard_screen.dart';
 import 'package:healthway_app/screens_nutricionist/nutritionist_profile.dart';
 import 'package:healthway_app/screens_nutricionist/patient_list_screen.dart';
 import 'package:healthway_app/screens_nutricionist/schedule_screen.dart';
-import 'package:healthway_app/screens_patient/dashboardScreen.dart';
-import 'package:healthway_app/screens_patient/dietScreen.dart';
+import 'package:healthway_app/screens_nutricionist/signup_nutritionist_screen.dart';
 import 'package:healthway_app/screens_patient/notificationScreen.dart';
-import 'package:healthway_app/screens_patient/profileScreen.dart';
+import 'package:healthway_app/screens_patient/patient_dashboard_screen.dart';
+import 'package:healthway_app/screens_patient/patient_profile_screen.dart';
 import 'package:healthway_app/screens_patient/setingsScreen.dart';
 import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
-import 'package:healthway_app/screens_patient/signup_patient_screen.dart';
-import 'package:healthway_app/widgets/paciente_item.dart';
-
-import 'geral_screens/chat_screen.dart';
-import 'geral_screens/presentationScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,65 +30,76 @@ class MyApp extends StatelessWidget {
       title: 'Health Dashboard',
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: const Color(0xFF4CAF50),
+        primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: kPrimaryColor, // Define a cor do cursor
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color(0xFF4CAF50),
+        primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.black,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: kPrimaryColor, // Define a cor do cursor
+        ),
       ),
       themeMode:
           ThemeMode.system, // Alterna automaticamente entre claro e escuro
       initialRoute: '/',
       routes: {
         '/': (context) => PresentationScreen(),
-        '/home': (context) => PatientDashboardScreen(),
-        '/signUp': (context) => CadastroPacienteScreen(),
-        '/login': (context) => LoginScreen(),
+        '/signup_patient': (context) => CadastroPacienteScreen(),
+        '/signup_nutritionist': (context) => CadastroNutricionistaScreen(),
+        '/login': (context) => login.LoginScreen(),
         '/chat': (context) => ChatScreen(),
-        '/health': (context) => PlanoAlimentarScreen(
-              pacienteId: '',
-            ),
+        // '/historic': (context) => PlanoAlimentarScreen(
+        //       pacienteId: '',
+        //     ),
         '/alimentos': (context) => AlimentosScreen(),
         '/nutricionistas': (context) => NutricionistasScreen(),
-        '/menu': (context) => MenuScreen(),
-        '/profile': (context) => PatientProfileScreen(),
         '/notifications': (context) => NotificationScreen(),
         '/settings': (context) => SettingsScreen(),
-        '/patientList': (context) => PacientesScreen(),
-        '/nutritionistProfile': (context) => NutritionistProfileScreen(),
         '/schedule': (context) => ScheduleScreen(),
-        '/meal_plans': (context) => MealPlanScreen(
-              patientName: '',
-            ),
       },
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Home')),
-      bottomNavigationBar: CustomBottomNavigationBar(),
-      body: Center(child: Text('Tela Inicial')),
-    );
-  }
-}
-
-class MenuScreen extends StatelessWidget {
-  const MenuScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Menu')),
-      bottomNavigationBar: CustomBottomNavigationBar(),
-      body: Center(child: Text('Tela de Menu')),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/home_patient':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PatientDashboardScreen(userData: args),
+            );
+          case '/home_nutritionist':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => NutritionistDashboardScreen(userData: args),
+            );
+          case '/patient_profile':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PatientProfileScreen(userData: args),
+            );
+          case '/nutritionist_profile':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => NutritionistProfileScreen(userData: args),
+            );
+          case '/meal_plan':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => MealPlanScreen(patientData: args),
+            );
+          case '/patient_list':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PacientesScreen(
+                args: args,
+              ),
+            );
+          default:
+            return null;
+        }
+      },
     );
   }
 }
@@ -101,7 +110,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      selectedItemColor: Color(0xFF31BAC2),
+      selectedItemColor: kPrimaryColor,
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.fixed,
       items: const [

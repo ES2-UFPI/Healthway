@@ -5,11 +5,12 @@ const pacienteController = {
     // Criar um paciente
     async create(req, res) {
         try {
-        const paciente = new Paciente(req.body);
-        await db.collection('paciente').add(paciente.toFirestore());
-        res.status(201).json({ message: 'Paciente criado com sucesso!' });
+            const paciente = new Paciente();
+            paciente.fromJson(req.body);
+            await db.collection('paciente').add(paciente.toFirestore());
+            res.status(201).json({ message: 'Paciente criado com sucesso!' });
         } catch (error) {
-        res.status(500).json({ error: error.message });
+            res.status(500).json({ error: error.message });
         }
     },
 
@@ -40,11 +41,44 @@ const pacienteController = {
         }
     },
 
+    async getByListOfIds(req, res) {
+        try {
+        const { ids } = req.body;
+        const pacientes = [];
+        for (const id of ids) {
+            const doc = await db.collection('paciente').doc(id).get();
+            if (doc.exists) {
+            pacientes.push({ id: doc.id, ...doc.data() });
+            }
+        }
+        res.status(200).json(pacientes);
+        } catch (error) {
+        res.status(500).json({ error: error.message });
+        }
+    },
+
+    async getByEmailAndPassword(req, res) {
+        try {
+        const { email, senha } = req.body;
+        const snapshot = await db.collection('paciente').where('email', '==', email).where('senha', '==', senha).get();
+        const paciente = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        if (paciente.length === 0) {
+            return res.status(404).json({ error: 'Paciente não encontrado.' });
+        }
+
+        res.status(200).json(paciente[0]);
+        } catch (error) {
+        res.status(500).json({ error: error.message });
+        }
+    },
+
     // Atualizar um paciente
     async update(req, res) {
         try {
         const { id } = req.params;
-        const paciente = new Paciente(req.body);
+        const paciente = new Paciente();
+        paciente.fromJson(req.body);
 
         await db.collection('paciente').doc(id).update(paciente.toFirestore());
         res.status(200).json({ message: 'Paciente atualizado com sucesso!' });

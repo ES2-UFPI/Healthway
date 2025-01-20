@@ -48,4 +48,26 @@ class NutricionistaService {
       throw Exception('Falha ao cadastrar nutricionista');
     }
   }
+
+  Future<void> atualizarNutricionista(Nutricionista nutricionista) async {
+    var uri = Uri.parse('$apiUrl/${nutricionista.id}');
+    var request = http.MultipartRequest('PUT', uri);
+
+    request.fields['nome'] = nutricionista.nome;
+    request.fields['email'] = nutricionista.email;
+    request.fields['cpf'] = nutricionista.cpf;
+    request.fields['crn'] = nutricionista.crn;
+    request.fields['especialidade'] = nutricionista.especialidade;
+    request.fields['senha'] = nutricionista.senha;
+
+    // request.files
+    //     .add(await http.MultipartFile.fromPath('foto_perfil', fotoPerfil.path));
+    // request.files.add(await http.MultipartFile.fromPath(
+    //     'foto_documento', fotoDocumento.path));
+
+    var response = await request.send();
+    if (response.statusCode != 200) {
+      throw Exception('Falha ao atualizar nutricionista');
+    }
+  }
 }

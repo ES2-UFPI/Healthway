@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import '../models/paciente.dart';
 
@@ -52,14 +53,15 @@ class PacienteItem extends StatelessWidget {
 class PacienteDetalhesScreen extends StatelessWidget {
   final Paciente paciente;
 
-  const PacienteDetalhesScreen({Key? key, required this.paciente}) : super(key: key);
+  const PacienteDetalhesScreen({Key? key, required this.paciente})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Detalhes do Paciente'),
-        backgroundColor: Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -80,7 +82,8 @@ class PacienteDetalhesScreen extends StatelessWidget {
             Text('Sexo: ${paciente.sexo}'),
             Text('Altura: ${paciente.altura} m'),
             Text('Peso: ${paciente.peso} kg'),
-            Text('Circunferência Abdominal: ${paciente.circunferenciaAbdominal} cm'),
+            Text(
+                'Circunferência Abdominal: ${paciente.circunferenciaAbdominal} cm'),
             Text('Gordura Corporal: ${paciente.gorduraCorporal}%'),
             Text('Massa Muscular: ${paciente.massaMuscular} kg'),
             SizedBox(height: 16),
@@ -88,13 +91,23 @@ class PacienteDetalhesScreen extends StatelessWidget {
               'Alergias:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text(paciente.alergias),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: paciente.alergias
+                  .map((alergia) => Text('- $alergia'))
+                  .toList(),
+            ),
             SizedBox(height: 16),
             Text(
               'Preferências:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text(paciente.preferencias),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: paciente.preferencias
+                  .map((preferencia) => Text('- $preferencia'))
+                  .toList(),
+            ),
           ],
         ),
       ),

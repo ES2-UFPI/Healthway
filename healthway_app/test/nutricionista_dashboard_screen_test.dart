@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard.dart';
+import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard_screen.dart';
 
 void main() {
   testWidgets('NutritionistDashboardScreen displays correctly', (WidgetTester tester) async {
     // Build the NutritionistDashboardScreen widget.
-    await tester.pumpWidget(MaterialApp(home: NutritionistDashboardScreen()));
+    await tester.pumpWidget(MaterialApp(home: NutritionistDashboardScreen(userData: {},)));
 
     // Verify if the background color is correct.
     final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
@@ -37,7 +37,7 @@ void main() {
 
   testWidgets('NutritionistDashboardScreen displays CircularProgressIndicator when loading', (WidgetTester tester) async {
     // Build the NutritionistDashboardScreen widget.
-    await tester.pumpWidget(MaterialApp(home: NutritionistDashboardScreen()));
+    await tester.pumpWidget(MaterialApp(home: NutritionistDashboardScreen(userData: {},)));
 
     // Verify if the CircularProgressIndicator widget is present.
     expect(find.byType(CircularProgressIndicator), findsNothing);

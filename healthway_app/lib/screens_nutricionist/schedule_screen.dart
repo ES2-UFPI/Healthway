@@ -1,12 +1,12 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
 
   @override
-  _ScheduleScreenState createState() => _ScheduleScreenState();
+  State<ScheduleScreen> createState() => _ScheduleScreenState();
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
@@ -43,10 +43,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: Text('Agenda', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
       body: Column(
@@ -57,7 +57,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addAppointment,
-        backgroundColor: const Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         child: Icon(Icons.add),
       ),
     );
@@ -85,15 +85,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       eventLoader: _getAppointmentsForDay,
       calendarStyle: CalendarStyle(
         selectedDecoration: BoxDecoration(
-          color: const Color(0xFF31BAC2),
+          color: kPrimaryColor,
           shape: BoxShape.circle,
         ),
         todayDecoration: BoxDecoration(
-          color: const Color(0xFF31BAC2).withOpacity(0.5),
+          color: kPrimaryColor.withValues(alpha: 0.5),
           shape: BoxShape.circle,
         ),
         markerDecoration: BoxDecoration(
-          color: const Color(0xFF31BAC2),
+          color: kPrimaryColor,
           shape: BoxShape.circle,
         ),
       ),
@@ -115,7 +115,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: const Color(0xFF31BAC2),
+              backgroundColor: kPrimaryColor,
               child: Text(
                 appointment.patientName[0],
                 style: TextStyle(color: Colors.white),
@@ -127,7 +127,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               appointment.time,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: const Color(0xFF31BAC2),
+                color: kPrimaryColor,
               ),
             ),
             onTap: () => _viewAppointmentDetails(appointment),
@@ -144,7 +144,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Adicionar Consulta'),
-          content: Text('Funcionalidade de adicionar consulta a ser implementada.'),
+          content:
+              Text('Funcionalidade de adicionar consulta a ser implementada.'),
           actions: [
             TextButton(
               child: Text('OK'),
@@ -188,6 +189,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   }
 }
 
+extension on Color {
+  withValues({required double alpha}) {}
+}
+
 class Appointment {
   final String patientName;
   final String type;
@@ -195,4 +200,3 @@ class Appointment {
 
   Appointment(this.patientName, this.type, this.time);
 }
-

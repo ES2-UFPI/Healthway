@@ -17,12 +17,19 @@ class NutricionistaItem extends StatelessWidget {
         leading: CircleAvatar(
           radius: 30,
           backgroundImage: NetworkImage(
-            nutricionista.fotoPerfil ??
-                'https://www.w3schools.com/w3images/avatar2.png', // Imagem padrão
+            'https://www.w3schools.com/w3images/avatar2.png', // Imagem padrão
           ),
         ),
-        title: Text(nutricionista.nome),
-        subtitle: Text(nutricionista.especialidade),
+        title: Text(
+          nutricionista.nome,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        subtitle: Text(nutricionista.especialidade,
+            style: TextStyle(
+              color: Colors.white60,
+            )),
         onTap: () {
           // Navega para a tela de detalhes do nutricionista
           Navigator.push(

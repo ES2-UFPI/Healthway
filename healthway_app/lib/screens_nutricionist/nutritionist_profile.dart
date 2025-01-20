@@ -1,10 +1,13 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class NutritionistProfileScreen extends StatefulWidget {
-  const NutritionistProfileScreen({super.key});
+  final Object userData;
+
+  const NutritionistProfileScreen({super.key, required this.userData});
 
   @override
-  _NutritionistProfileScreenState createState() =>
+  State<NutritionistProfileScreen> createState() =>
       _NutritionistProfileScreenState();
 }
 
@@ -24,10 +27,10 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: const Text('Meu Perfil'),
-        backgroundColor: const Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
         actions: [
           IconButton(
@@ -68,7 +71,7 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
       floatingActionButton: _isEditing
           ? FloatingActionButton(
               onPressed: _saveChanges,
-              backgroundColor: Color(0xFF31BAC2),
+              backgroundColor: kPrimaryColor,
               child: Icon(Icons.save),
             )
           : null,
@@ -84,7 +87,7 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
             children: [
               CircleAvatar(
                 radius: 60,
-                backgroundColor: Color(0xFF31BAC2),
+                backgroundColor: kPrimaryColor,
                 backgroundImage: NetworkImage(fotoPerfil),
                 child: fotoPerfil.isEmpty
                     ? Text(
@@ -99,7 +102,7 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
               if (!_isEditing)
                 Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFF31BAC2),
+                    color: kPrimaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -198,7 +201,7 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
             // Navigate to detailed edit profile screen
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF31BAC2),
+            backgroundColor: kPrimaryColor,
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -211,11 +214,11 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
             // Navigate to change password screen
           },
           style: OutlinedButton.styleFrom(
-            foregroundColor: Color(0xFF31BAC2),
+            foregroundColor: kPrimaryColor,
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            side: BorderSide(color: Color(0xFF31BAC2)),
+            side: BorderSide(color: kPrimaryColor),
           ),
           child: Text('Alterar Senha'),
         ),
@@ -245,7 +248,7 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
                   width: 200,
                   height: 150,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF31BAC2)),
+                    border: Border.all(color: kPrimaryColor),
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       image: NetworkImage(fotoDocumento),
@@ -253,8 +256,7 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
                     ),
                   ),
                   child: fotoDocumento.isEmpty
-                      ? Icon(Icons.add_a_photo,
-                          size: 50, color: Color(0xFF31BAC2))
+                      ? Icon(Icons.add_a_photo, size: 50, color: kPrimaryColor)
                       : null,
                 ),
               ),
