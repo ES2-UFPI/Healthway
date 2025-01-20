@@ -55,4 +55,4 @@ class Paciente {
     }
   }
 
-  module.exports = Paciente;
+module.exports = Paciente; // Exporta a classe para uso em outros módulos

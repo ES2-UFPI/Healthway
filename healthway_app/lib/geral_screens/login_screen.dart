@@ -64,8 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 30),
                     _buildLoginButton(),
                     SizedBox(height: 20),
-                    _buildPatientButton(),
-                    _buildNutricionistButton(),
+                    _buildSignupAsPatientButton(),
+                    SizedBox(height: 10),
+                    _buildSignupAsNutricionistButton(),
                   ],
                 ),
               ),
@@ -201,12 +202,14 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(30),
         ),
       ),
-      child: Text('Entrar',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      child: _isLoading
+          ? CircularProgressIndicator(color: Colors.white)
+          : Text('Entrar',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
     );
   }
 
-  Widget _buildPatientButton() {
+  Widget _buildSignupAsPatientButton() {
     return TextButton(
       onPressed: () {
         Navigator.pushNamed(context, '/signup_patient');
@@ -218,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildNutricionistButton() {
+  Widget _buildSignupAsNutricionistButton() {
     return TextButton(
       onPressed: () {
         Navigator.pushNamed(context, '/signup_nutritionist');

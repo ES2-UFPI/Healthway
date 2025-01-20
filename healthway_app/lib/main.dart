@@ -2,7 +2,7 @@ import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:healthway_app/geral_screens/alimentos_screen.dart';
 import 'package:healthway_app/geral_screens/chat_screen.dart';
-import 'package:healthway_app/geral_screens/login_screen.dart';
+import 'package:healthway_app/geral_screens/login_screen.dart' as login;
 import 'package:healthway_app/geral_screens/nutricionistas_screen.dart';
 import 'package:healthway_app/geral_screens/presentation_screen.dart';
 import 'package:healthway_app/screens_nutricionist/meal_plan_screen.dart';
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => PresentationScreen(),
         '/signup_patient': (context) => CadastroPacienteScreen(),
         '/signup_nutritionist': (context) => CadastroNutricionistaScreen(),
-        '/login': (context) => LoginScreen(),
+        '/login': (context) => login.LoginScreen(),
         '/chat': (context) => ChatScreen(),
         // '/historic': (context) => PlanoAlimentarScreen(
         //       pacienteId: '',

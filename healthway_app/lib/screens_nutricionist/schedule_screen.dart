@@ -6,7 +6,7 @@ class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
 
   @override
-  _ScheduleScreenState createState() => _ScheduleScreenState();
+  State<ScheduleScreen> createState() => _ScheduleScreenState();
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
@@ -89,7 +89,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           shape: BoxShape.circle,
         ),
         todayDecoration: BoxDecoration(
-          color: kPrimaryColor.withOpacity(0.5),
+          color: kPrimaryColor.withValues(alpha: 0.5),
           shape: BoxShape.circle,
         ),
         markerDecoration: BoxDecoration(

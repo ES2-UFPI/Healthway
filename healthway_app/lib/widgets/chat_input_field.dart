@@ -7,7 +7,7 @@ class ChatInputField extends StatefulWidget {
   const ChatInputField({super.key, required this.onSendMessage});
 
   @override
-  _ChatInputFieldState createState() => _ChatInputFieldState();
+  State<ChatInputField> createState() => _ChatInputFieldState();
 }
 
 class _ChatInputFieldState extends State<ChatInputField> {

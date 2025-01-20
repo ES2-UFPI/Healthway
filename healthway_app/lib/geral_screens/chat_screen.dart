@@ -9,6 +9,8 @@ import '../widgets/chat_message_bubble.dart';
 class ChatScreen extends StatelessWidget {
   final ChatController chatController = Get.put(ChatController());
 
+  ChatScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
