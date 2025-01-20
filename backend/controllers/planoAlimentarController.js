@@ -75,16 +75,15 @@ const planoAlimentarController = {
 
             const snapshot = await db.collection('plano_alimentar')
                                         .where('id_paciente', '==', paciente)
-                                        .limit(1)
                                         .get();
 
             if (snapshot.empty) {
                 return res.status(404).json({ message: 'Nenhum plano alimentar encontrado para este paciente.' });
             }
 
-            const plano = snapshot.docs[0].data();
-
-            return res.status(200).json({ id: snapshot.docs[0].id, ...plano });
+            const planos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            res.status(200).json(planos);
 
         } catch (error) {
             res.status(500).json({ error: error.message });

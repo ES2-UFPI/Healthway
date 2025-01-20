@@ -33,7 +33,7 @@ class PlanoAlimentarService {
         dynamic data = json.decode(response.body);
 
         if (data != null) {
-          return PlanoAlimentar.fromJson(data);
+          return PlanoAlimentar.fromJson(data[0]);
         } else {
           throw Exception('Dados não encontrados ou formato inválido');
         }
