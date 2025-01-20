@@ -34,4 +34,21 @@ void main() {
 
     // Add more specific tests for the widgets inside the Column as needed.
   });
+
+  testWidgets('NutritionistDashboardScreen displays CircularProgressIndicator when loading', (WidgetTester tester) async {
+    // Build the NutritionistDashboardScreen widget.
+    await tester.pumpWidget(MaterialApp(home: NutritionistDashboardScreen()));
+
+    // Verify if the CircularProgressIndicator widget is present.
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+
+    // Tap the ElevatedButton to simulate a loading state.
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pump();
+
+    // Verify if the CircularProgressIndicator widget is present.
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+
 }
