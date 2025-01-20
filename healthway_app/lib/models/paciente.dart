@@ -10,8 +10,8 @@ class Paciente {
   final double circunferenciaAbdominal;
   final double gorduraCorporal;
   final double massaMuscular;
-  final String alergias;
-  final String preferencias;
+  final List<String> alergias;
+  final List<String> preferencias;
   final String senha;
 
   Paciente({
@@ -37,15 +37,15 @@ class Paciente {
       nome: json['nome'],
       email: json['email'],
       cpf: json['cpf'],
-      dataNascimento: json['dataNascimento'],
+      dataNascimento: json['dt_nascimento'],
       sexo: json['sexo'],
       altura: json['altura'].toDouble(),
       peso: json['peso'].toDouble(),
-      circunferenciaAbdominal: json['circunferenciaAbdominal'].toDouble(),
-      gorduraCorporal: json['gorduraCorporal'].toDouble(),
-      massaMuscular: json['massaMuscular'].toDouble(),
-      alergias: json['alergias'],
-      preferencias: json['preferencias'],
+      circunferenciaAbdominal: json['circunferencia_abdominal'].toDouble(),
+      gorduraCorporal: json['gordura_corporal'].toDouble(),
+      massaMuscular: json['massa_muscular'].toDouble(),
+      alergias: List<String>.from(json['alergias']),
+      preferencias: List<String>.from(json['preferencias']),
       senha: json['senha'],
     );
   }
@@ -56,13 +56,13 @@ class Paciente {
       'nome': nome,
       'email': email,
       'cpf': cpf,
-      'dataNascimento': dataNascimento,
+      'dt_nascimento': dataNascimento,
       'sexo': sexo,
       'altura': altura,
       'peso': peso,
-      'circunferenciaAbdominal': circunferenciaAbdominal,
-      'gorduraCorporal': gorduraCorporal,
-      'massaMuscular': massaMuscular,
+      'circunferencia_abdominal': circunferenciaAbdominal,
+      'gordura_corporal': gorduraCorporal,
+      'massa_muscular': massaMuscular,
       'alergias': alergias,
       'preferencias': preferencias,
     };
@@ -80,8 +80,8 @@ class Paciente {
     double? circunferenciaAbdominal,
     double? gorduraCorporal,
     double? massaMuscular,
-    String? alergias,
-    String? preferencias,
+    List<String>? alergias,
+    List<String>? preferencias,
     String? senha,
   }) {
     return Paciente(

@@ -1,17 +1,19 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class MealPlanScreen extends StatelessWidget {
-  final String patientName;
+  final Map<String, dynamic> patientData;
 
-  const MealPlanScreen({super.key, required this.patientName});
+  const MealPlanScreen({super.key, required this.patientData});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
-        title: Text('Plano Alimentar - $patientName'),
-        backgroundColor: const Color(0xFF31BAC2),
+        title: Text('Plano Alimentar - ${patientData['nome']}'),
+        backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
         elevation: 0,
       ),
       body: SafeArea(
@@ -40,7 +42,7 @@ class MealPlanScreen extends StatelessWidget {
                 // Editar plano alimentar
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF31BAC2),
+                backgroundColor: kPrimaryColor,
                 padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -71,7 +73,7 @@ class MealPlanScreen extends StatelessWidget {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF31BAC2)),
+                  color: kPrimaryColor),
             ),
             SizedBox(height: 8),
             ...foods.map((food) => Padding(
@@ -79,7 +81,7 @@ class MealPlanScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.fiber_manual_record,
-                          size: 8, color: Color(0xFF31BAC2)),
+                          size: 8, color: kPrimaryColor),
                       SizedBox(width: 8),
                       Text(food, style: TextStyle(fontSize: 16)),
                     ],

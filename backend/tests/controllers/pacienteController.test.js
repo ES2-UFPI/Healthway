@@ -4,6 +4,7 @@ const db = require('../../firebase-config');
 jest.mock('../../firebase-config', () => ({
   collection: jest.fn().mockReturnThis(),
   doc: jest.fn().mockReturnThis(),
+  where: jest.fn().mockReturnThis(),
   get: jest.fn().mockResolvedValue(),
   add: jest.fn(),
   update: jest.fn(),
@@ -202,6 +203,56 @@ describe('pacienteController', () => {
   
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao excluir paciente.' });
+    });
+  });
+
+  describe('getByEmailAndPassword', () => {
+    test('deve retornar um paciente pelo email e senha', async () => {
+      const mockData = { id: '1', nome: 'João', email: 'joao@example.com', senha: '123456' };
+      db.get.mockResolvedValueOnce({
+        docs: [{ id: mockData.id, data: () => mockData }],
+      });
+
+      const req = { body: { email: 'joao@example.com', senha: '123456' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      const result = await pacienteController.getByEmailAndPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(mockData);
+    });
+
+    test('deve retornar um erro ao não achar nenhum paciente com o email e senha', async () => {
+      db.get.mockResolvedValueOnce({ docs: [] });
+
+      const req = { body: { email: 'joao@example.com', senha: '123456' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await pacienteController.getByEmailAndPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Paciente não encontrado.' });
+    });
+
+    test('deve retornar um erro ao buscar um paciente pelo email e senha', async () => {
+      db.get.mockRejectedValueOnce(new Error('Erro ao buscar paciente.'));
+
+      const req = { body: { email: 'joao@example.com', senha: '123456' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await pacienteController.getByEmailAndPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao buscar paciente.' });
     });
   });
 });

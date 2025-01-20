@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Configurações'),
-        backgroundColor: const Color(0xFF31BAC2),
+        backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
       body: SafeArea(
@@ -35,7 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _notificationsEnabled = value;
                   });
                 },
-                activeColor: const Color(0xFF31BAC2),
+                activeColor: kPrimaryColor,
               ),
             ),
             _buildSettingItem(
@@ -48,7 +49,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _darkModeEnabled = value;
                   });
                 },
-                activeColor: const Color(0xFF31BAC2),
+                activeColor: kPrimaryColor,
               ),
             ),
             _buildSettingItem(
@@ -117,7 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF31BAC2),
+          color: kPrimaryColor,
         ),
       ),
     );
@@ -166,7 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Navigator.of(context).pop();
       },
       trailing: _selectedLanguage == language
-          ? const Icon(Icons.check, color: Color(0xFF31BAC2))
+          ? const Icon(Icons.check, color: kPrimaryColor)
           : null,
     );
   }
