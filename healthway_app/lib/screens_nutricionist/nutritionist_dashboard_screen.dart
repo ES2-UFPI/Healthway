@@ -2,7 +2,9 @@ import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class NutritionistDashboardScreen extends StatelessWidget {
-  const NutritionistDashboardScreen({super.key});
+  final Map<String, dynamic> userData;
+
+  const NutritionistDashboardScreen({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Olá, Dr. Silva',
+                    userData['nome'],
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -88,7 +90,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildStatItem('Pacientes', '42'),
+                _buildStatItem('Pacientes', '${userData['pacientes'].length}'),
                 _buildStatItem('Consultas Hoje', '8'),
                 _buildStatItem('Mensagens', '15'),
               ],
@@ -140,14 +142,14 @@ class NutritionistDashboardScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              _buildQuickAccessItem(context, Icons.people, 'Pacientes',
+                  '/patient_list', userData),
               _buildQuickAccessItem(
-                  context, Icons.people, 'Pacientes', '/patientList'),
-              _buildQuickAccessItem(
-                  context, Icons.calendar_today, 'Agenda', '/schedule'),
-              _buildQuickAccessItem(
-                  context, Icons.restaurant_menu, 'Planos', '/meal_plans'),
-              _buildQuickAccessItem(
-                  context, Icons.food_bank_outlined, 'Alimentos', '/alimentos'),
+                  context, Icons.calendar_today, 'Agenda', '/schedule', null),
+              // _buildQuickAccessItem(
+              //     context, Icons.restaurant_menu, 'Planos', '/meal_plans'),
+              _buildQuickAccessItem(context, Icons.food_bank_outlined,
+                  'Alimentos', '/alimentos', null),
             ],
           ),
         ],
@@ -155,11 +157,11 @@ class NutritionistDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAccessItem(
-      BuildContext context, IconData icon, String label, String route) {
+  Widget _buildQuickAccessItem(BuildContext context, IconData icon,
+      String label, String route, Object? args) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, route);
+        Navigator.pushNamed(context, route, arguments: args);
       },
       child: Column(
         children: [

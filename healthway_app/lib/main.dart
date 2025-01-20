@@ -2,7 +2,7 @@ import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:healthway_app/geral_screens/alimentos_screen.dart';
 import 'package:healthway_app/geral_screens/chat_screen.dart';
-import 'package:healthway_app/geral_screens/loginScreen.dart';
+import 'package:healthway_app/geral_screens/login_screen.dart';
 import 'package:healthway_app/geral_screens/nutricionistas_screen.dart';
 import 'package:healthway_app/geral_screens/presentation_screen.dart';
 import 'package:healthway_app/screens_nutricionist/meal_plan_screen.dart';
@@ -56,12 +56,10 @@ class MyApp extends StatelessWidget {
         // '/historic': (context) => PlanoAlimentarScreen(
         //       pacienteId: '',
         //     ),
-
         '/alimentos': (context) => AlimentosScreen(),
         '/nutricionistas': (context) => NutricionistasScreen(),
         '/notifications': (context) => NotificationScreen(),
         '/settings': (context) => SettingsScreen(),
-        '/patientList': (context) => PacientesScreen(),
         '/schedule': (context) => ScheduleScreen(),
       },
       onGenerateRoute: (settings) {
@@ -72,8 +70,9 @@ class MyApp extends StatelessWidget {
               builder: (context) => PatientDashboardScreen(userData: args),
             );
           case '/home_nutritionist':
+            final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
-              builder: (context) => NutritionistDashboardScreen(),
+              builder: (context) => NutritionistDashboardScreen(userData: args),
             );
           case '/patient_profile':
             final args = settings.arguments as Map<String, dynamic>;
@@ -89,6 +88,13 @@ class MyApp extends StatelessWidget {
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
               builder: (context) => MealPlanScreen(patientData: args),
+            );
+          case '/patient_list':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PacientesScreen(
+                args: args,
+              ),
             );
           default:
             return null;

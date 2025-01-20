@@ -252,6 +252,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 arguments: userData);
           }
         } else {
+          setState(() {
+            _isLoading = false;
+          });
           // Show error message
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

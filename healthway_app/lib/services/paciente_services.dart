@@ -39,6 +39,29 @@ class PacienteService {
     }
   }
 
+  Future<List<Paciente>> fetchPacientesByIds(List<String> ids) async {
+    var uri = Uri.parse('$apiUrl/list');
+    var request = http.Request('POST', uri)
+      ..headers['Content-Type'] = 'application/json'
+      ..body = json.encode({'ids': ids});
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      var responseBody = await response.stream.bytesToString();
+      List<dynamic>? data = json.decode(responseBody);
+      try {
+        if (data != null) {
+          return data.map((json) => Paciente.fromJson(json)).toList();
+        } else {
+          throw Exception('Dados não encontrados ou formato inválido');
+        }
+      } catch (e) {
+        throw Exception('Erro ao parsear o JSON: $e');
+      }
+    } else {
+      throw Exception('Falha ao carregar pacientes');
+    }
+  }
+
   Future<void> cadastrarPaciente(Paciente paciente) async {
     var uri = Uri.parse(apiUrl);
     var request = http.MultipartRequest('POST', uri);

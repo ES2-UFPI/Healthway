@@ -2,7 +2,7 @@ import 'package:healthway_app/constants.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:healthway_app/geral_screens/loginScreen.dart';
+import 'package:healthway_app/geral_screens/login_screen.dart';
 
 class PresentationScreen extends StatefulWidget {
   const PresentationScreen({super.key});

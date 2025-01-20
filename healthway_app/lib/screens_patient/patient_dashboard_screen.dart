@@ -48,7 +48,7 @@ class PatientDashboardScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    userData['nome'],
+                    name,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,

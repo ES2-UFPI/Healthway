@@ -34,6 +34,10 @@ class ServicesFacade {
     return await _pacienteService.fetchPacienteById(id);
   }
 
+  Future<List<Paciente>> obterPacientesPorIds(List<String> ids) async {
+    return await _pacienteService.fetchPacientesByIds(ids);
+  }
+
   Future<void> cadastrar(dynamic entity) async {
     if (entity is Nutricionista) {
       await _nutricionistaService.cadastrarNutricionista(entity);

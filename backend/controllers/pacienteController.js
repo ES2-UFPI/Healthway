@@ -40,6 +40,22 @@ const pacienteController = {
         }
     },
 
+    async getByListOfIds(req, res) {
+        try {
+        const { ids } = req.body;
+        const pacientes = [];
+        for (const id of ids) {
+            const doc = await db.collection('paciente').doc(id).get();
+            if (doc.exists) {
+            pacientes.push({ id: doc.id, ...doc.data() });
+            }
+        }
+        res.status(200).json(pacientes);
+        } catch (error) {
+        res.status(500).json({ error: error.message });
+        }
+    },
+
     async getByEmailAndPassword(req, res) {
         try {
         const { email, senha } = req.body;

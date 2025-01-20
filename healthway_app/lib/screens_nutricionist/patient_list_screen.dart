@@ -1,21 +1,26 @@
-import 'package:healthway_app/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:healthway_app/constants.dart';
+import 'package:healthway_app/services/services_facade.dart';
+
 import '../models/paciente.dart';
-import '../services/paciente_services.dart';
 import '../widgets/paciente_item.dart';
 
 class PacientesScreen extends StatefulWidget {
-  const PacientesScreen({super.key});
+  final Map<String, dynamic> args;
+
+  const PacientesScreen({super.key, required this.args});
 
   @override
-  _PacientesScreenState createState() => _PacientesScreenState();
+  State<PacientesScreen> createState() => _PacientesScreenState();
 }
 
 class _PacientesScreenState extends State<PacientesScreen> {
   late Future<List<Paciente>> _pacientes;
+  bool initialized = false;
   List<Paciente> pacientes = [];
   List<Paciente> pacientesFiltrados = [];
   TextEditingController searchController = TextEditingController();
+  var servicesFacade = ServicesFacade();
 
   @override
   void initState() {
@@ -25,16 +30,19 @@ class _PacientesScreenState extends State<PacientesScreen> {
 
   void _carregarPacientes() {
     setState(() {
-      _pacientes = PacienteService().fetchPacientes();
+      _pacientes = servicesFacade
+          .obterPacientesPorIds(List<String>.from(widget.args['pacientes']));
     });
   }
 
   void _filtrarPacientes(String query) {
+    query = query.trim();
     setState(() {
       pacientesFiltrados = pacientes
           .where((paciente) =>
               paciente.nome.toLowerCase().contains(query.toLowerCase()) ||
-              paciente.email.toLowerCase().contains(query.toLowerCase()))
+              paciente.email.toLowerCase().contains(query.toLowerCase()) ||
+              paciente.cpf.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -45,6 +53,7 @@ class _PacientesScreenState extends State<PacientesScreen> {
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
         title: Text('Pacientes'),
+        foregroundColor: Colors.white,
         backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
@@ -64,8 +73,12 @@ class _PacientesScreenState extends State<PacientesScreen> {
                   return _buildEmptyWidget();
                 } else {
                   pacientes = snapshot.data!;
-                  if (pacientesFiltrados.isEmpty) {
+                  if (!initialized) {
                     pacientesFiltrados = pacientes;
+                    initialized = true;
+                  }
+                  if (pacientesFiltrados.isEmpty) {
+                    return _buildEmptyWidget();
                   }
                   return _buildPacientesList();
                 }
@@ -77,6 +90,7 @@ class _PacientesScreenState extends State<PacientesScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _carregarPacientes,
         backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
         child: Icon(Icons.refresh),
       ),
     );
@@ -89,8 +103,9 @@ class _PacientesScreenState extends State<PacientesScreen> {
       child: TextField(
         controller: searchController,
         onChanged: _filtrarPacientes,
+        style: TextStyle(color: kTextColor, fontWeight: FontWeight.w500),
         decoration: InputDecoration(
-          hintText: 'Pesquisar por nome ou email...',
+          hintText: 'Pesquisar por nome, email ou CPF...',
           prefixIcon: Icon(Icons.search, color: kPrimaryColor),
           filled: true,
           fillColor: Colors.white,
