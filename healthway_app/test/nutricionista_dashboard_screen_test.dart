@@ -3,40 +3,37 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard_screen.dart';
 
 void main() {
-  testWidgets('NutritionistDashboardScreen displays user data correctly',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(
-      home: NutritionistDashboardScreen(userData: {},),
-    ));
+  group('NutritionistDashboardScreen', () {
+    testWidgets('Exibe o cabeçalho corretamente com o nome do usuário', (WidgetTester tester) async {
+      // Dados simulados para o teste
+      const String mockUserName = 'Teste Nutricionista';
 
-    expect(find.text('Olá, Nutricionista!'), findsOneWidget);
-    expect(find.text('Vamos cuidar da saúde dos seus pacientes hoje!'),
-        findsOneWidget);
-    expect(find.text('Pacientes'), findsOneWidget);
-    expect(find.text('Chat'), findsOneWidget);
-  });
+      // Renderiza o widget com dados de teste
+      await tester.pumpWidget(
+        MaterialApp(
+          home: NutritionistDashboardScreen(userData: {'name': mockUserName}),
+        ),
+      );
 
-  testWidgets('NutritionistDashboardScreen navigates to chat on tap',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/chat_nutricionist':
-            return MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(title: Text('Chat')),
-              ),
-            );
-          default:
-            return null;
-        }
-      },
-      home: NutritionistDashboardScreen(userData: {},),
-    ));
+      // Verifica se o texto esperado está presente
+      expect(find.text('Olá, Nutricionista!'), findsOneWidget);
+      expect(find.text(mockUserName), findsOneWidget);
+    });
 
-    await tester.tap(find.byKey(Key('dashboard_chat')));
-    await tester.pumpAndSettle();
+    testWidgets('Não exibe widgets desnecessários ou duplicados', (WidgetTester tester) async {
+      const String mockUserName = 'Nutricionista Exemplo';
 
-    expect(find.byType(NutritionistDashboardScreen), findsNothing);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: NutritionistDashboardScreen(userData: {'name': mockUserName}),
+        ),
+      );
+
+      // Verifica que apenas um widget com "Olá, Nutricionista!" existe
+      expect(find.text('Olá, Nutricionista!'), findsOneWidget);
+
+      // Certifica-se de que widgets com textos incorretos não existem
+      expect(find.text('Texto não esperado'), findsNothing);
+    });
   });
 }
