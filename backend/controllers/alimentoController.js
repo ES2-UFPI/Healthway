@@ -1,4 +1,4 @@
-const AlimentoService = require('../services/alimentoServices');
+const AlimentoService = require('../services/alimentoService');
 
 const alimentoController = {
     async create(req, res) {
@@ -35,7 +35,11 @@ const alimentoController = {
             const alimento = await AlimentoService.getById(id);
             res.status(200).json(alimento);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            if (error.message === 'Alimento não encontrado.') {
+                res.status(404).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
         }
     },
 

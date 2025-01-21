@@ -1,66 +1,100 @@
-const PacienteService = require('../services/pacienteServices');
+const db = require('../firebase-config');
+const Paciente = require('../model/Paciente');
 
 const pacienteController = {
+    // Criar um paciente
     async create(req, res) {
         try {
-            await PacienteService.create(req.body);
+            const paciente = new Paciente();
+            paciente.fromJson(req.body);
+            await db.collection('paciente').add(paciente.toFirestore());
             res.status(201).json({ message: 'Paciente criado com sucesso!' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     },
 
+    // Obter todos os pacientes
     async getAll(req, res) {
         try {
-            const pacientes = await PacienteService.getAll();
-            res.status(200).json(pacientes);
+        const snapshot = await db.collection('paciente').get();
+        const pacientes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        res.status(200).json(pacientes);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
         }
     },
 
+    // Obter um paciente pelo ID
     async getById(req, res) {
         try {
-            const paciente = await PacienteService.getById(req.params.id);
-            res.status(200).json(paciente);
+        const { id } = req.params;
+        const doc = await db.collection('paciente').doc(id).get();
+
+        if (!doc.exists) {
+            return res.status(404).json({ error: 'Paciente não encontrado.' });
+        }
+
+        res.status(200).json({ id: doc.id, ...doc.data() });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
         }
     },
 
     async getByListOfIds(req, res) {
         try {
-            const pacientes = await PacienteService.getByListOfIds(req.body.ids);
-            res.status(200).json(pacientes);
+        const { ids } = req.body;
+        const pacientes = [];
+        for (const id of ids) {
+            const doc = await db.collection('paciente').doc(id).get();
+            if (doc.exists) {
+            pacientes.push({ id: doc.id, ...doc.data() });
+            }
+        }
+        res.status(200).json(pacientes);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
         }
     },
 
     async getByEmailAndPassword(req, res) {
         try {
-            const paciente = await PacienteService.getByEmailAndPassword(req.body.email, req.body.senha);
-            res.status(200).json(paciente);
+        const { email, senha } = req.body;
+        const snapshot = await db.collection('paciente').where('email', '==', email).where('senha', '==', senha).get();
+        const paciente = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        if (paciente.length === 0) {
+            return res.status(404).json({ error: 'Paciente não encontrado.' });
+        }
+
+        res.status(200).json(paciente[0]);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
         }
     },
 
+    // Atualizar um paciente
     async update(req, res) {
         try {
-            await PacienteService.update(req.params.id, req.body);
-            res.status(200).json({ message: 'Paciente atualizado com sucesso!' });
+        const { id } = req.params;
+        const paciente = new Paciente();
+        paciente.fromJson(req.body);
+
+        await db.collection('paciente').doc(id).update(paciente.toFirestore());
+        res.status(200).json({ message: 'Paciente atualizado com sucesso!' });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
         }
     },
 
+    // Excluir um paciente
     async delete(req, res) {
         try {
-            await PacienteService.delete(req.params.id);
-            res.status(200).json({ message: 'Paciente excluído com sucesso!' });
+        const { id } = req.params;
+        await db.collection('paciente').doc(id).delete();
+        res.status(200).json({ message: 'Paciente excluído com sucesso!' });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
         }
     }
 };
