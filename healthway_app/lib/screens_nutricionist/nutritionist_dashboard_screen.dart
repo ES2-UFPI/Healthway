@@ -66,7 +66,8 @@ class NutritionistDashboardScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/nutritionist_profile');
+                  Navigator.pushNamed(context, '/nutritionist_profile',
+                      arguments: userData);
                 },
                 child: CircleAvatar(
                   radius: 30,
@@ -317,18 +318,6 @@ class NutritionistDashboardScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/patient_updates');
-                },
-                child: Text(
-                  'Ver todas',
-                  style: TextStyle(
-                    color: kPrimaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
               ),
             ],

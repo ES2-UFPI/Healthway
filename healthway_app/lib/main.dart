@@ -89,6 +89,12 @@ class MyApp extends StatelessWidget {
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
               builder: (context) =>
+                  MealPlanScreen(patientData: args, isPatient: true),
+            );
+          case '/meal_plan_nutritionist':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) =>
                   MealPlanScreen(patientData: args, isPatient: false),
             );
           case '/patient_list':

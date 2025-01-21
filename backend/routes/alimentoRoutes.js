@@ -4,6 +4,7 @@ const alimentoController = require('../controllers/alimentoController');
 
 // Rotas
 router.post('/', alimentoController.create);
+router.post('/many', alimentoController.createMany);
 router.get('/', alimentoController.getAll);
 router.get('/:id', alimentoController.getById);
 router.get('/categoria/:categoria', alimentoController.getByCategory); // Nova rota para buscar por categoria

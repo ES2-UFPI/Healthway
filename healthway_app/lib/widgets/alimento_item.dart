@@ -39,7 +39,7 @@ class AlimentoItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Categoria: ${alimento.categoria}',
+                'Categoria: ',
                 style: TextStyle(
                     color: Colors.grey[700]), // Cor mais suave para a categoria
               ),

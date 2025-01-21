@@ -222,65 +222,64 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = true;
       });
       String email = _emailController.text;
-      // String senha = _senhaController.text;
-      // String userType = _userType;
+      String senha = _senhaController.text;
+      String userType = _userType;
 
-      // Call the login service
-      // _servicesFacade
-      //     .login(email: email, senha: senha, userType: userType)
-      //     .then((userData) {
-      //   if (userData != null) {
-      //     if (_userType == 'Paciente') {
-      //       Navigator.pushReplacementNamed(context, '/home_patient',
-      //           arguments: userData);
-      //     } else if (_userType == 'Nutricionista') {
-      //       Navigator.pushReplacementNamed(context, '/home_nutritionist',
-      //           arguments: userData);
-      //     }
-      //   } else {
-      //     setState(() {
-      //       _isLoading = false;
-      //     });
-      //     // Show error message
-      //     ScaffoldMessenger.of(context).showSnackBar(
-      //       SnackBar(
-      //           content: Text('Falha no login. Verifique suas credenciais.')),
-      //     );
-      //   }
-      // }).catchError((error) {
-      //   setState(() {
-      //     _isLoading = false;
-      //   });
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(content: Text('Erro ao fazer login: ${error.toString()}')),
-      //   );
-      // });
+      _servicesFacade
+          .login(email: email, senha: senha, userType: userType)
+          .then((userData) {
+        if (userData != null) {
+          if (_userType == 'Paciente') {
+            Navigator.pushReplacementNamed(context, '/home_patient',
+                arguments: userData);
+          } else if (_userType == 'Nutricionista') {
+            Navigator.pushReplacementNamed(context, '/home_nutritionist',
+                arguments: userData);
+          }
+        } else {
+          setState(() {
+            _isLoading = false;
+          });
+          // Show error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('Falha no login. Verifique suas credenciais.')),
+          );
+        }
+      }).catchError((error) {
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao fazer login: ${error.toString()}')),
+        );
+      });
 
-      var patientMockData = {
-        'id': '1',
-        'nome': 'francisco',
-        'email': email,
-        'dt_nascimento': '01/01/2000',
-        'altura': 180,
-        'peso': 75,
-        'circunferencia_abdominal': 88,
-        'massa_muscular': 6.5,
-        'gordura_corporal': 15.5,
-        'alergias': ['Amendoim', 'Leite'],
-        'preferencias': ['Vegano'],
-      };
+      // var patientMockData = {
+      //   'id': '1',
+      //   'nome': 'francisco',
+      //   'email': email,
+      //   'dt_nascimento': '01/01/2000',
+      //   'altura': 180,
+      //   'peso': 75,
+      //   'circunferencia_abdominal': 88,
+      //   'massa_muscular': 6.5,
+      //   'gordura_corporal': 15.5,
+      //   'alergias': ['Amendoim', 'Leite'],
+      //   'preferencias': ['Vegano'],
+      // };
 
-      var nutritionistMockData = {
-        'nome': 'João',
-        'pacientes': ['1'],
-      };
-      if (_userType == 'Paciente') {
-        Navigator.pushReplacementNamed(context, '/home_patient',
-            arguments: patientMockData);
-      } else if (_userType == 'Nutricionista') {
-        Navigator.pushReplacementNamed(context, '/home_nutritionist',
-            arguments: nutritionistMockData);
-      }
+      // var nutritionistMockData = {
+      //   'nome': 'João',
+      //   'pacientes': ['1'],
+      // };
+      // if (_userType == 'Paciente') {
+      //   Navigator.pushReplacementNamed(context, '/home_patient',
+      //       arguments: patientMockData);
+      // } else if (_userType == 'Nutricionista') {
+      //   Navigator.pushReplacementNamed(context, '/home_nutritionist',
+      //       arguments: nutritionistMockData);
+      // }
     }
   }
 

@@ -97,28 +97,39 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
                           color: kPrimaryColor,
                         ),
                         subtitle: Padding(
-                          padding: EdgeInsets.only(top: 8.0),
+                          padding: EdgeInsets.only(top: 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children:
-                                List<Widget>.from(itensDeRefeicao[refeicao.id]!
-                                    .entries
-                                    .map((itemDeRefeicao) => Text(
-                                          '${itemDeRefeicao.key}: ${itemDeRefeicao.value}',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: kTextColor),
-                                        ))
-                                    .toList()),
+                            children: [
+                              if (refeicao.observacoes != null &&
+                                  refeicao.observacoes!.isNotEmpty)
+                                Text(
+                                  '${refeicao.observacoes}',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: kTextColor.withValues(alpha: 0.8)),
+                                ),
+                              ...itensDeRefeicao[refeicao.id]!.entries.map(
+                                    (itemDeRefeicao) => Text(
+                                      '${itemDeRefeicao.key}: ${itemDeRefeicao.value}',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: kTextColor),
+                                    ),
+                                  ),
+                            ],
                           ),
                         ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            _editMeal(refeicao, alimentos[refeicao.id]);
-                          },
-                        ),
+                        trailing: widget.isPatient
+                            ? null
+                            : IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  _editMeal(refeicao, alimentos[refeicao.id]);
+                                },
+                              ),
                       ),
                     );
                   }),
@@ -172,6 +183,5 @@ class _MealPlanScreenState extends State<MealPlanScreen> {
     _planData[refeicao.id] = {'refeicao': refeicao, 'alimentos': alimentos};
     Navigator.pushNamed(context, '/meal_edit',
         arguments: _planData[refeicao.id]);
-    carregarPlanoAlimentar();
   }
 }

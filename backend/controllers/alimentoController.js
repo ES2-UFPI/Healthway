@@ -11,6 +11,15 @@ const alimentoController = {
         }
     },
 
+    async createMany(req, res) {
+        try {
+            await AlimentoService.createMany(req.body);
+            res.status(201).json({ message: 'Alimentos criados com sucesso!' });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     async getAll(req, res) {
         try {
             const alimentos = await AlimentoService.getAll();

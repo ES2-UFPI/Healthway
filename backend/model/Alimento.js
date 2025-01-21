@@ -1,7 +1,6 @@
 class Alimento {
     constructor(
-        categoria,
-        descricao,
+        {descricao,
         umidade,
         energiaKcal,
         energiaKJ,
@@ -19,9 +18,8 @@ class Alimento {
         sodio,
         potassio,
         cobre,
-        zinco
+        zinco}
     ) {
-        this.categoria = categoria; // Categoria do Alimento
         this.descricao = descricao; // Descrição dos alimentos
         this.umidade = umidade; // Umidade (%)
         this.energiaKcal = energiaKcal; // Energia (Kcal)
@@ -45,27 +43,50 @@ class Alimento {
 
     toFirestore() {
         return {
-            categoria: this.categoria,
-            descricao: this.descricao,
-            umidade: this.umidade,
-            energiaKcal: this.energiaKcal,
-            energiaKJ: this.energiaKJ,
-            proteina: this.proteina,
-            lipideos: this.lipideos,
-            colesterol: this.colesterol,
-            carboidrato: this.carboidrato,
-            fibraAlimentar: this.fibraAlimentar,
-            cinzas: this.cinzas,
-            calcio: this.calcio,
-            magnesio: this.magnesio,
-            manganes: this.manganes,
-            fosforo: this.fosforo,
-            ferro: this.ferro,
-            sodio: this.sodio,
-            potassio: this.potassio,
-            cobre: this.cobre,
-            zinco: this.zinco
+            "Descrição dos alimentos": this.descricao,
+            "Umidade (%)": this.umidade,
+            "Energia (Kcal)": this.energiaKcal,
+            "Energia (KJ)": this.energiaKJ,
+            "Proteína (g)": this.proteina,
+            "Lipídeos (g)": this.lipideos,
+            "Colesterol (mg)": this.colesterol,
+            "Carboidrato (g)": this.carboidrato,
+            "Fibra Alimentar (g)": this.fibraAlimentar,
+            "Cinzas (g)": this.cinzas,
+            "Cálcio (mg)": this.calcio,
+            "Magnésio (mg)": this.magnesio,
+            "Manganês (mg)": this.manganes,
+            "Fósforo (mg)": this.fosforo,
+            "Ferro (mg)": this.ferro,
+            "Sódio (mg)": this.sodio,
+            "Potássio (mg)": this.potassio,
+            "Cobre (mg)": this.cobre,
+            "Zinco (mg)": this.zinco
         };
+    }
+
+    static fromJson(json) {
+        return new Alimento({
+            descricao: json["Descrição dos alimentos"],
+            umidade: json["Umidade (%)"],
+            energiaKcal: json["Energia (Kcal)"],
+            energiaKJ: json["Energia (KJ)"],
+            proteina: json["Proteína (g)"],
+            lipideos: json["Lipídeos (g)"],
+            colesterol: json["Colesterol (mg)"],
+            carboidrato: json["Carboidrato (g)"],
+            fibraAlimentar: json["Fibra Alimentar (g)"],
+            cinzas: json["Cinzas (g)"],
+            calcio: json["Cálcio (mg)"],
+            magnesio: json["Magnésio (mg)"],
+            manganes: json["Manganês (mg)"],
+            fosforo: json["Fósforo (mg)"],
+            ferro: json["Ferro (mg)"],
+            sodio: json["Sódio (mg)"],
+            potassio: json["Potássio (mg)"],
+            cobre: json["Cobre (mg)"],
+            zinco: json["Zinco (mg)"]
+    });
     }
 }
 
