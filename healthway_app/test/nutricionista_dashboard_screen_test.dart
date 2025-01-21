@@ -1,53 +1,109 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard_screen.dart';
+import 'package:healthway_app/screens_nutricionist/meal_plan_screen.dart';
+import 'package:healthway_app/screens_patient/patient_dashboard_screen.dart';
+import 'package:healthway_app/screens_patient/patient_profile_screen.dart';
 
 void main() {
-  testWidgets('NutritionistDashboardScreen displays correctly', (WidgetTester tester) async {
-    // Build the NutritionistDashboardScreen widget.
-    await tester.pumpWidget(MaterialApp(home: NutritionistDashboardScreen(userData: {},)));
+  final Map<String, dynamic> mockUserData = <String, dynamic>{
+    'nome': 'John Doe',
+    'email': 'ho@gmail.com',
+    'dt_nascimento': '01/01/2000',
+    'altura': 180,
+    'peso': 75,
+    'circunferencia_abdominal': 88,
+    'massa_muscular': 6.5,
+    'gordura_corporal': 15.5,
+    'alergias': ['Amendoim', 'Leite'],
+    'preferencias': ['Vegano'],
+  };
 
-    // Verify if the background color is correct.
-    final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
-    expect(scaffold.backgroundColor, const Color(0xFFE6F7F8));
+  testWidgets('PatientDashboardScreen displays user data correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: PatientDashboardScreen(userData: mockUserData),
+    ));
 
-    // Verify if the AppBar widget is present.
-    expect(find.byType(AppBar), findsOneWidget);
-
-    // Verify if the Icon widget is present.
-    expect(find.byType(Icon), findsOneWidget);
-
-    // Verify if the Padding widget is present.
-    expect(find.byType(Padding), findsOneWidget);
-
-    // Verify if the Form widget is present.
-    expect(find.byType(Form), findsOneWidget);
-
-    // Verify if the TextFormField widget is present.
-    expect(find.byType(TextFormField), findsNWidgets(2));
-
-    // Verify if the ElevatedButton widget is present.
-    expect(find.byType(ElevatedButton), findsOneWidget);
-
-    // Verify if the CircularProgressIndicator widget is present.
-    expect(find.byType(CircularProgressIndicator), findsNothing);
-
-    // Add more specific tests for the widgets inside the Column as needed.
+    expect(find.text('John Doe'), findsOneWidget);
+    expect(find.text('Vamos cuidar da sua saúde hoje!'), findsOneWidget);
+    expect(find.text('IMC'), findsOneWidget);
+    expect(find.text('Peso'), findsOneWidget);
+    expect(find.text('Altura'), findsOneWidget);
   });
 
-  testWidgets('NutritionistDashboardScreen displays CircularProgressIndicator when loading', (WidgetTester tester) async {
-    // Build the NutritionistDashboardScreen widget.
-    await tester.pumpWidget(MaterialApp(home: NutritionistDashboardScreen(userData: {},)));
+  testWidgets('PatientDashboardScreen navigates to meal plan on tap',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/meal_plan':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => MealPlanScreen(patientData: args, isPatient: true),
+            );
+          default:
+            return null;
+        }
+      },
+      home: PatientDashboardScreen(userData: mockUserData),
+    ));
 
-    // Verify if the CircularProgressIndicator widget is present.
-    expect(find.byType(CircularProgressIndicator), findsNothing);
+    await tester.tap(find.byKey(Key('dashboard_dieta')));
+    await tester.pumpAndSettle();
 
-    // Tap the ElevatedButton to simulate a loading state.
-    await tester.tap(find.byType(ElevatedButton));
-    await tester.pump();
+    expect(find.byType(PatientDashboardScreen), findsNothing);
+  });
 
-    // Verify if the CircularProgressIndicator widget is present.
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  testWidgets('PatientDashboardScreen displays next appointment',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: PatientDashboardScreen(userData: mockUserData),
+    ));
+
+    expect(find.text('Próxima consulta:'), findsOneWidget);
+    expect(find.text('Nutricionista'), findsOneWidget);
+    expect(find.text('Dr. João Silva'), findsOneWidget);
+  });
+
+  testWidgets('PatientProfileScreen displays user data correctly',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: PatientProfileScreen(userData: mockUserData),
+    ));
+
+    expect(find.text('John Doe'), findsOneWidget);
+    expect(find.text('01/01/2000'), findsOneWidget);
+    expect(find.text('180 cm'), findsOneWidget);
+    expect(find.text('75 kg'), findsOneWidget);
+    expect(find.text('88 cm'), findsOneWidget);
+    expect(find.text('6.5 kg'), findsOneWidget);
+    expect(find.text('15.5%'), findsOneWidget);
+    expect(find.text('Amendoim'), findsOneWidget);
+    expect(find.text('Leite'), findsOneWidget);
+    expect(find.text('Vegano'), findsOneWidget);
+  });
+
+  testWidgets('PatientProfileScreen navigates to edit profile on tap',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/edit_profile':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PatientProfileScreen(userData: args),
+            );
+          default:
+            return null;
+        }
+      },
+      home: PatientProfileScreen(userData: mockUserData),
+    ));
+
+    await tester.tap(find.byKey(Key('edit_profile_button')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(PatientProfileScreen), findsNothing);
   });
 
 
