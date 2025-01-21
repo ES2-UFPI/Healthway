@@ -1,5 +1,6 @@
 class Refeicao {
-    constructor(nome, alimentos, observacoes) {
+    constructor({id = '', nome, alimentos, observacoes}) {
+        this.id = id;
         this.nome = nome;
         this.alimentos = alimentos;
         this.observacoes = observacoes;

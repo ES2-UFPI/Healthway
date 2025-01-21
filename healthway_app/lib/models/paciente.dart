@@ -33,19 +33,20 @@ class Paciente {
 
   factory Paciente.fromJson(Map<String, dynamic> json) {
     return Paciente(
-      id: json['id'],
-      nome: json['nome'],
-      email: json['email'],
-      cpf: json['cpf'],
-      dataNascimento: json['dt_nascimento'],
-      sexo: json['sexo'],
-      altura: json['altura'].toDouble(),
-      peso: json['peso'].toDouble(),
-      circunferenciaAbdominal: json['circunferencia_abdominal'].toDouble(),
-      gorduraCorporal: json['gordura_corporal'].toDouble(),
-      massaMuscular: json['massa_muscular'].toDouble(),
-      alergias: List<String>.from(json['alergias']),
-      preferencias: List<String>.from(json['preferencias']),
+      id: json['id'] ?? '',
+      nome: json['nome'] ?? '',
+      email: json['email'] ?? '',
+      cpf: json['cpf'] ?? '',
+      dataNascimento: json['dt_nascimento'] ?? '',
+      sexo: json['sexo'] ?? '',
+      altura: json['altura'].toDouble() ?? 0.0,
+      peso: json['peso'].toDouble() ?? 0.0,
+      circunferenciaAbdominal:
+          json['circunferencia_abdominal'].toDouble() ?? 0.0,
+      gorduraCorporal: json['gordura_corporal'].toDouble() ?? 0.0,
+      massaMuscular: json['massa_muscular'].toDouble() ?? 0.0,
+      alergias: List<String>.from(json['alergias'] ?? []),
+      preferencias: List<String>.from(json['preferencias'] ?? []),
       senha: json['senha'],
     );
   }

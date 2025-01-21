@@ -25,7 +25,7 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
 
   void _carregarAlimentos() {
     setState(() {
-      futureAlimentos = AlimentoService().fetchAlimentos();
+      futureAlimentos = AlimentoService().fetchFoods();
     });
   }
 
@@ -81,8 +81,9 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _carregarAlimentos,
-        child: Icon(Icons.refresh),
         backgroundColor: kPrimaryColor,
+        foregroundColor: Colors.white,
+        child: Icon(Icons.refresh),
       ),
     );
   }

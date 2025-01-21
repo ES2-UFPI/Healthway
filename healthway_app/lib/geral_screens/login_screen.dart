@@ -59,8 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     _buildPasswordField(),
                     SizedBox(height: 20),
                     _buildUserTypeDropdown(),
-                    SizedBox(height: 20),
-                    _buildForgotPasswordButton(),
                     SizedBox(height: 30),
                     _buildLoginButton(),
                     SizedBox(height: 20),
@@ -173,21 +171,6 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       style: TextStyle(
           fontSize: 16, fontWeight: FontWeight.w600, color: kTextColor),
-    );
-  }
-
-  Widget _buildForgotPasswordButton() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () {
-          // TODO: Implementar lógica para recuperação de senha
-        },
-        child: Text(
-          'Esqueceu a senha?',
-          style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
-        ),
-      ),
     );
   }
 
