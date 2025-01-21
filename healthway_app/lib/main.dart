@@ -5,12 +5,14 @@ import 'package:healthway_app/geral_screens/chat_screen.dart';
 import 'package:healthway_app/geral_screens/login_screen.dart' as login;
 import 'package:healthway_app/geral_screens/nutricionistas_screen.dart';
 import 'package:healthway_app/geral_screens/presentation_screen.dart';
+import 'package:healthway_app/screens_nutricionist/meal_edit_screen.dart';
 import 'package:healthway_app/screens_nutricionist/meal_plan_screen.dart';
 import 'package:healthway_app/screens_nutricionist/nutritionist_dashboard_screen.dart';
 import 'package:healthway_app/screens_nutricionist/nutritionist_profile.dart';
 import 'package:healthway_app/screens_nutricionist/patient_list_screen.dart';
 import 'package:healthway_app/screens_nutricionist/schedule_screen.dart';
 import 'package:healthway_app/screens_nutricionist/signup_nutritionist_screen.dart';
+import 'package:healthway_app/screens_patient/dietScreen.dart';
 import 'package:healthway_app/screens_patient/notificationScreen.dart';
 import 'package:healthway_app/screens_patient/patient_dashboard_screen.dart';
 import 'package:healthway_app/screens_patient/patient_profile_screen.dart';
@@ -84,16 +86,30 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (context) => NutritionistProfileScreen(userData: args),
             );
-          case '/meal_plan':
+          case '/meal_plan_patient':
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
-              builder: (context) => MealPlanScreen(patientData: args),
+              builder: (context) =>
+                  MealPlanScreen(patientData: args, isPatient: false),
             );
           case '/patient_list':
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
               builder: (context) => PacientesScreen(
                 args: args,
+              ),
+            );
+          case '/meal_edit':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => MealEditScreen(mealData: args),
+            );
+
+          case '/diet':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => PlanoAlimentarScreen(
+                pacienteId: args['id'],
               ),
             );
           default:

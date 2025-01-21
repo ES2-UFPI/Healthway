@@ -36,10 +36,13 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case '/meal_plan':
+          case '/meal_plan_patient':
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
-              builder: (context) => MealPlanScreen(patientData: args),
+              builder: (context) => MealPlanScreen(
+                patientData: args,
+                isPatient: true,
+              ),
             );
           default:
             return null;
@@ -82,10 +85,11 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case '/meal_plan':
+          case '/meal_plan_patient':
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
-              builder: (context) => MealPlanScreen(patientData: args),
+              builder: (context) =>
+                  MealPlanScreen(patientData: args, isPatient: true),
             );
           case '/patient_profile':
             final args = settings.arguments as Map<String, dynamic>;

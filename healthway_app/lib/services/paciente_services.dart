@@ -5,7 +5,7 @@ import 'package:healthway_app/models/paciente.dart';
 class PacienteService {
   static const String apiUrl = 'http://localhost:3000/api/pacientes';
 
-  Future<List<Paciente>> fetchPacientes() async {
+  Future<List<Paciente>> fetchPatients() async {
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
@@ -25,7 +25,7 @@ class PacienteService {
     }
   }
 
-  Future<Paciente> fetchPacienteById(String id) async {
+  Future<Paciente> fetchPatientById(String id) async {
     final response = await http.get(Uri.parse('$apiUrl/$id'));
 
     if (response.statusCode == 200) {
@@ -39,7 +39,7 @@ class PacienteService {
     }
   }
 
-  Future<List<Paciente>> fetchPacientesByIds(List<String> ids) async {
+  Future<List<Paciente>> fetchPatientsByIds(List<String> ids) async {
     var uri = Uri.parse('$apiUrl/list');
     var request = http.Request('POST', uri)
       ..headers['Content-Type'] = 'application/json'
@@ -62,7 +62,7 @@ class PacienteService {
     }
   }
 
-  Future<void> cadastrarPaciente(Paciente paciente) async {
+  Future<void> registerPatient(Paciente paciente) async {
     var uri = Uri.parse(apiUrl);
     // var request = http.MultipartRequest('POST', uri);
 
@@ -126,7 +126,7 @@ class PacienteService {
     }
   }
 
-  Future<void> atualizarPaciente(Paciente paciente) async {
+  Future<void> updatePatient(Paciente paciente) async {
     var uri = Uri.parse('$apiUrl/${paciente.id}');
     var response = await http.put(
       uri,
