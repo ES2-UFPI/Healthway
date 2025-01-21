@@ -66,7 +66,7 @@ class NutritionistDashboardScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/nutritionistProfile');
+                  Navigator.pushNamed(context, '/nutritionist_profile');
                 },
                 child: CircleAvatar(
                   radius: 30,

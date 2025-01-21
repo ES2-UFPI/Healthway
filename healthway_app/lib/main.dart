@@ -120,49 +120,49 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CustomBottomNavigationBar extends StatelessWidget {
-  const CustomBottomNavigationBar({super.key});
+// class CustomBottomNavigationBar extends StatelessWidget {
+//   const CustomBottomNavigationBar({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      selectedItemColor: kPrimaryColor,
-      unselectedItemColor: Colors.grey,
-      type: BottomNavigationBarType.fixed,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.chat_bubble_outline),
-          label: 'Chat',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite_border),
-          label: 'Saúde',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.menu),
-          label: 'Menu',
-        ),
-      ],
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushNamed(context, '/home');
-            break;
-          case 1:
-            Navigator.pushNamed(context, '/chat');
-            break;
-          case 2:
-            Navigator.pushNamed(context, '/health');
-            break;
-          case 3:
-            Navigator.pushNamed(context, '/settings');
-            break;
-        }
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return BottomNavigationBar(
+//       selectedItemColor: kPrimaryColor,
+//       unselectedItemColor: Colors.grey,
+//       type: BottomNavigationBarType.fixed,
+//       items: const [
+//         BottomNavigationBarItem(
+//           icon: Icon(Icons.home_outlined),
+//           label: 'Home',
+//         ),
+//         BottomNavigationBarItem(
+//           icon: Icon(Icons.chat_bubble_outline),
+//           label: 'Chat',
+//         ),
+//         BottomNavigationBarItem(
+//           icon: Icon(Icons.favorite_border),
+//           label: 'Saúde',
+//         ),
+//         BottomNavigationBarItem(
+//           icon: Icon(Icons.menu),
+//           label: 'Menu',
+//         ),
+//       ],
+//       onTap: (index) {
+//         switch (index) {
+//           case 0:
+//             Navigator.pushNamed(context, '/home');
+//             break;
+//           case 1:
+//             Navigator.pushNamed(context, '/chat');
+//             break;
+//           case 2:
+//             Navigator.pushNamed(context, '/health');
+//             break;
+//           case 3:
+//             Navigator.pushNamed(context, '/settings');
+//             break;
+//         }
+//       },
+//     );
+//   }
+// }
