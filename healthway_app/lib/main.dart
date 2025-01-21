@@ -12,7 +12,6 @@ import 'package:healthway_app/screens_nutricionist/nutritionist_profile.dart';
 import 'package:healthway_app/screens_nutricionist/patient_list_screen.dart';
 import 'package:healthway_app/screens_nutricionist/schedule_screen.dart';
 import 'package:healthway_app/screens_nutricionist/signup_nutritionist_screen.dart';
-import 'package:healthway_app/screens_patient/dietScreen.dart';
 import 'package:healthway_app/screens_patient/notificationScreen.dart';
 import 'package:healthway_app/screens_patient/patient_dashboard_screen.dart';
 import 'package:healthway_app/screens_patient/patient_profile_screen.dart';
@@ -103,14 +102,6 @@ class MyApp extends StatelessWidget {
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
               builder: (context) => MealEditScreen(mealData: args),
-            );
-
-          case '/diet':
-            final args = settings.arguments as Map<String, dynamic>;
-            return MaterialPageRoute(
-              builder: (context) => PlanoAlimentarScreen(
-                pacienteId: args['id'],
-              ),
             );
           default:
             return null;

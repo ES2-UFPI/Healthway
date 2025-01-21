@@ -222,8 +222,8 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = true;
       });
       String email = _emailController.text;
-      String senha = _senhaController.text;
-      String userType = _userType;
+      // String senha = _senhaController.text;
+      // String userType = _userType;
 
       // Call the login service
       // _servicesFacade
@@ -256,9 +256,10 @@ class _LoginScreenState extends State<LoginScreen> {
       //   );
       // });
 
-      var mockData = {
-        'nome': 'John Doe',
-        'email': 'exemplo@email.com',
+      var patientMockData = {
+        'id': '1',
+        'nome': 'francisco',
+        'email': email,
         'dt_nascimento': '01/01/2000',
         'altura': 180,
         'peso': 75,
@@ -268,12 +269,17 @@ class _LoginScreenState extends State<LoginScreen> {
         'alergias': ['Amendoim', 'Leite'],
         'preferencias': ['Vegano'],
       };
+
+      var nutritionistMockData = {
+        'nome': 'João',
+        'pacientes': ['1'],
+      };
       if (_userType == 'Paciente') {
         Navigator.pushReplacementNamed(context, '/home_patient',
-            arguments: mockData);
+            arguments: patientMockData);
       } else if (_userType == 'Nutricionista') {
         Navigator.pushReplacementNamed(context, '/home_nutritionist',
-            arguments: mockData);
+            arguments: nutritionistMockData);
       }
     }
   }

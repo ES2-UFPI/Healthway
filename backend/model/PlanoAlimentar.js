@@ -1,6 +1,5 @@
 class PlanoAlimentar {
-    constructor(consulta, dt_inicio, dt_fim, refeicoes, paciente, nutricionista) {
-        this.consulta = consulta;
+    constructor(dt_inicio, dt_fim, refeicoes, paciente, nutricionista) {
         this.dt_inicio = dt_inicio;
         this.dt_fim = dt_fim;
         this.refeicoes = refeicoes;
@@ -10,7 +9,6 @@ class PlanoAlimentar {
 
     toFirestore() {
         return {
-            consulta: this.consulta,
             dt_inicio: this.dt_inicio,
             dt_fim: this.dt_fim,
             refeicoes: this.refeicoes,
