@@ -1,11 +1,12 @@
 import 'package:healthway_app/constants.dart';
+import 'package:healthway_app/models/paciente.dart';
 import 'package:flutter/material.dart';
 import '../models/paciente.dart';
 
 class PacienteItem extends StatelessWidget {
   final Paciente paciente;
 
-  const PacienteItem({Key? key, required this.paciente}) : super(key: key);
+  const PacienteItem({super.key, required this.paciente});
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +54,7 @@ class PacienteItem extends StatelessWidget {
 class PacienteDetalhesScreen extends StatelessWidget {
   final Paciente paciente;
 
-  const PacienteDetalhesScreen({Key? key, required this.paciente})
-      : super(key: key);
+  const PacienteDetalhesScreen({super.key, required this.paciente});
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +107,15 @@ class PacienteDetalhesScreen extends StatelessWidget {
               children: paciente.preferencias
                   .map((preferencia) => Text('- $preferencia'))
                   .toList(),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Navegar para a tela de plano de refeições do paciente
+                Navigator.pushNamed(context, '/meal_plan_nutritionist',
+                    arguments: paciente.toJson());
+              },
+              child: Text('Ver Plano de Refeições'),
             ),
           ],
         ),

@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:healthway_app/constants.dart';
 import 'package:http/http.dart' as http;
 import '../models/alimento.dart';
 
 class AlimentoService {
-  final String apiUrl = 'http://localhost:3000/api/alimentos';
+  final String apiUrl = 'http://$domain/api/alimentos';
 
   Future<List<Alimento>> fetchFoods() async {
     // Fazendo a requisição HTTP para o endpoint da API

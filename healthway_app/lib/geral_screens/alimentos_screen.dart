@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:healthway_app/constants.dart';
-import '../services/alimento_services.dart';
+import 'package:healthway_app/services/services_facade.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '../models/alimento.dart';
 import '../widgets/alimento_item.dart';
 
@@ -16,6 +21,7 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
   List<Alimento> alimentos = [];
   List<Alimento> alimentosFiltrados = [];
   TextEditingController searchController = TextEditingController();
+  final ServicesFacade _servicesFacade = ServicesFacade();
 
   @override
   void initState() {
@@ -25,8 +31,33 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
 
   void _carregarAlimentos() {
     setState(() {
-      futureAlimentos = AlimentoService().fetchFoods();
+      futureAlimentos = _downloadAlimentos();
     });
+  }
+
+  Future<List<Alimento>> _downloadAlimentos() async {
+    try {
+      final directory = await getApplicationCacheDirectory();
+      final file = File('${directory.path}/alimentos.json');
+      if (file.existsSync()) {
+        final foodsJson = await file.readAsString();
+        final foodsData = jsonDecode(foodsJson) as List<dynamic>;
+        final foods = foodsData.map((food) => Alimento.fromJson(food)).toList();
+        return foods;
+      } else {
+        final foods = await _servicesFacade.obterAlimentos();
+        final foodsJson = jsonEncode(foods);
+        await file.writeAsString(foodsJson);
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao baixar alimentos. Tente novamente.'),
+        ),
+      );
+      return [];
+    }
+    return [];
   }
 
   void _filtrarAlimentos(String query) {
@@ -34,9 +65,7 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
       alimentosFiltrados = alimentos.where((alimento) {
         final descricaoMatch =
             alimento.descricao.toLowerCase().contains(query.toLowerCase());
-        final categoriaMatch =
-            alimento.categoria.toLowerCase().contains(query.toLowerCase());
-        return descricaoMatch || categoriaMatch;
+        return descricaoMatch;
       }).toList();
     });
   }

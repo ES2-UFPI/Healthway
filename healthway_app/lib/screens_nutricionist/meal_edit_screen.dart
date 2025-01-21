@@ -80,7 +80,7 @@ class _MealEditScreenState extends State<MealEditScreen> {
         });
         _servicesFacade.atualizar(refeicao);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Perfil atualizado com sucesso')),
+          SnackBar(content: Text('Refeição atualizada com sucesso')),
         );
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(

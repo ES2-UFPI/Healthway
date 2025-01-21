@@ -1,4 +1,3 @@
-const consultaController = require('../../controllers/consultaController');
 const nutricionistaController = require('../../controllers/nutricionistaController');
 const db = require('../../firebase-config');
 
