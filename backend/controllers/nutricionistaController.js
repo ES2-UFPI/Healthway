@@ -104,7 +104,7 @@ const nutricionistaController = {
       const { nome } = req.params;
 
       const startAt = nome;
-      const endAt = nome + '\uf8ff'; 
+      const endAt = nome + '\uf8ff';
 
       const snapshot = await db.collection('nutricionistas')
                                             .orderBy('nome')
