@@ -3,33 +3,32 @@ import 'package:http/http.dart' as http;
 import '../models/alimento.dart';
 
 class AlimentoService {
-  static const String apiUrl = 'http://localhost:3000/api/alimentos';
+  final String apiUrl = 'http://localhost:3000/api/alimentos';
 
-  Future<List<Alimento>> fetchAlimentos() async {
-    try {
-      final response = await http.get(Uri.parse(apiUrl));
+  Future<List<Alimento>> fetchFoods() async {
+    // Fazendo a requisição HTTP para o endpoint da API
+    final response = await http.get(Uri.parse(apiUrl));
 
-      if (response.statusCode == 200) {
-        // Decodifica o corpo da resposta para obter a lista de alimentos
-        List<dynamic> data = json.decode(response.body);
+    // Verificando o status da resposta
+    if (response.statusCode == 200) {
+      // Se a requisição for bem-sucedida, parseia o JSON
+      final List<dynamic> jsonData = json.decode(response.body);
 
-        // Converte os dados em objetos Alimento, tratando valores nulos
-        return data
-            .map((json) {
-              try {
-                return Alimento.fromJson(json);
-              } catch (e) {
-                print('Erro ao parse JSON: $e');
-                return null; // Retorna null caso haja erro na conversão
-              }
-            })
-            .whereType<Alimento>()
-            .toList(); // Ignora objetos null
-      } else {
-        throw Exception('Falha ao carregar alimentos');
-      }
-    } catch (e) {
-      throw Exception('Falha ao carregar alimentos: $e');
+      // Mapeia os dados JSON para objetos Alimento
+      return jsonData.map((item) => Alimento.fromJson(item)).toList();
+    } else {
+      // Em caso de erro, lança uma exceção
+      throw Exception('Falha ao carregar os alimentos');
+    }
+  }
+
+  Future<Alimento> fetchAlimentoById(String id) async {
+    final response = await http.get(Uri.parse('$apiUrl/$id'));
+
+    if (response.statusCode == 200) {
+      return Alimento.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Falha ao carregar o alimento');
     }
   }
 }

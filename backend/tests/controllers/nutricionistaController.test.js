@@ -1,4 +1,3 @@
-const consultaController = require('../../controllers/consultaController');
 const nutricionistaController = require('../../controllers/nutricionistaController');
 const db = require('../../firebase-config');
 
@@ -318,6 +317,56 @@ describe('nutricionistaController', () => {
 
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao buscar nutricionistas.' });
+    });
+  });
+
+  describe('getByEmailAndPassword', () => {
+    test('deve retornar um nutricionista pelo email e senha', async () => {
+      const mockData = { id: '1', nome: 'Nutricionista 1', email: 'test@example.com', senha: '123456' };
+      db.get.mockResolvedValueOnce({
+        docs: [{ id: mockData.id, data: () => mockData }],
+      });
+
+      const req = { body: { email: 'test@example.com', senha: '123456' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await nutricionistaController.getByEmailAndPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(mockData);
+    });
+
+    test('deve retornar um erro ao não achar nenhum nutricionista com o email e senha', async () => {
+      db.get.mockResolvedValueOnce({ docs: [] });
+
+      const req = { body: { email: 'test@example.com', senha: '123456' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await nutricionistaController.getByEmailAndPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Nutricionista não encontrado.' });
+    });
+
+    test('deve retornar um erro ao buscar nutricionista pelo email e senha', async () => {
+      db.get.mockRejectedValueOnce(new Error('Erro ao buscar nutricionista.'));
+
+      const req = { body: { email: 'test@example.com', senha: '123456' } };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await nutricionistaController.getByEmailAndPassword(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Erro ao buscar nutricionista.' });
     });
   });
 });

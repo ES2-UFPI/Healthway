@@ -1,6 +1,8 @@
+import 'package:healthway_app/constants.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:healthway_app/geral_screens/login_screen.dart' as login;
 
 class PresentationScreen extends StatefulWidget {
   const PresentationScreen({super.key});
@@ -33,7 +35,9 @@ class _PresentationScreenState extends State<PresentationScreen>
 
     // Navegar para a próxima tela após a animação
     Timer(Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => login.LoginScreen()),
+      );
     });
   }
 
@@ -46,7 +50,7 @@ class _PresentationScreenState extends State<PresentationScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF31BAC2),
+      backgroundColor: kPrimaryColor,
       body: Center(
         child: FadeTransition(
           opacity: _animation,

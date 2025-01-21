@@ -1,80 +1,77 @@
-const db = require('../firebase-config');
-const Alimento = require('../model/Alimento');
+const AlimentoService = require('../services/alimentoService');
+
 
 const alimentoController = {
-    //Criar um novo alimento
-    async create(req, res){
+    async create(req, res) {
         try {
-            const alimento = new Alimento(req.body);
-            await db.collection('alimentos').add(alimento.toFirestore());
+            await AlimentoService.create(req.body);
             res.status(201).json({ message: 'Alimento criado com sucesso!' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     },
 
-    //Obter todos os alimentos
-    async getAll(req, res){
+    async createMany(req, res) {
         try {
-            const snapshot = await db.collection('alimentos').get();
-            const alimentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            await AlimentoService.createMany(req.body);
+            res.status(201).json({ message: 'Alimentos criados com sucesso!' });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    async getAll(req, res) {
+        try {
+            const alimentos = await AlimentoService.getAll();
             res.status(200).json(alimentos);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     },
 
-    // Obter alimentos por categoria
     async getByCategory(req, res) {
         try {
             const { categoria } = req.params;
-            const snapshot = await db.collection('alimentos').where('Categoria', '==', categoria).get();
-            const alimentos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const alimentos = await AlimentoService.getByCategory(categoria);
             res.status(200).json(alimentos);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     },
-    
-    //Obter um alimento pelo ID
-    async getById(req, res){
+
+    async getById(req, res) {
         try {
             const { id } = req.params;
-            const doc = await db.collection('alimentos').doc(id).get();
-
-            if (!doc.exists) {
-                return res.status(404).json({ error: 'Alimento não encontrado.' });
-            }
-
-            res.status(200).json({ id: doc.id, ...doc.data() });
+            const alimento = await AlimentoService.getById(id);
+            res.status(200).json(alimento);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            if (error.message === 'Alimento não encontrado.') {
+                res.status(404).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
         }
     },
 
-    //Atualizar um alimento
-    async update(req, res){
+    async update(req, res) {
         try {
             const { id } = req.params;
-            const alimento = new Alimento(req.body);
-
-            await db.collection('alimentos').doc(id).update(alimento.toFirestore());
+            await AlimentoService.update(id, req.body);
             res.status(200).json({ message: 'Alimento atualizado com sucesso!' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     },
 
-    //Excluir um alimento
-    async delete(req, res){
+    async delete(req, res) {
         try {
             const { id } = req.params;
-            await db.collection('alimentos').doc(id).delete();
+            await AlimentoService.delete(id);
             res.status(200).json({ message: 'Alimento excluído com sucesso!' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }
+    },
 };
 
 module.exports = alimentoController;

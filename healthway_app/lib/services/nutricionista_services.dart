@@ -1,23 +1,22 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../models/nutricionista.dart';
 
 class NutricionistaService {
   static const String apiUrl = 'http://localhost:3000/api/nutricionistas';
 
-  Future<List<Nutricionista>> fetchNutricionistas() async {
+  Future<List<Nutricionista>> fetchNutritionists() async {
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
       try {
-        // Decodifica o corpo da resposta
         List<dynamic>? data = json.decode(response.body);
 
-        // Verifica se os dados não são nulos e se são uma lista
         if (data != null) {
           return data.map((json) => Nutricionista.fromJson(json)).toList();
         } else {
-          // Caso os dados sejam nulos ou não sejam uma lista
           throw Exception('Dados não encontrados ou formato inválido');
         }
       } catch (e) {
@@ -25,6 +24,50 @@ class NutricionistaService {
       }
     } else {
       throw Exception('Falha ao carregar nutricionistas');
+    }
+  }
+
+  Future<void> registerNutritionist(Nutricionista nutricionista) async {
+    var uri = Uri.parse(apiUrl);
+    var request = http.MultipartRequest('POST', uri);
+
+    request.fields['nome'] = nutricionista.nome;
+    request.fields['email'] = nutricionista.email;
+    request.fields['cpf'] = nutricionista.cpf;
+    request.fields['crn'] = nutricionista.crn;
+    request.fields['especialidade'] = nutricionista.especialidade;
+    request.fields['senha'] = nutricionista.senha;
+
+    // request.files
+    //     .add(await http.MultipartFile.fromPath('foto_perfil', fotoPerfil.path));
+    // request.files.add(await http.MultipartFile.fromPath(
+    //     'foto_documento', fotoDocumento.path));
+
+    var response = await request.send();
+    if (response.statusCode != 201) {
+      throw Exception('Falha ao cadastrar nutricionista');
+    }
+  }
+
+  Future<void> updateNutritionist(Nutricionista nutricionista) async {
+    var uri = Uri.parse('$apiUrl/${nutricionista.id}');
+    var request = http.MultipartRequest('PUT', uri);
+
+    request.fields['nome'] = nutricionista.nome;
+    request.fields['email'] = nutricionista.email;
+    request.fields['cpf'] = nutricionista.cpf;
+    request.fields['crn'] = nutricionista.crn;
+    request.fields['especialidade'] = nutricionista.especialidade;
+    request.fields['senha'] = nutricionista.senha;
+
+    // request.files
+    //     .add(await http.MultipartFile.fromPath('foto_perfil', fotoPerfil.path));
+    // request.files.add(await http.MultipartFile.fromPath(
+    //     'foto_documento', fotoDocumento.path));
+
+    var response = await request.send();
+    if (response.statusCode != 200) {
+      throw Exception('Falha ao atualizar nutricionista');
     }
   }
 }
