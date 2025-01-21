@@ -14,7 +14,7 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
   late Future<List<Alimento>> futureAlimentos;
   List<Alimento> alimentos = [];
   List<Alimento> alimentosFiltrados = [];
-  TextEditingController searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -29,11 +29,11 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
   }
 
   void _filtrarAlimentos(String query) {
+    final lowerQuery = query.toLowerCase();
     setState(() {
       alimentosFiltrados = alimentos.where((alimento) {
-        final descricaoMatch = alimento.descricao.toLowerCase().contains(query.toLowerCase());
-        final categoriaMatch = alimento.categoria.toLowerCase().contains(query.toLowerCase());
-        return descricaoMatch || categoriaMatch;
+        return alimento.descricao.toLowerCase().contains(lowerQuery) ||
+            alimento.categoria.toLowerCase().contains(lowerQuery);
       }).toList();
     });
   }
@@ -41,57 +41,45 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
-      appBar: AppBar(
-        title: Text('Alimentos'),
-        backgroundColor: Color(0xFF31BAC2),
-        elevation: 5,
-        // Remover o arredondamento da parte superior do AppBar
-        shape: null,
-      ),
+      backgroundColor: const Color(0xFFF5F5F5),
+      appBar: _buildAppBar(),
       body: Column(
         children: [
           _buildSearchBar(),
           Expanded(
             child: FutureBuilder<List<Alimento>>(
               future: futureAlimentos,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator(color: Color(0xFF31BAC2)));
-                } else if (snapshot.hasError) {
-                  return _buildErrorWidget(snapshot.error.toString());
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return _buildEmptyWidget();
-                } else {
-                  alimentos = snapshot.data!;
-                  if (alimentosFiltrados.isEmpty) {
-                    alimentosFiltrados = alimentos;
-                  }
-                  return _buildAlimentosList();
-                }
-              },
+              builder: (context, snapshot) => _buildBody(snapshot),
             ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _carregarAlimentos,
-        child: Icon(Icons.refresh),
-        backgroundColor: Color(0xFF31BAC2),
+        child: const Icon(Icons.refresh),
+        backgroundColor: const Color(0xFF31BAC2),
       ),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: const Text('Alimentos'),
+      backgroundColor: const Color(0xFF31BAC2),
+      elevation: 5,
     );
   }
 
   Widget _buildSearchBar() {
     return Container(
-      padding: EdgeInsets.all(16),
-      color: Color(0xFF31BAC2),
+      padding: const EdgeInsets.all(16),
+      color: const Color(0xFF31BAC2),
       child: TextField(
         controller: searchController,
         onChanged: _filtrarAlimentos,
         decoration: InputDecoration(
           hintText: 'Pesquisar alimentos...',
-          prefixIcon: Icon(Icons.search, color: Color(0xFF31BAC2)),
+          prefixIcon: const Icon(Icons.search, color: Color(0xFF31BAC2)),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
@@ -103,19 +91,34 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
     );
   }
 
+  Widget _buildBody(AsyncSnapshot<List<Alimento>> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(
+        child: CircularProgressIndicator(color: Color(0xFF31BAC2)),
+      );
+    } else if (snapshot.hasError) {
+      return _buildErrorWidget(snapshot.error.toString());
+    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+      return _buildEmptyWidget();
+    } else {
+      alimentos = snapshot.data!;
+      if (alimentosFiltrados.isEmpty) alimentosFiltrados = alimentos;
+      return _buildAlimentosList();
+    }
+  }
+
   Widget _buildAlimentosList() {
     return ListView.builder(
       itemCount: alimentosFiltrados.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Card(
             elevation: 6,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
             shadowColor: Colors.black.withOpacity(0.2),
-            color: Colors.transparent,  // Garantir que o fundo do card seja transparente
             child: AlimentoItem(alimento: alimentosFiltrados[index]),
           ),
         );
@@ -128,13 +131,13 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 60, color: Colors.red),
-          SizedBox(height: 16),
-          Text(
+          const Icon(Icons.error_outline, size: 60, color: Colors.red),
+          const SizedBox(height: 16),
+          const Text(
             'Erro ao carregar alimentos',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             error,
             style: TextStyle(color: Colors.grey[600]),
@@ -150,9 +153,9 @@ class _AlimentosScreenState extends State<AlimentosScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.no_food, size: 60, color: Color(0xFF31BAC2)),
-          SizedBox(height: 16),
-          Text(
+          const Icon(Icons.no_food, size: 60, color: Color(0xFF31BAC2)),
+          const SizedBox(height: 16),
+          const Text(
             'Nenhum alimento encontrado',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
