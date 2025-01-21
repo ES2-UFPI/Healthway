@@ -21,8 +21,7 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
   String cpf = '123.456.789-00';
   String crn = 'CRN-1 12345';
   String especialidade = 'Nutrição Esportiva';
-  String fotoPerfil = 'https://example.com/dr_silva_profile.jpg';
-  String fotoDocumento = 'https://example.com/dr_silva_document.jpg';
+  String fotoPerfil = '';
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +59,7 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
                 SizedBox(height: 24),
                 _buildInfoSection(),
                 SizedBox(height: 24),
-                _buildActionButtons(),
-                SizedBox(height: 24),
-                _buildDocumentSection(),
+                _buildActionButtons()
               ],
             ),
           ),
@@ -88,7 +85,8 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
               CircleAvatar(
                 radius: 60,
                 backgroundColor: kPrimaryColor,
-                backgroundImage: NetworkImage(fotoPerfil),
+                backgroundImage:
+                    fotoPerfil.isNotEmpty ? NetworkImage(fotoPerfil) : null,
                 child: fotoPerfil.isEmpty
                     ? Text(
                         nome.isNotEmpty ? nome[0].toUpperCase() : '?',
@@ -223,47 +221,6 @@ class _NutritionistProfileScreenState extends State<NutritionistProfileScreen> {
           child: Text('Alterar Senha'),
         ),
       ],
-    );
-  }
-
-  Widget _buildDocumentSection() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Documento',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  // Implement document image viewing or updating functionality
-                },
-                child: Container(
-                  width: 200,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: kPrimaryColor),
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(fotoDocumento),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: fotoDocumento.isEmpty
-                      ? Icon(Icons.add_a_photo, size: 50, color: kPrimaryColor)
-                      : null,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
