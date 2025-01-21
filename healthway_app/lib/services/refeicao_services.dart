@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:healthway_app/models/refeicao.dart';
 
 class RefeicaoService {
-  static const String apiUrl = 'http://$domain/api/refeicoes';
+  static const String apiUrl = 'https://$domain/api/refeicoes';
 
   Future<Refeicao> fetchMealById(String id) async {
     final response = await http.get(Uri.parse('$apiUrl/$id'));

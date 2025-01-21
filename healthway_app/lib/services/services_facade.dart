@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ServicesFacade {
-  static const String apiUrl = 'http://$domain/api';
+  static const String apiUrl = 'https://$domain/api';
   static const String pacienteUrl = '$apiUrl/pacientes';
   static const String nutricionistaUrl = '$apiUrl/nutricionistas';
   final AlimentoService _alimentoService = AlimentoService();
