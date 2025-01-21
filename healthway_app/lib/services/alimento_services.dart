@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../models/alimento.dart';
 
 class AlimentoService {
-  final String apiUrl = 'http://$domain/api/alimentos';
+  final String apiUrl = 'https://$domain/api/alimentos';
 
   Future<List<Alimento>> fetchFoods() async {
     // Fazendo a requisição HTTP para o endpoint da API

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import '../models/nutricionista.dart';
 
 class NutricionistaService {
-  static const String apiUrl = 'http://$domain/api/nutricionistas';
+  static const String apiUrl = 'https://$domain/api/nutricionistas';
 
   Future<List<Nutricionista>> fetchNutritionists() async {
     final response = await http.get(Uri.parse(apiUrl));
