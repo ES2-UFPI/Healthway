@@ -7,7 +7,7 @@ import '../models/nutricionista.dart';
 class NutricionistaService {
   static const String apiUrl = 'http://localhost:3000/api/nutricionistas';
 
-  Future<List<Nutricionista>> fetchNutricionistas() async {
+  Future<List<Nutricionista>> fetchNutritionists() async {
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
@@ -27,7 +27,7 @@ class NutricionistaService {
     }
   }
 
-  Future<void> cadastrarNutricionista(Nutricionista nutricionista) async {
+  Future<void> registerNutritionist(Nutricionista nutricionista) async {
     var uri = Uri.parse(apiUrl);
     var request = http.MultipartRequest('POST', uri);
 
@@ -49,7 +49,7 @@ class NutricionistaService {
     }
   }
 
-  Future<void> atualizarNutricionista(Nutricionista nutricionista) async {
+  Future<void> updateNutritionist(Nutricionista nutricionista) async {
     var uri = Uri.parse('$apiUrl/${nutricionista.id}');
     var request = http.MultipartRequest('PUT', uri);
 
