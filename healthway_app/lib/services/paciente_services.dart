@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:healthway_app/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:healthway_app/models/paciente.dart';
 
 class PacienteService {
-  static const String apiUrl = 'http://localhost:3000/api/pacientes';
+  static const String apiUrl = 'http://$domain/api/pacientes';
 
   Future<List<Paciente>> fetchPatients() async {
     final response = await http.get(Uri.parse(apiUrl));

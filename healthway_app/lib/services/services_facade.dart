@@ -1,3 +1,4 @@
+import 'package:healthway_app/constants.dart';
 import 'package:healthway_app/models/plano_alimentar.dart';
 import 'package:healthway_app/models/refeicao.dart';
 import 'package:healthway_app/services/plano_alimentar_services.dart';
@@ -13,7 +14,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ServicesFacade {
-  static const String apiUrl = 'http://localhost:3000/api';
+  static const String apiUrl = 'http://$domain/api';
   static const String pacienteUrl = '$apiUrl/pacientes';
   static const String nutricionistaUrl = '$apiUrl/nutricionistas';
   final AlimentoService _alimentoService = AlimentoService();
