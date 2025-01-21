@@ -226,35 +226,55 @@ class _LoginScreenState extends State<LoginScreen> {
       String userType = _userType;
 
       // Call the login service
-      _servicesFacade
-          .login(email: email, senha: senha, userType: userType)
-          .then((userData) {
-        if (userData != null) {
-          if (_userType == 'Paciente') {
-            Navigator.pushReplacementNamed(context, '/home_patient',
-                arguments: userData);
-          } else if (_userType == 'Nutricionista') {
-            Navigator.pushReplacementNamed(context, '/home_nutritionist',
-                arguments: userData);
-          }
-        } else {
-          setState(() {
-            _isLoading = false;
-          });
-          // Show error message
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text('Falha no login. Verifique suas credenciais.')),
-          );
-        }
-      }).catchError((error) {
-        setState(() {
-          _isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao fazer login: ${error.toString()}')),
-        );
-      });
+      // _servicesFacade
+      //     .login(email: email, senha: senha, userType: userType)
+      //     .then((userData) {
+      //   if (userData != null) {
+      //     if (_userType == 'Paciente') {
+      //       Navigator.pushReplacementNamed(context, '/home_patient',
+      //           arguments: userData);
+      //     } else if (_userType == 'Nutricionista') {
+      //       Navigator.pushReplacementNamed(context, '/home_nutritionist',
+      //           arguments: userData);
+      //     }
+      //   } else {
+      //     setState(() {
+      //       _isLoading = false;
+      //     });
+      //     // Show error message
+      //     ScaffoldMessenger.of(context).showSnackBar(
+      //       SnackBar(
+      //           content: Text('Falha no login. Verifique suas credenciais.')),
+      //     );
+      //   }
+      // }).catchError((error) {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(content: Text('Erro ao fazer login: ${error.toString()}')),
+      //   );
+      // });
+
+      var mockData = {
+        'nome': 'John Doe',
+        'email': 'exemplo@email.com',
+        'dt_nascimento': '01/01/2000',
+        'altura': 180,
+        'peso': 75,
+        'circunferencia_abdominal': 88,
+        'massa_muscular': 6.5,
+        'gordura_corporal': 15.5,
+        'alergias': ['Amendoim', 'Leite'],
+        'preferencias': ['Vegano'],
+      };
+      if (_userType == 'Paciente') {
+        Navigator.pushReplacementNamed(context, '/home_patient',
+            arguments: mockData);
+      } else if (_userType == 'Nutricionista') {
+        Navigator.pushReplacementNamed(context, '/home_nutritionist',
+            arguments: mockData);
+      }
     }
   }
 
