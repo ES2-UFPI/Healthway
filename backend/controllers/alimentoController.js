@@ -1,5 +1,6 @@
 const AlimentoService = require('../services/alimentoService');
 
+
 const alimentoController = {
     async create(req, res) {
         try {
